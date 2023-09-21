@@ -344,7 +344,7 @@ export default {
     moment,
     
     async printMessage() {
-      const defaultLang = this.storedLang ?? "nl";
+      const defaultLang = this.storedLang ?? "en";
     const lang =defaultLang;
      this.loadingexport=true
       const token = localStorage.getItem('token')

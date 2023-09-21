@@ -30,7 +30,7 @@ import {ref, computed, provide, inject} from 'vue';
 import Button from './Button.vue';
 import PreviewModal from '../components/PreviewModal.vue';
 import {ChevronLeftIcon} from '@heroicons/vue/solid';
-import FamilyMemberModal from '../components/FamilyMemberModal.vue';
+
 import {useI18n} from "vue-i18n";
 
 const {t} = useI18n();

@@ -1,4 +1,5 @@
 export const en = {
+  appName:"Mpola Pay",
   showRecals:" show recalls",
   view_recalls_text:"view recalls text",
   confirm_text: 'Confirm',

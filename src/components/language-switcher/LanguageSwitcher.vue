@@ -15,8 +15,10 @@
     class="dark-mode-switcher cursor-pointer fixed top-2 right-0 dark:bg-dark-2 h-12 flex items-center justify-center z-50 mb-10 mr-10"
   >
     <TomSelect v-model="lang" @change="languagechange" class="cursor-pointer">
-      <option value="en" selected="selected">🇺🇸 {{ $t('translation.english_text') }}</option>
-      <option value="nl">🇳🇱 {{ $t('translation.dutch_text') }}</option>
+      <option value="en" selected="selected">
+        🇺🇸 {{ $t("translation.english_text") }}
+      </option>
+      <option value="nl">🇳🇱 {{ $t("translation.dutch_text") }}</option>
     </TomSelect>
   </div>
   <!-- END: Dark Mode Switcher-->
@@ -35,7 +37,7 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const storedLang = localStorage.getItem("lang");
-    const defaultLang = storedLang ?? "nl";
+    const defaultLang = storedLang ?? "en";
     const lang = ref(defaultLang);
     // const lang = ref(localStorage.getItem('lang') ?? 'nl')
     console.log("initial lang", lang);

@@ -1,4 +1,5 @@
 export const nl = {
+  appName:"Mpola Pay",
   showRecals:" Terugroepafspraak weergeven  ",
   view_recalls_text:"Bekijk terugroeptekst",
   confirm_text: 'Bevestig',

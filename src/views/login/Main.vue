@@ -2,18 +2,18 @@
   <div class>
     <DarkModeSwitcher />
     <LanguageSwitcher />
-    <div class="container sm:px-10 ">
+    <div class="container sm:px-10">
       <div class="block xl:grid grid-cols-2 gap-4">
         <!-- BEGIN: Login Info -->
         <div class="hidden xl:flex flex-col min-h-screen">
           <a href class="-intro-x flex items-center pt-5">
             <img
-              alt="Metadent"
+              alt="Mpola pay"
               class="w-10 h-10 font-medium"
               src="../../assets/images/shield1.png"
             />
             <span class="text-white text-lg ml-3">
-              <span class="font-medium"> Application</span>
+              <span class="font-medium"> {{ $t("translation.appName") }}</span>
             </span>
           </a>
           <div class="my-auto">
@@ -32,15 +32,12 @@
           <div
             class="my-auto mx-auto bg-white dark:bg-dark-1 xl:bg-white px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto xl:w-auto items-center content-center box"
           >
-          <h2
+            <h2
               class="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left"
             >
               {{ $t("translation.auth.signIn") }}
             </h2>
-            <div
-              class="intro-x mt-5 xl:mt-8 text-center xl:text-left"
-         
-            >
+            <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
               <button
                 class="btn btn-facebook py-3 px-4 w-full xl:w-33 xl:mr-3 align-top"
               >
@@ -57,19 +54,6 @@
                 />Google Sign In
               </button>
             </div>
-            <a
-              href
-              class="-intro-x flex items-center pt-5 2xl:hidden xl:hidden lg:flex md:flex sm:flex"
-            >
-              <img
-                alt="Metadent"
-                class="w-10 h-10 font-medium"
-                src="../../assets/images/shield1.png"
-              />
-              <span class="text-4xl ml-1 font-medium leading-none text-theme-3">
-                <span class="font-medium">Application</span>
-              </span>
-            </a>
 
             <div
               v-if="message"
@@ -90,7 +74,7 @@
                   for="update-profile-form-1"
                   class="form-label font-semibold"
                 >
-                 {{ $t('translation.enter_verification_text') }} 
+                  {{ $t("translation.enter_verification_text") }}
                   <span class="text-theme-6">*</span>
                 </label>
                 <div
@@ -230,9 +214,12 @@
                   {{ $t("translation.auth.dontHaveAnAccount") }}
                 </span>
                 <!-- <router-link to="/register" @click="navigateToRegister"> -->
-                  <a class="text-primary font-bold ml-2" @click="navigateToRegister">
-                    {{ $t("translation.auth.signUp") }}
-                  </a>
+                <a
+                  class="text-theme-1 font-bold ml-2 cursor-pointer hover:text-primary"
+                  @click="navigateToRegister"
+                >
+                  {{ $t("translation.auth.signUp") }}
+                </a>
                 <!-- </router-link> -->
               </h4>
             </div>
@@ -252,7 +239,6 @@
             <!-- Form End -->
             <div
               class="intro-x mt-10 xl:mt-24 text-gray-700 dark:text-gray-600 text-center xl:text-left"
-              style="display: none"
             >
               By signing in, you agree to our
               <br />
@@ -281,7 +267,7 @@ import Toast from "@/components/toast/Toast.vue";
 import FailToast from "@/components/toast/FailToast.vue";
 import Cash from "../../utils/cash";
 import { useI18n } from "vue-i18n";
-import { useStore } from 'vuex'
+import { useStore } from "vuex";
 import AuthService from "../../service/auth-service.js";
 // Validations
 import { Form, Field, ErrorMessage } from "vee-validate";
@@ -298,7 +284,6 @@ export default defineComponent({
     LanguageSwitcher,
   },
   setup() {
-  
     const { t } = useI18n({});
     onMounted(() => {
       Cash.cashDom();
@@ -316,7 +301,10 @@ export default defineComponent({
   data() {
     // Define a validation schema
     const schema = yup.object().shape({
-      identifier: yup.string().email().required(this.t("translation.emailRequired") ),
+      identifier: yup
+        .string()
+        .email()
+        .required(this.t("translation.emailRequired")),
       password: yup.string().required(this.t("translation.passwordRequired")),
     });
 
@@ -339,7 +327,7 @@ export default defineComponent({
       codeToken: "",
       codeReceived: "",
       recievedCode: "",
-      password:""
+      password: "",
     };
   },
   computed: {
@@ -359,7 +347,7 @@ export default defineComponent({
   },
   methods: {
     navigateToRegister() {
-      this.$router.push('/register'); 
+      this.$router.push("/register");
     },
     hoverdiv(e, divid) {
       console.log("hovering", e);
@@ -388,61 +376,59 @@ export default defineComponent({
     },
     handleSignIn() {
       console.log("login: current lang", localStorage.getItem("lang"));
-      const user = {
-        identifier: this.identifier,
-        password: this.password,
-      };
-      this.loading = true;
 
-      this.$store.dispatch("auth/login", user).then(
-        (res) => {
-          this.loading = false;
+      this.$router.push("/dashboard");
 
-          if (res?.status === true) {
-            // this.$router.push('/dashboard').catch((err) => console.log(err))
-            const store = useStore()
-const patientId = computed(() => this.$store.state.auth.user);
+      // return;
+      // const user = {
+      //   identifier: this.identifier,
+      //   password: this.password,
+      // };
+      // this.loading = true;
 
-this.$store.dispatch('treatment/patientsFetch', patientId.value.id);
-// // emailCode
+      // this.$store.dispatch("auth/login", user).then(
+      //   (res) => {
+      //     this.loading = false;
 
-if (res?.status === true){
-  // console.log('inside true check code status',res?.status)
-  this.message = this.t("translation.emailCode");
-}
+      //     if (res?.status === true) {
 
+      //       const store = useStore();
+      //       const patientId = computed(() => this.$store.state.auth.user);
 
-else{
-  this.message = res?.message;
-}
-            // this.message = res?.message;
-            this.codeToken = res?.payload?.token;
+      //       this.$store.dispatch("treatment/patientsFetch", patientId.value.id);
 
-            console.log("code message", this.codeToken, this.codeReceived);
-            (this.verifyNow = true), (this.loginNow = false);
-            // this.successtoast = true
-          }
-        },
-        (error) => {
-        
-          if(error==="The combination of email and password is incorrect please check your details & try again. 3 attempts remaining")
-        {
+      //       if (res?.status === true) {
 
-          console.log('got new error', error)
-          this.message = this.t("translation.wrongEmailPassword");
-          this.failmessage = this.t("translation.wrongEmailPassword");
-        }
-        else{
-          this.message = error;
-          this.failmessage = error;
-        }
-          
-          this.loading = false;
-          
-          
-          this.failtoast = true;
-        }
-      );
+      //         this.message = this.t("translation.emailCode");
+      //       } else {
+      //         this.message = res?.message;
+      //       }
+
+      //       this.codeToken = res?.payload?.token;
+
+      //       console.log("code message", this.codeToken, this.codeReceived);
+      //       (this.verifyNow = true), (this.loginNow = false);
+
+      //     }
+      //   },
+      //   (error) => {
+      //     if (
+      //       error ===
+      //       "The combination of email and password is incorrect please check your details & try again. 3 attempts remaining"
+      //     ) {
+      //       console.log("got new error", error);
+      //       this.message = this.t("translation.wrongEmailPassword");
+      //       this.failmessage = this.t("translation.wrongEmailPassword");
+      //     } else {
+      //       this.message = error;
+      //       this.failmessage = error;
+      //     }
+
+      //     this.loading = false;
+
+      //     this.failtoast = true;
+      //   }
+      // );
     },
 
     verifyEmail() {
@@ -455,7 +441,7 @@ else{
         (res) => {
           this.loadingCode = false;
           console.log("final code response", res);
-          
+
           if (res.status) {
             this.$router.push("/dashboard").catch((err) => console.log(err));
           }

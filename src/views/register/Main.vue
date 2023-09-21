@@ -1,18 +1,19 @@
 <template>
-  <div class="h-screen py-8 overflow-y-auto 2xl:items-center 2xl:justify-center 2xl:flex py-auto">
+  <div
+    class="h-screen py-8 overflow-y-auto 2xl:items-center 2xl:justify-center 2xl:flex py-auto"
+  >
     <!--  -->
     <DarkModeSwitcher />
     <LanguageSwitcher />
     <div class="">
-      <div class="block xl:grid ">
+      <div class="block xl:grid">
         <RegisterForm />
-        
+
         <!-- BEGIN: Register Info -->
-      
+
         <!-- END: Register Info -->
 
         <!-- BEGIN: Register Form -->
-     
 
         <!-- BEGIN: Account Creation Success Notification Content -->
         <div
@@ -63,7 +64,7 @@ import LanguageSwitcher from "@/components/language-switcher/LanguageSwitcher.vu
 import $ from "cash-dom";
 import { useI18n } from "vue-i18n";
 // import RegisterForm from "./createPatientForm.vue"
-import RegisterForm from "./createPatientForm.vue"
+import RegisterForm from "./createPatientForm.vue";
 
 export default defineComponent({
   components: {
@@ -72,7 +73,7 @@ export default defineComponent({
     Field,
     ErrorMessage,
     LanguageSwitcher,
-    RegisterForm
+    RegisterForm,
   },
   setup() {
     const { t } = useI18n({});
@@ -80,11 +81,11 @@ export default defineComponent({
       $("body").removeClass("main").removeClass("error-page").addClass("login");
     });
     const storedLang = localStorage.getItem("lang");
-    const defaultLang = storedLang ?? "nl";
+    const defaultLang = storedLang ?? "en";
     const lang = ref(defaultLang);
     return {
       t,
-      lang
+      lang,
     };
   },
   data() {
@@ -93,7 +94,6 @@ export default defineComponent({
     const phoneRegExp = /^\d{9}$/;
     // Define a validation schema
     const schema = yup.object().shape({
-   
       first_name: yup
         .string()
         .required(this.t("translation.firstnameRequired")),
@@ -127,9 +127,12 @@ export default defineComponent({
       password_confirmation: yup
         .string()
         .required(this.t("translation.retypePassword"))
-        .oneOf([yup.ref("password"), null], this.t("translation.matchPassword")),
+        .oneOf(
+          [yup.ref("password"), null],
+          this.t("translation.matchPassword")
+        ),
     });
-    
+
     return {
       successful: false,
       type: "password",
@@ -196,7 +199,6 @@ export default defineComponent({
       }
     },
     handleRegister() {
-     
       const user = {
         firstName: this.first_name,
         lastName: this.last_name,

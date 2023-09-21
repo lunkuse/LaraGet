@@ -14,7 +14,7 @@ import Reset from '../views/change-password/Reset.vue'
 import Invoice from '../views/invoices/Invoice.vue'
 // import Notification from '../views/notifications/Notification.vue'
 import Settings from '../views/settings/Settings.vue'
-import Appointments from '../views/appointments/Appointments.vue'
+
 import AppointmentsDetails from '../views/appointments/AppointmentDetails.vue'
 import Questions from '../views/appointments/appointments/answer_dental_questions.vue'
 import ViewAppointments from '../views/appointments/ViewAppointments.vue'
@@ -112,18 +112,7 @@ const routes = [
         }
       },
       
-      {
-        path: 'appointments',
-        name: 'side-menu-appointments',
-        component: Appointments,
-        meta: {
-          crumbs: [
-            { name: 'Dashboard', link: '/dashboard' },
-            { name: 'Appointments', link: '' },
-          
-          ]
-        }
-      },
+     
      
 
       {
