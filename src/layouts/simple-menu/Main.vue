@@ -1,0 +1,229 @@
+<template>
+  <div>
+    <DarkModeSwitcher />
+    <MobileMenu />
+    <div class="flex">
+      <!-- BEGIN: Simple Menu -->
+      <nav class="side-nav side-nav--simple">
+        <!-- BEGIN: Logo -->
+        <router-link
+          :to="{ name: 'simple-menu-dashboard-overview-1' }"
+          tag="a"
+          class="intro-x flex items-center pl-5 pt-4"
+        >
+          <img
+            alt="Metadent"
+            class="w-6"
+            src="@/assets/images/logoswhite1.png" 
+          />
+        </router-link>
+        <!-- END: Logo -->
+        <div class="side-nav__devider my-6"></div>
+        <ul>
+          <!-- BEGIN: First Child -->
+          <template v-for="(menu, menuKey) in formattedMenu">
+            <li
+              v-if="menu == 'devider'"
+              :key="menu + menuKey"
+              class="side-nav__devider my-6"
+            ></li>
+            <li v-else :key="menu + menuKey">
+              <!-- :content="menu.title" -->
+              <Tippy
+                tag="a"
+                :content="translations?.[`${menu?.title?.toLowerCase().replace(' ', '_')}_text`]  ?? menu.title "
+                :options="{
+                  placement: 'left'
+                }"
+                :href="
+                  menu.subMenu
+                    ? 'javascript:;'
+                    : router.resolve({ name: menu.pageName }).path
+                "
+                class="side-menu"
+                :class="{
+                  'side-menu--active': menu.active,
+                  'side-menu--open': menu.activeDropdown
+                }"
+                @click="linkTo(menu, router, $event)"
+              >
+                <div class="side-menu__icon">
+                  <component :is="menu.icon" />
+                </div>
+                <div class="side-menu__title">
+                  <!-- {{ menu.title }} -->
+                  {{ capitalized(translations?.[`${menu?.title?.toLowerCase().replace(' ', '_')}_text`] ?? menu.title) }}
+                  <ChevronDownIcon
+                    v-if="$h.isset(menu.subMenu)"
+                    class="side-menu__sub-icon"
+                    :class="{ 'transform rotate-180 text-white': menu.activeDropdown }"
+                  />
+                </div>
+              </Tippy>
+              <!-- BEGIN: Second Child -->
+              <transition @enter="enter" @leave="leave">
+                <ul v-if="$h.isset(menu.subMenu) && menu.activeDropdown">
+                  <li
+                    v-for="(subMenu, subMenuKey) in menu.subMenu"
+                    :key="subMenuKey"
+                  >
+                  <!-- :content="subMenu.title" -->
+                    <Tippy
+                      tag="a"
+                      :content="translations?.[`${subMenu?.title?.toLowerCase().replace(' ', '_')}_text`]  ?? subMenu.title "
+                      :options="{
+                        placement: 'left'
+                      }"
+                      :href="
+                        subMenu.subMenu
+                          ? 'javascript:;'
+                          : router.resolve({ name: subMenu.pageName }).path
+                      "
+                      class="side-menu"
+                      :class="{ 'side-menu--active': subMenu.active }"
+                      @click="linkTo(subMenu, router, $event)"
+                    >
+                      <div class="side-menu__icon">
+                        <ActivityIcon />
+                      </div>
+                      <div class="side-menu__title">
+                        {{ subMenu.title }}
+                        <ChevronDownIcon
+                          v-if="$h.isset(subMenu.subMenu)"
+                          class="side-menu__sub-icon"
+                          :class="{
+                            'transform rotate-180': subMenu.activeDropdown
+                          }"
+                        />
+                      </div>
+                    </Tippy>
+                    <!-- BEGIN: Third Child -->
+                    <transition @enter="enter" @leave="leave">
+                      <ul
+                        v-if="
+                          $h.isset(subMenu.subMenu) && subMenu.activeDropdown
+                        "
+                      >
+                        <li
+                          v-for="(
+                            lastSubMenu, lastSubMenuKey
+                          ) in subMenu.subMenu"
+                          :key="lastSubMenuKey"
+                        >
+                        <!-- :content="lastSubMenu.title" -->
+                          <Tippy
+                            tag="a"
+                            :content="translations?.[`${lastSubMenu?.title?.toLowerCase().replace(' ', '_')}_text`]  ?? lastSubMenu?.title "
+                            :options="{
+                              placement: 'left'
+                            }"
+                            :href="
+                              lastSubMenu.subMenu
+                                ? 'javascript:;'
+                                : router.resolve({ name: lastSubMenu.pageName })
+                                    .path
+                            "
+                            class="side-menu"
+                            :class="{ 'side-menu--active': lastSubMenu.active }"
+                            @click="linkTo(lastSubMenu, router, $event)"
+                          >
+                            <div class="side-menu__icon">
+                              <ZapIcon />
+                            </div>
+                            <div class="side-menu__title">
+                              <!-- {{ lastSubMenu.title }} -->
+                              {{translations?.[`${lastSubMenu?.title?.toLowerCase().replace(' ', '_')}_text`] ?? lastSubMenu.title }}
+                            </div>
+                          </Tippy>
+                        </li>
+                      </ul>
+                    </transition>
+                    <!-- END: Third Child -->
+                  </li>
+                </ul>
+              </transition>
+              <!-- END: Second Child -->
+            </li>
+          </template>
+          <!-- END: First Child -->
+        </ul>
+        <SideMenuTooltip class="side-menu">
+          <transition @enter="enter" @leave="leave">
+            <router-link to="/" @click="onLogout" class="text-white">
+              <Log-outIcon class="side-menu__icon" /> Logout 
+            </router-link></transition
+          ></SideMenuTooltip
+        >
+      </nav>
+      <!-- END: Simple Menu -->
+      <!-- BEGIN: Content -->
+      <div class="content">
+        <TopBar />
+        <router-view />
+      </div>
+      <!-- END: Content -->
+    </div>
+  </div>
+</template>
+
+<script>
+import { defineComponent, computed, onMounted, ref, watch, inject  } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from '@/store'
+import { helper as $h } from '@/utils/helper'
+import TopBar from '@/components/top-bar/Main.vue'
+import MobileMenu from '@/components/mobile-menu/Main.vue'
+import DarkModeSwitcher from '@/components/dark-mode-switcher/Main.vue'
+import { linkTo, nestedMenu, enter, leave } from '@/layouts/side-menu'
+import $ from 'cash-dom'
+export default defineComponent({
+  components: {
+    TopBar,
+    MobileMenu,
+    DarkModeSwitcher
+  },
+  setup() {
+    const route = useRoute()
+    const router = useRouter()
+    const store = useStore()
+    const formattedMenu = ref([])
+    const translations = inject('translation_v3')
+    const simpleMenu = computed(() =>
+      nestedMenu(store.state.simpleMenu.menu, route)
+    )
+
+    watch(
+      computed(() => route.path),
+      () => {
+        formattedMenu.value = $h.toRaw(simpleMenu.value)
+      }
+    )
+
+    onMounted(() => {
+      $('body')
+        .removeClass('error-page')
+        .removeClass('login')
+        .addClass('main')
+      formattedMenu.value = $h.toRaw(simpleMenu.value)
+    })
+
+    return {
+      formattedMenu,
+      router,
+      linkTo,
+      enter,
+      leave,
+      translations
+    }
+  },
+  methods: {
+   
+   capitalized(title) {
+     const capitalizedFirst = title[0].toUpperCase()
+     const rest = title?.slice(1)?.toLowerCase()
+     console.log('capitalizedFirst', capitalizedFirst + rest)
+     return capitalizedFirst + rest
+   }
+ },
+})
+</script>

@@ -1,0 +1,11 @@
+variables:
+  environment: demo
+  resourcesEnvironment: prd
+  deploymentyamlfile: deployment.yml
+  keyvault: $(environment)-be-prd-01
+  VITE_BACKEND_URL: https://$(environment).api.metadent.nl/api
+  BackendUrl: $(VITE_BACKEND_URL)
+  websiteAddress: patients-$(environment).metadent.nl
+  websiteAddressHttps: https://patients-$(environment).metadent.nl
+  node-client: $(environment)
+  namespace: metadent-$(environment)

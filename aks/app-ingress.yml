@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: patients-web-#{environment}#
+  namespace: #{namespace}#
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - #{websiteAddress}#
+    secretName: #{tls-cert}#
+  rules:
+  - host: #{websiteAddress}#
+    http:
+      paths:
+      - path: /?(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: metadentpatientssvc
+            port:
+              number: 80

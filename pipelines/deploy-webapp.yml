@@ -1,0 +1,58 @@
+name: $(Year:yyyy).$(Month).$(DayOfMonth)$(Rev:.r)
+trigger:
+  branches:
+    include:
+      - main
+      - feature/*
+      - bugfix/*
+      - releases/*
+      - hotfix/*
+    exclude:
+      - feature/os/aks
+
+variables:
+  - template: configs/common.yml
+
+stages:
+  - stage: BuildForDeploy
+    dependsOn: []
+    displayName: Build
+    jobs:
+      - job: ChangeBranchName
+        displayName: Change branch name
+        pool:
+          name: $(adoPool)
+        steps:
+          - powershell: |
+              $BuildNumber="$(Build.BuildNumber)";
+              $Branch = "$(Build.SourceBranchName)";
+              $Configuration = "$(BuildConfiguration)";
+
+                If (-Not ($Branch  -eq 'main'))
+                {
+                  $suffix = $Branch;
+
+                  echo "##vso[build.updatebuildnumber]$($BuildNumber)-$($suffix)"
+                }
+            displayName: build number naming
+      - template: templates/build.yml
+
+  - stage: DEV
+    dependsOn: BuildForDeploy
+    variables:
+      - template: configs/dev.yml
+    jobs:
+      - template: templates/job-webapp.yml
+        parameters:
+          subscription: ${{variables.subscription}}
+          environment: ${{variables.environment}}
+
+  - stage: OHCP
+    dependsOn: DEV
+    variables:
+      - template: configs/ohcp.yml
+    jobs:
+      - template: templates/job-webapp.yml
+        parameters:
+          subscription: ${{variables.subscription}}
+          environment: ${{variables.environment}}

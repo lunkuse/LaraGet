@@ -1,0 +1,12 @@
+variables:
+  environment: uat
+  resourcesEnvironment: uat
+  deploymentyamlfile: deployment-dev.yml
+  keyvault: uat-fe-test-01
+  VITE_BACKEND_URL: https://$(environment).api.metadent.nl/api
+  BackendUrl: $(VITE_BACKEND_URL)
+  websiteAddress: $(environment).metadent.nl
+  websiteAddressHttps: https://$(environment).metadent.nl
+  node-client: $(resourcesEnvironment)
+  namespace: metadent
+

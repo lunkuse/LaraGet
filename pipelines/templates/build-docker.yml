@@ -1,0 +1,10 @@
+jobs:
+# - template: runtests.yml
+
+- job: BuildImage
+  displayName: Build Docker image
+  dependsOn: ChangeBranchName
+  pool:
+    name: $(adoPool)
+  steps:
+    - template: docker-build.yml

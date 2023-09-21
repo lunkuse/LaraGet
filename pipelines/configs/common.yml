@@ -1,0 +1,16 @@
+variables:
+  sqlserver: $(sqlservername)
+  organisation: projectcode
+  adoPool: DefaultLinux
+  adoPoolWindows: DefaultWindows
+  BuildConfiguration: debug
+  dockerRegistryServiceConnection: projectcode
+  subscription: METADENT
+  tagBuildId: $(Build.BuildId)
+  tagBuildNumber: $(Build.BuildNumber)
+  containerRegistry: metadentprd01.azurecr.io
+  imageRepository: metadent-patients
+  imageName: $(containerRegistry)/$(imageRepository):$(build.buildId)
+  tls-cert: metadent-wildcard-root
+  ingressyamlfile: app-ingress.yml
+  dockerFile: Dockerfile

@@ -1,0 +1,16 @@
+variables:
+  Settings.MockConnections: "false"
+  Settings.MockUserData: "false"
+  Settings.HostingLocation: $(location)
+  Settings.WebsiteAddress: $(websiteAddress)
+  cdn.url: $(cdnAddress)
+  Storage.ConnectionString: $(storageAccountConnectionString)
+  Storage.BaseUrl: https://$(storageAccountName).blob.core.windows.net
+  Storage.AccountName: $(storageAccountName)
+  Database.DatabaseConnectionString: $(dbconnectionstring)
+  ApplicationInsights.InstrumentationKey: $(applicationInsightsKey)
+  LogMonitor.WorkspaceId: $(logMonitorWorkspaceId)
+  LogMonitor.PrimaryKey: $(logMonitorPrimaryKey)
+  Settings.CancelUrl: $(cancelUrl)
+  Settings.SuccessUrl: $(successUrl)
+  Settings.Environment: $(environment)
