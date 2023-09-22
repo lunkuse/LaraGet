@@ -332,10 +332,6 @@ export default defineComponent({
   },
   computed: {
     loggedIn() {
-      console.log(
-        "this.$store.state.auth.status.loggedIn",
-        this.$store?.state?.auth?.status?.loggedIn
-      );
       return this.$store.state.auth.status.loggedIn;
     },
   },

@@ -58,7 +58,7 @@ const routes = [
       },
       
       {
-        path: 'allproducts',
+        path: '/allproducts',
         name: 'side-menu-view-products',
         component: AllProducts,
         meta: {
@@ -70,7 +70,7 @@ const routes = [
       },
 
       {
-        path: 'allorders',
+        path: '/allorders',
         name: 'side-menu-view-orders',
         component: AllOrders,
         meta: {
@@ -484,7 +484,8 @@ router.beforeEach((to, from, next) => {
 
 
     '/dashboard',
-    '/allproducts'
+    '/allproducts',
+    '/allorders'
   ]
   const authRequired = !publicPages.includes(to.path)
   const loggedIn = JSON.parse(localStorage.getItem('user'))
