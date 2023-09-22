@@ -3,7 +3,8 @@ export const nl = {
   showRecals:" Terugroepafspraak weergeven  ",
   view_recalls_text:"Bekijk terugroeptekst",
   confirm_text: 'Bevestig',
-  
+  products_text:'Producten',
+  orders_text:'Bestellingen',
   auth: {
     signIn: 'Inloggen',
     email: 'E-mail',

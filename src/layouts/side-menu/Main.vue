@@ -13,8 +13,8 @@
           class="intro-x flex items-center pl-5 pt-4"
         >
           <a href class="-intro-x hidden md:flex">
-            <img class="w-6" src="@/assets/images/logoswhite1.png" />
-            <p class="text-white text-lg ml-3 hidden xl:block">Metadent</p>
+            <img class="w-6" src="@/assets/images/shield1.png" />
+            <p class="text-white text-lg ml-3 hidden xl:block">Mpola Pay</p>
           </a>
         </router-link>
         <!-- END: Logo -->
@@ -93,17 +93,17 @@
                           : router.resolve({ name: subMenu.pageName }).path
                       "
                       class="side-menu"
-                      :class="{ 'side-menu--active': subMenu.active,
-                      'bg-gray-300': subMenu.active,
-                      '!text-gray-800': subMenu.active
-                     }"
+                      :class="{
+                        'side-menu--active': subMenu.active,
+                        'bg-gray-300': subMenu.active,
+                        '!text-gray-800': subMenu.active,
+                      }"
                       @click="linkTo(subMenu, router, $event)"
                     >
                       <div class="side-menu__icon">
                         <component :is="subMenu.icon" />
                       </div>
                       <div class="side-menu__title">
-                      
                         {{
                           capitalized(
                             $t(

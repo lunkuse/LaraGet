@@ -23,8 +23,6 @@ import CompletedAppointments from '../views/appointments/CompletedAppointments.v
 import InvoiceDetails from '../views/invoices/SingleInvoice.vue'
 import SingleTransaction from '../views/invoices/SingleTransaction.vue'
 
-
-
 import ComposeEmail from '../views/communications/ComposeEmail.vue'
 import Draft from '../views/communications/Draft.vue'
 import OpenEmail from '../views/communications/OpenEmail.vue'
@@ -37,6 +35,10 @@ import ChangePassword from '../views/change-password/Main.vue'
 import Logout from '../views/change-password/Logout.vue'
 import RegularTable from '../views/regular-table/Main.vue'
 import PaymentSuccessPage from '../views/invoices/SuccessPayment.vue'
+
+import AllProducts from '../views/products/allProducts.vue'
+import AllOrders from '../views/orders/allOrders.vue'
+
 
 import AuthService from '../service/auth-service'
 // import { useI18n } from 'vue-i18n'
@@ -52,6 +54,30 @@ const routes = [
         component: DashboardOverview,
         meta: {
           crumbs: [{ name: 'Dashboard', link: '' }]
+        }
+      },
+      
+      {
+        path: 'allproducts',
+        name: 'side-menu-view-products',
+        component: AllProducts,
+        meta: {
+          crumbs: [
+            { name: 'Dashboard', link: '/dashboard' },
+            { name: 'products', link: '' }
+          ]
+        }
+      },
+
+      {
+        path: 'allorders',
+        name: 'side-menu-view-orders',
+        component: AllOrders,
+        meta: {
+          crumbs: [
+            { name: 'Dashboard', link: '/dashboard' },
+            { name: 'orders', link: '' }
+          ]
         }
       },
 
@@ -454,7 +480,11 @@ router.beforeEach((to, from, next) => {
     '/register',
     '/error-page',
     '/contact',
-    '/reset'
+    '/reset',
+
+
+    '/dashboard',
+    '/allproducts'
   ]
   const authRequired = !publicPages.includes(to.path)
   const loggedIn = JSON.parse(localStorage.getItem('user'))

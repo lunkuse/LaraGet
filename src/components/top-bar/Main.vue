@@ -56,7 +56,7 @@
             >
               <div class="notification-content__title">
                 <!-- {{ $t('translation.email_notifications_text') }} -->
-                <div class="intro-x flex items-center h-10" >
+                <div class="intro-x flex items-center h-10">
                   <h2 class="notification-content__title">
                     {{ $t("translation.email_notifications_text") }}
                   </h2>
@@ -70,58 +70,51 @@
                   </a>
                 </div>
               </div>
-            
+
               <div
                 v-for="notification in notificationclientemails"
                 :key="notification.id"
                 class="cursor-pointer relative flex items-center"
                 :class="{ 'mt-5': notification.id }"
               >
-
-
-
-              <div class="cursor-pointer relative flex items-center">
-                <div class="relative flex-none w-12 h-12 mr-1 image-fit">
-                  <img
-                    alt="image"
-                    class="rounded-full"
-                    src="../../assets/images/placeholders/placeholder.jpg"
-                  />
-                  <div
-                    class="absolute bottom-0 right-0 w-3 h-3 border-2 border-white rounded-full bg-success dark:border-darkmode-600"
-                  ></div>
-                </div>
-                <div class="ml-2 overflow-auto shadow-[0px_3px_20px_#0000000b] bg-white
-                 border-transparent rounded-md dark:bg-darkmode-600 dark:border-transparent w-[220px]  p-2 mt-2">
-                 <!-- sm:w-[350px] -->
-                  <div class="flex items-center">
-                    <a href="" class="mr-5 font-medium truncate"
-                      >{{ notification?.data?.from_details?.first_name }} {{ notification?.data?.from_details?.last_name }}</a
-                    >
+                <div class="cursor-pointer relative flex items-center">
+                  <div class="relative flex-none w-12 h-12 mr-1 image-fit">
+                    <img
+                      alt="image"
+                      class="rounded-full"
+                      src="../../assets/images/placeholders/placeholder.jpg"
+                    />
                     <div
-                      class="ml-auto text-xs text-slate-400 whitespace-nowrap"
-                    >
-                    {{ moment(notification?.created_at).fromNow() }}
+                      class="absolute bottom-0 right-0 w-3 h-3 border-2 border-white rounded-full bg-success dark:border-darkmode-600"
+                    ></div>
+                  </div>
+                  <div
+                    class="ml-2 overflow-auto shadow-[0px_3px_20px_#0000000b] bg-white border-transparent rounded-md dark:bg-darkmode-600 dark:border-transparent w-[220px] p-2 mt-2"
+                  >
+                    <!-- sm:w-[350px] -->
+                    <div class="flex items-center">
+                      <a href="" class="mr-5 font-medium truncate"
+                        >{{ notification?.data?.from_details?.first_name }}
+                        {{ notification?.data?.from_details?.last_name }}</a
+                      >
+                      <div
+                        class="ml-auto text-xs text-slate-400 whitespace-nowrap"
+                      >
+                        {{ moment(notification?.created_at).fromNow() }}
+                      </div>
+                    </div>
+                    <div class="w-full truncate text-slate-500 mt-0.5">
+                      <!-- {{ notification?.data?.subject }} -->
+                      {{
+                        notification?.data?.subject
+                          ? notification?.data?.subject.replace(/<[^>]+>/g, "")
+                          : ""
+                      }}
                     </div>
                   </div>
-                  <div class="w-full truncate text-slate-500 mt-0.5">
-                  <!-- {{ notification?.data?.subject }} -->
-                  {{ notification?.data?.subject ? notification?.data?.subject.replace(/<[^>]+>/g, '') : '' }}
-                  </div>
                 </div>
-              </div>
 
-
-
-
-
-
-
-
-
-
-
-                <div class="ml-2 overflow-hidden hidden" >
+                <div class="ml-2 overflow-hidden hidden">
                   <a
                     href="javascript:;"
                     data-toggle="modal"
@@ -359,7 +352,7 @@
           <GlobeIcon class="text-theme-36" />
         </a>
 
-        <!-- BEGIN: Account Menu   v-if="currentUser.photo"-->
+        <!-- BEGIN: Account Menu   v-if="currentUser?.photo"-->
         <div class="intro-x dropdown w-8 h-8" @click="showMenu">
           <div
             class="dropdown-toggle w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in"
@@ -367,10 +360,10 @@
             aria-expanded="false"
           >
             <img
-              v-if="currentUser.image"
+              v-if="currentUser?.image"
               alt
               class="rounded-full"
-              :src="currentUser.image"
+              :src="currentUser?.image"
             />
             <img
               v-else
@@ -390,13 +383,13 @@
             >
               <div class="p-4 border-b border-white dark:border-dark-3">
                 <div v-if="currentUser" class="font-medium">
-                  {{ currentUser.first_name }} {{ currentUser.last_name }}
+                  {{ currentUser?.first_name }} {{ currentUser?.last_name }}
                 </div>
                 <div v-if="currentUser" class="font-medium">
-                  {{ currentUser.email }}
+                  {{ currentUser?.email }}
                 </div>
                 <div v-if="currentUser" class="font-medium">
-                  +{{ currentUser.patient_phone }}
+                  +{{ currentUser?.patient_phone }}
                 </div>
               </div>
               <div class="p-2">
@@ -447,7 +440,7 @@
 
     <TranslateModal />
   </div>
-  <!-- BEGIN: Account Menu   v-if="currentUser.photo"-->
+  <!-- BEGIN: Account Menu   v-if="currentUser?.photo"-->
   <!-- END: Top Bar -->
 </template>
 
@@ -529,9 +522,9 @@ export default defineComponent({
   },
   created() {},
   mounted() {
-    this.getNotifications();
-    this.getEmail();
-    this.getInbox();
+    // this.getNotifications();
+    // this.getEmail();
+    // this.getInbox();
   },
   // eslint-disable-next-line no-dupe-keys
   computed: {

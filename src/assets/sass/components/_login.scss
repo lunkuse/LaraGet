@@ -1,7 +1,7 @@
 .login {
     @apply relative bg-white dark:bg-dark-1;
     @include media-breakpoint-down(xl) {
-      background: linear-gradient(to bottom, #1c3faa, #2b51b4);
+      background: linear-gradient(to bottom, #f1807e, #f1807e);
       background-repeat: no-repeat;
       background-attachment: fixed;
     }

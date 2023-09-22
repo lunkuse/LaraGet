@@ -718,7 +718,7 @@
         to="/login"
         class="
         "
-        ><a class="text-theme-1 font-bold ml-2">
+        ><a class="text-theme-1 font-bold ml-2 hover:underline">
           {{ $t("translation.auth.signIn") }}</a
         ></router-link
       ></span

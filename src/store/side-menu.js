@@ -8,17 +8,21 @@ const state = () => {
       },
       {
         icon: 'CalendarIcon',
-        pageName: 'side-menu-view-appointments',
-        title: 'Appointments'
+        pageName: 'side-menu-view-products',
+        title: 'Products'
       },
-
-     
 
       {
-        icon: 'MessageSquareIcon',
-        pageName: 'side-menu-communication',
-        title: 'Communication'
+        icon: 'CalendarIcon',
+        pageName: 'side-menu-view-orders',
+        title: 'Orders'
       },
+
+      // {
+      //   icon: 'MessageSquareIcon',
+      //   pageName: 'side-menu-communication',
+      //   title: 'Communication'
+      // },
       {
         icon: 'CreditCardIcon',
         pageName: 'side-menu-invoice',
@@ -34,23 +38,8 @@ const state = () => {
         pageName: 'side-menu-profile-overview',
         title: 'Profile'
       },
-      // {
-      //     icon: 'ToolIcon',
-      //     pageName: 'side-menu-settings',
-      //     title: 'Settings'
-      // },
-
-      {
-        icon: 'CalendarIcon',
-        pageName: 'side-menu-calendar',
-        title: 'Calendar'
-      },
-      {
-        icon: 'BookOpenIcon',
-        pageName: 'side-menu-medical-history',
-        title: 'Digital Anamnese'
-      },
-
+ 
+    
       {
         icon: 'ChevronLeftIcon',
         pageName: 'side-menu-logout',

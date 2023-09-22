@@ -4,19 +4,11 @@
       <div class="content">
         <div class="col-span-12 2xl:col-span-9">
           <!-- first column -->
-          <CustomerSupport class="position: absolute z-50" />
 
-          <div
-            class="col-span-12 md:col-span-6 xl:col-span-4 2xl:col-span-12 xl:col-start-1 xl:row-start-2 2xl:col-start-auto 2xl:row-start-auto mt-3"
-          >
-            <h2 class="text-lg font-medium truncate mr-5">
-              {{ $t("translation.services_text") }}
-            </h2>
-          </div>
           <div class="grid grid-cols-12 gap-6">
             <!-- tabs -->
             <div class="col-span-12 grid grid-cols-12 gap-6">
-              <!-- manage appointments -->
+              <!-- products -->
               <router-link
                 to="/dashboard/viewappointments"
                 class="col-span-12 sm:col-span-6 2xl:col-span-3 intro-y zoom-in rounded-2xl border-theme-43 border-r-4"
@@ -27,7 +19,8 @@
                   <div class="box p-5 zoom-in rounded-2xl">
                     <div class="flex">
                       <div class="text-lg font-medium truncate mr-3">
-                        {{ $t("translation.manage_your_appointments") }}
+                        Products
+                        <!-- {{ $t("translation.manage_your_appointments") }} -->
                       </div>
                       <div
                         class="text-theme-43 py-1 px-2 flex items-center rounded-full text-xs bg-slate-100 dark:bg-darkmode-400 text-slate-500 cursor-pointer ml-auto truncate"
@@ -44,7 +37,7 @@
                 </div>
               </router-link>
 
-              <!-- statements & invoices -->
+              <!-- orders -->
               <router-link
                 to="/dashboard/invoice"
                 class="col-span-12 sm:col-span-6 2xl:col-span-3 intro-y zoom-in rounded-2xl border-theme-44 border-r-4"
@@ -55,9 +48,7 @@
                   <div class="box p-5 zoom-in rounded-2xl">
                     <div class="flex">
                       <div class="text-lg font-medium truncate mr-3">
-                        <span>{{ $t("translation.statements_text") }}</span>
-                        &
-                        <span>{{ $t("translation.invoice_text") }}</span>
+                        Orders
                       </div>
                       <!-- <div class="text-lg font-medium truncate mr-3" v-else>Statements & Invoices</div> -->
                       <div
@@ -75,7 +66,7 @@
                 </div>
               </router-link>
 
-              <!-- Communicate to your doctor -->
+              <!-- order types -->
               <router-link
                 to="/dashboard/communication"
                 class="col-span-12 sm:col-span-6 2xl:col-span-3 intro-y zoom-in rounded-2xl border-theme-43 border-r-4"
@@ -86,7 +77,8 @@
                   <div class="box p-5 zoom-in rounded-2xl">
                     <div class="flex">
                       <div class="text-lg font-medium truncate mr-3">
-                        {{ $t("translation.communicate_to_your_doctor") }}
+                        <!-- {{ $t("translation.communicate_to_your_doctor") }} -->
+                        Product Types
                       </div>
 
                       <div
@@ -101,23 +93,19 @@
                   </div>
                 </div>
               </router-link>
-
-            
             </div>
           </div>
         </div>
 
-        <div class="grid grid-cols-12 gap-6">
+        <div class="grid grid-cols-12 gap-6 hidden">
           <div class="col-span-12 2xl:col-span-9">
             <!-- first column -->
 
             <div class="grid grid-cols-12 gap-6">
               <!-- added -->
               <!-- BEGIN: Calender Component -->
-            
-             
 
-              <!-- upcoming -->
+              <!-- upcoming installments -->
               <div
                 class="col-span-12 block 2xl:hidden xl:block lg:block md:block sm:block"
               >
@@ -130,7 +118,8 @@
 
                       <div class="intro-x flex flex-wrap items-center h-14">
                         <h2 class="text-lg font-medium mr-5">
-                          {{ $t("translation.upcoming_appointments_text") }}
+                          Upcoming Installments
+                          <!-- {{ $t("translation.upcoming_appointments_text") }} -->
                         </h2>
 
                         <a
@@ -181,15 +170,13 @@
                               :key="upcomingappointments.id"
                               :class="{ 'mt-5': upcomingappointments.id }"
                             >
-                            
-
                               <div class="box px-5 py-2 ml-1 flex-1 zoom-in">
                                 <div class="flex items-center">
                                   <div class="font-medium truncate ...">
                                     <h5
                                       class="mb-2 font-bold tracking-tight text-gray-900 dark:text-white"
                                     >
-                                   title
+                                      title
                                     </h5>
                                   </div>
                                 </div>
@@ -643,7 +630,6 @@
 
                     <div class="intro-y p-2 mt-1 sm:mt-1">
                       <div class="mt-5 relative" style="height: 100%">
-                     
                         <div
                           class="intro-x relative flex items-center mb-3"
                           v-for="upcomingappointments in upcomingonly"
@@ -886,8 +872,6 @@
         </div>
       </div>
     </div>
-
-   
   </div>
 </template>
 
@@ -906,7 +890,6 @@ import { useStore } from "vuex";
 import { EyeIcon } from "@heroicons/vue/outline";
 export default defineComponent({
   components: {
-  
     Avatar,
     EyeIcon,
   },
@@ -924,41 +907,6 @@ export default defineComponent({
       client_invoices: [],
       client_messages: [],
       notificationclientemails: "",
-
-      calendarOptions: {
-        plugins: [dayGridPlugin, interactionPlugin, timeGrid, list],
-        initialView: "dayGridMonth",
-        dateClick: this.handleDateClick,
-        header: {
-          left: "title",
-          center: "month,agendaWeek,agendaDay",
-          right: "today prev,next",
-        },
-        headerToolbar: {
-          left: "dayGridMonth timeGridWeek timeGridDay",
-          center: "title",
-          right: "prevYear prev next nextYear",
-        },
-        footerToolbar: {
-          left: "TableFormat",
-          center: "",
-          right: "prev,next",
-        },
-        customButtons: {
-          TableFormat: {
-            text: " Table View",
-            click: function () {
-              // alert('View in Table Format');
-              // /dashboard/viewappointments
-              router.push({
-                name: "side-menu-view-appointments",
-              });
-            },
-          },
-        },
-        events: [],
-        eventColor: "#FF782E",
-      },
     };
   },
   watch: {
@@ -972,22 +920,17 @@ export default defineComponent({
 
     return {
       t,
-  
     };
   },
   computed: {},
   created() {
- 
+    console.log("on dashboard");
     // moment.updateLocale("nl");
   },
   mounted() {
     this.datetoday = new Date();
- 
   },
-  methods: {
- 
-   
-  },
+  methods: {},
 });
 </script>
 

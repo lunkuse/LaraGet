@@ -21,7 +21,7 @@ module.exports = {
             current: 'current',
             transparent: 'transparent',
             theme: {
-              1: '#1C3FAA',
+              1: '#f1807e',
               2: '#F1F5F8',
               3: '#2E51BB',
               4: '#274AB7',

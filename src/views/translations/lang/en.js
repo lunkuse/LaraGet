@@ -3,6 +3,7 @@ export const en = {
   showRecals:" show recalls",
   view_recalls_text:"view recalls text",
   confirm_text: 'Confirm',
+  products_text:'Products',
   auth: {
     signIn: 'Sign In',
     email: 'Email',
