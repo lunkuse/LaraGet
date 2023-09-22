@@ -12,33 +12,7 @@ const state = () => {
         title: 'Appointments'
       },
 
-      {
-        icon: 'FileTextIcon',
-        pageName: 'side-menu-treatments',
-        title: 'Treatments',
-        subMenu: [
-          {
-            icon: 'ZapIcon',
-            pageName: 'side-menu-dental-chart',
-            title: 'Dental Chart'
-          },
-          {
-            icon: 'EyeIcon',
-            pageName: 'side-menu-perio-chart',
-            title: 'Perio Chart'
-          },
-          {
-            icon: 'CheckCircleIcon',
-            pageName: 'side-menu-treatment-history',
-            title: 'Treatment History'
-          }
-        ]
-      },
-      // {
-      //     icon: 'EyeIcon',
-      //     pageName: 'side-menu-perio-chart',
-      //     title: 'Perio Chart'
-      // },
+     
 
       {
         icon: 'MessageSquareIcon',

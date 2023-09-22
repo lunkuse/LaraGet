@@ -18,12 +18,10 @@ import Appointments from '../views/appointments/Appointments.vue'
 import AppointmentsDetails from '../views/appointments/AppointmentDetails.vue'
 import Questions from '../views/appointments/appointments/answer_dental_questions.vue'
 import ViewAppointments from '../views/appointments/ViewAppointments.vue'
-import ViewRecalls from '/src/views/appointments/ViewRecalls.vue'
+
 import CompletedAppointments from '../views/appointments/CompletedAppointments.vue'
 import InvoiceDetails from '../views/invoices/SingleInvoice.vue'
 import SingleTransaction from '../views/invoices/SingleTransaction.vue'
-import Calendar from '../views/calendar/Calendar.vue'
-import AppointmentTypes from '../views/appointmenttypes/AppointmentType.vue'
 
 
 
@@ -126,17 +124,7 @@ const routes = [
           ]
         }
       },
-      {
-        path: 'recalls',
-        name: 'appointment-view-Reacall',
-        component: ViewRecalls,
-        meta: {
-          crumbs: [
-            { name: 'Dashboard', link: '/dashboard' },
-            { name: 'View Recalls', link: '' }
-          ]
-        }
-      },
+     
 
       {
         path: 'viewappointments',
@@ -162,19 +150,6 @@ const routes = [
         }
       },
 
-      {
-        path: 'calendar',
-        name: 'side-menu-calendar',
-        component: Calendar,
-        meta: {
-          crumbs: [
-            { name: 'Dashboard', link: '/dashboard' },
-            { name: 'Calendar', link: '' }
-          ]
-        }
-      },
-    
-  
 
       {
         path: 'successful-payment',
@@ -247,17 +222,7 @@ const routes = [
         }
       },
 
-      {
-        path: 'appointmenttypes',
-        name: 'side-menu-appointmenttypes',
-        component: AppointmentTypes,
-        meta: {
-          crumbs: [
-            { name: 'Dashboard', link: '/dashboard' },
-            { name: 'Appointment Types', link: '' }
-          ]
-        }
-      },
+
 
       {
         path: 'chat',

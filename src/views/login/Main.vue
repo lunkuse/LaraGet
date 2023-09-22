@@ -108,7 +108,7 @@
               </div>
               <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
                 <button
-                  class="btn py-3 px-4 w-full align-top bg-theme-32 text-white"
+                  class="btn py-3 px-4 w-full align-top btn-primary text-white"
                   type="submit"
                   id="submit_button"
                 >
@@ -187,7 +187,7 @@
               <div
                 class="intro-x flex text-gray-700 dark:text-gray-600 text-xs sm:text-sm mt-4"
               >
-                <a href="/reset" class="text-theme-32"
+                <a href="/reset" class="text-primary"
                   >{{ $t("translation.auth.forgotPassword") }}?</a
                 >
                 <div class="flex items-center mr-auto" style="display: none">
@@ -203,7 +203,7 @@
               </div>
               <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
                 <button
-                  class="btn py-3 px-4 w-full align-top bg-theme-32 text-white"
+                  class="btn py-3 px-4 w-full align-top btn-primary text-white"
                   type="submit"
                   id="submit_button"
                 >
@@ -230,7 +230,7 @@
                   {{ $t("translation.auth.dontHaveAnAccount") }}
                 </span>
                 <!-- <router-link to="/register" @click="navigateToRegister"> -->
-                  <a class="text-theme-32 font-bold ml-2" @click="navigateToRegister">
+                  <a class="text-primary font-bold ml-2" @click="navigateToRegister">
                     {{ $t("translation.auth.signUp") }}
                   </a>
                 <!-- </router-link> -->

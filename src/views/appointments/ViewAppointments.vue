@@ -91,7 +91,7 @@
       </div>
       <!-- last column -->
       <div class="col-span-12 2xl:col-span-3">
-        <Calendar />
+     
         <div>
        
           <div
@@ -562,7 +562,6 @@ import { defineComponent, toRaw, reactive, toRefs, inject, ref,provide } from 'v
 // import TableAppointment from '../appointments/TableAppointment.vue'
 import NewTableAppointment from '../appointments/appointments/AppointmentsContainer.vue'
 import ApplicationForm from '../appointments/AddAppointment.vue'
-import Calendar from '../appointments/Calender.vue'
 
 import axios from 'axios'
 import Toastify from 'toastify-js'
@@ -579,7 +578,6 @@ export default defineComponent({
   components: {
     // TableAppointment,
     ApplicationForm,
-    Calendar,
     NewTableAppointment
   },
 
