@@ -1,4 +1,4 @@
-// const primaryColors = require('@left4code/tw-starter/dist/js/colors')
+
 const primaryColors = require('./node_modules/@left4code/tw-starter/dist/js/colors')
 module.exports = {
     mode: 'jit',
@@ -21,90 +21,71 @@ module.exports = {
             current: 'current',
             transparent: 'transparent',
             theme: {
-                // 1: '#FFF4EF',
-                1: '#FF782E',
-                2: '#fff8f2',
-                3: '#FF782E',
-                4: '#FF782E',
-                5: '#FF782E',
-                6: '#D32929',
-                7: '#FF782E',
-                8: '#FF782E',
-                9: '#91C714',
-                10: '#FF782E',
-                11: '#F78B00',
-                12: '#FBC500',
-                13: '#FF782E',
-                14: '#FF782E',
-                15: '#FF782E',
-                16: '#FF782E',
-                17: '#FFEFD9',
-                18: '#D8F8BC',
-                19: '#FF782E',
-                20: '#FF782E',
-                21: '#FF782E',
-                22: '#FF782E',
-                23: '#FF782E',
-                24: '#FF782E',
-                25: '#e6e3e1',
-                26: '#FF782E',
-                27: '#FF782E',
-                28: '#FF782E',
-                29: '#FF782E',
-                30: '#FF782E',
-                // green color for sucess
-                31: '#4BB543',
-                // orange
-                32: '#FF782E',
-                // pink
-                33: '#f705af',
-                // red
-                34: 'red',
-                // maroon
-                35: '#800000',
-                // bg color
-                36: '#FF782E',
-                37: '#ff8c00',
-                38: '#eaf9ff',
-                39: '#1C3FAA',
-                40: '#FF782E',
-                41: '#f5af89',
-                // success
-                42: '#37d159',
-                // red
-                43: '#FF2400',
-                // warning
-                44: '#ff9f0f',
-                // blue
-                45:'#6600FF',
-                46:'#F1F5F9',
-                // gray
-                47:'#808080'
-
+              1: '#1C3FAA',
+              2: '#F1F5F8',
+              3: '#2E51BB',
+              4: '#274AB7',
+              5: '#DEE7EF',
+              6: '#D32929',
+              7: '#365A74',
+              8: '#D2DFEA',
+              9: '#91C714',
+              10: '#3160D8',
+              11: '#F78B00',
+              12: '#FBC500',
+              13: '#7F9EB9',
+              14: '#E6F3FF',
+              15: '#8DA9BE',
+              16: '#607F96',
+              17: '#FFEFD9',
+              18: '#D8F8BC',
+              19: '#2449AF',
+              20: '#395EC1',
+              21: '#C6D4FD',
+              22: '#E8EEFF',
+              23: '#1A389F',
+              24: '#163296',
+              25: '#C7D2FF',
+              26: '#15329A',
+              27: '#203FAD',
+              28: '#BBC8FD',
+              29: '#284EB2',
+              30: '#98AFF5',
+              // green color for sucess
+              31: '#4BB543',
+              // orange
+              32: '#FFA500',
+              // pink
+              33: '#f705af',
+              // red
+              34: 'red',
+              // maroon
+              35: '#800000'
             }
-        },
-        extend: {
+          },
+          extend: {
             fontFamily: {
-                roboto: ['Roboto']
+              roboto: ['Roboto']
             },
             container: {
-                center: true
+              center: true
             },
             maxWidth: {
-                '1/4': '25%',
-                '1/2': '50%',
-                '3/4': '75%'
+              '1/4': '25%',
+              '1/2': '50%',
+              '3/4': '75%'
             },
             strokeWidth: {
-                0.5: 0.5,
-                1.5: 1.5,
-                2.5: 2.5
+              0.5: 0.5,
+              1.5: 1.5,
+              2.5: 2.5
             }
-        }
-    },
-    variants: {
-        extend: {
+          }
+        },
+        variants: {
+          extend: {
             boxShadow: ['dark']
+          }
         }
-    }
-}
+      }
+      

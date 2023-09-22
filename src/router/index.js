@@ -21,14 +21,11 @@ import ViewAppointments from '../views/appointments/ViewAppointments.vue'
 import ViewRecalls from '/src/views/appointments/ViewRecalls.vue'
 import CompletedAppointments from '../views/appointments/CompletedAppointments.vue'
 import InvoiceDetails from '../views/invoices/SingleInvoice.vue'
-import TreatmentInvoiceDetails from '../views/treatments/TreatmentInvoiceDetails.vue'
 import SingleTransaction from '../views/invoices/SingleTransaction.vue'
 import Calendar from '../views/calendar/Calendar.vue'
 import AppointmentTypes from '../views/appointmenttypes/AppointmentType.vue'
-import Treatments from '../views/treatments/Treatments.vue'
-import TreatmentDetails from '../views/treatments/TreatmentDetails.vue'
-import TreatmentHistory from '../views/treatments/personalTreatments/TreatmentsContainer.vue'
-import DentalChart from '../views/treatments/Chart.vue'
+
+
 
 import ComposeEmail from '../views/communications/ComposeEmail.vue'
 import Draft from '../views/communications/Draft.vue'
@@ -42,9 +39,6 @@ import ChangePassword from '../views/change-password/Main.vue'
 import Logout from '../views/change-password/Logout.vue'
 import RegularTable from '../views/regular-table/Main.vue'
 import PaymentSuccessPage from '../views/invoices/SuccessPayment.vue'
-
-import MedicalHistory from '../views/medicalhistory/MedicalHistory.vue'
-import PerioChart from '../views/treatments/Perio.vue'
 
 import AuthService from '../service/auth-service'
 // import { useI18n } from 'vue-i18n'
@@ -179,39 +173,8 @@ const routes = [
           ]
         }
       },
-      {
-        path: 'treatments',
-        name: 'side-menu-treatments',
-        component: Treatments,
-        meta: {
-          crumbs: [
-            { name: 'Dashboard', link: '/dashboard' },
-            { name: 'Treatments', link: '' }
-          ]
-        }
-      },
-      {
-        path: 'medicalhistory',
-        name: 'side-menu-medical-history',
-        component: MedicalHistory,
-        meta: {
-          crumbs: [
-            { name: 'Dashboard', link: '/dashboard' },
-            { name: 'Medical History', link: '' }
-          ]
-        }
-      },
-      {
-        path: 'periochart',
-        name: 'side-menu-perio-chart',
-        component: PerioChart,
-        meta: {
-          crumbs: [
-            { name: 'Dashboard', link: '/dashboard' },
-            { name: 'Perio Chart', link: '' }
-          ]
-        }
-      },
+    
+  
 
       {
         path: 'successful-payment',
@@ -346,53 +309,11 @@ const routes = [
           ]
         }
       },
-      {
-        path: 'treatment-invoice-details/:invoiceId',
-        name: 'side-menu-treatment-invoice-details',
-        component: TreatmentInvoiceDetails,
-        meta: {
-          crumbs: [
-            { name: 'Dashboard', link: '/dashboard' },
-            { name: 'Treatments', link: '/dashboard/treatments' },
-            { name: 'Invoice Details', link: '' }
-          ]
-        }
-      },
-      {
-        path: 'treatment-details/:toothId',
-        name: 'side-menu-treatment-details',
-        component: TreatmentDetails,
-        meta: {
-          crumbs: [
-            { name: 'Dashboard', link: '/dashboard' },
-            { name: 'Treatment', link: '/dashboard/treatments' },
-            { name: 'Details', link: '' }
-          ]
-        }
-      },
-      {
-        path: 'treatment-history',
-        name: 'side-menu-treatment-history',
-        component: TreatmentHistory,
-        meta: {
-          crumbs: [
-            { name: 'Dashboard', link: '/dashboard' },
-            { name: 'Treatment history', link: '' }
-          ]
-        }
-      },
+      
+     
+     
 
-      {
-        path: 'dental-chart',
-        name: 'side-menu-dental-chart',
-        component: DentalChart,
-        meta: {
-          crumbs: [
-            { name: 'Dashboard', link: '/dashboard' },
-            { name: 'Dental Chart', link: '' }
-          ]
-        }
-      },
+     
       {
         path: 'transaction-details/:invoiceId/:transactionId',
         name: 'side-menu-transaction-details',

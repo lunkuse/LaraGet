@@ -2,7 +2,7 @@
   <div class>
     <DarkModeSwitcher />
     <LanguageSwitcher />
-    <div class="container sm:px-10 dark:bg-dark-1">
+    <div class="container sm:px-10 ">
       <div class="block xl:grid grid-cols-2 gap-4">
         <!-- BEGIN: Login Info -->
         <div class="hidden xl:flex flex-col min-h-screen">
@@ -10,9 +10,9 @@
             <img
               alt="Metadent"
               class="w-10 h-10 font-medium"
-              src="../../assets/images/logos.png"
+              src="../../assets/images/shield1.png"
             />
-            <span class="text-4xl ml-1 font-medium leading-none text-theme-3">
+            <span class="text-white text-lg ml-3">
               <span class="font-medium"> Application</span>
             </span>
           </a>
@@ -20,7 +20,7 @@
             <img
               alt="Portal"
               class="-intro-x w-1/2 -mt-16"
-              src="../../assets/images/doctor.png"
+              src="../../assets/images/illustration.svg"
             />
           </div>
         </div>
@@ -28,18 +28,35 @@
         <!-- END: Login Info -->
 
         <!-- BEGIN: Login Form -->
-        <div
-          class="h-screen xl:h-auto flex py-5 xl:py-0 my-10 xl:my-0 items-center content-center"
-        >
+        <div class="h-screen xl:h-auto flex py-5 xl:py-0 my-10 xl:my-0">
           <div
             class="my-auto mx-auto bg-white dark:bg-dark-1 xl:bg-white px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto xl:w-auto items-center content-center box"
           >
-            <h2
-              class="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left text-theme-32 text-white hidden xl:block"
+          <h2
+              class="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left"
             >
               {{ $t("translation.auth.signIn") }}
             </h2>
+            <div
+              class="intro-x mt-5 xl:mt-8 text-center xl:text-left"
+         
+            >
+              <button
+                class="btn btn-facebook py-3 px-4 w-full xl:w-33 xl:mr-3 align-top"
+              >
+                <FacebookIcon class="w-5 h-5 mr-2" /> Facebook Sign In
+              </button>
 
+              <button
+                class="btn btn-outline-secondary py-3 px-4 w-full xl:w-33 mt-3 xl:mt-1 align-top"
+              >
+                <img
+                  alt="MFI Client"
+                  class="w-5 h-5 mr-2"
+                  src="../../assets/images/google.png"
+                />Google Sign In
+              </button>
+            </div>
             <a
               href
               class="-intro-x flex items-center pt-5 2xl:hidden xl:hidden lg:flex md:flex sm:flex"
@@ -47,7 +64,7 @@
               <img
                 alt="Metadent"
                 class="w-10 h-10 font-medium"
-                src="../../assets/images/logos.png"
+                src="../../assets/images/shield1.png"
               />
               <span class="text-4xl ml-1 font-medium leading-none text-theme-3">
                 <span class="font-medium">Application</span>

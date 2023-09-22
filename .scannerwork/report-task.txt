@@ -1,6 +1,0 @@
-projectKey=Patients-Portal
-serverUrl=http://localhost:9000
-serverVersion=10.0.0.68432
-dashboardUrl=http://localhost:9000/dashboard?id=Patients-Portal
-ceTaskId=AYo8SFoYV2mGdAelI6vU
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AYo8SFoYV2mGdAelI6vU

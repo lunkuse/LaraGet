@@ -22,7 +22,7 @@ translationFunctions()
 
 onMounted(() => {
   const storedLang = localStorage.getItem("lang");
-    const defaultLang = storedLang ?? "nl";
+    const defaultLang = storedLang ?? "en";
   localStorage.setItem("lang", defaultLang);
 
 })

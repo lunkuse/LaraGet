@@ -1,1 +1,0 @@
-// import { pathologyLayerBlob } from './store';
