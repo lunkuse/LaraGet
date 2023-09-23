@@ -11,11 +11,7 @@
           tag="a"
           class="intro-x flex items-center pl-5 pt-4"
         >
-          <img
-            alt="Metadent"
-            class="w-6"
-            src="@/assets/images/logoswhite1.png" 
-          />
+          <img alt="Metadent" class="w-6" src="@/assets/images/shield1.png" />
         </router-link>
         <!-- END: Logo -->
         <div class="side-nav__devider my-6"></div>
@@ -31,9 +27,13 @@
               <!-- :content="menu.title" -->
               <Tippy
                 tag="a"
-                :content="translations?.[`${menu?.title?.toLowerCase().replace(' ', '_')}_text`]  ?? menu.title "
+                :content="
+                  translations?.[
+                    `${menu?.title?.toLowerCase().replace(' ', '_')}_text`
+                  ] ?? menu.title
+                "
                 :options="{
-                  placement: 'left'
+                  placement: 'left',
                 }"
                 :href="
                   menu.subMenu
@@ -43,7 +43,7 @@
                 class="side-menu"
                 :class="{
                   'side-menu--active': menu.active,
-                  'side-menu--open': menu.activeDropdown
+                  'side-menu--open': menu.activeDropdown,
                 }"
                 @click="linkTo(menu, router, $event)"
               >
@@ -52,11 +52,19 @@
                 </div>
                 <div class="side-menu__title">
                   <!-- {{ menu.title }} -->
-                  {{ capitalized(translations?.[`${menu?.title?.toLowerCase().replace(' ', '_')}_text`] ?? menu.title) }}
+                  {{
+                    capitalized(
+                      translations?.[
+                        `${menu?.title?.toLowerCase().replace(" ", "_")}_text`
+                      ] ?? menu.title
+                    )
+                  }}
                   <ChevronDownIcon
                     v-if="$h.isset(menu.subMenu)"
                     class="side-menu__sub-icon"
-                    :class="{ 'transform rotate-180 text-white': menu.activeDropdown }"
+                    :class="{
+                      'transform rotate-180 text-white': menu.activeDropdown,
+                    }"
                   />
                 </div>
               </Tippy>
@@ -67,12 +75,18 @@
                     v-for="(subMenu, subMenuKey) in menu.subMenu"
                     :key="subMenuKey"
                   >
-                  <!-- :content="subMenu.title" -->
+                    <!-- :content="subMenu.title" -->
                     <Tippy
                       tag="a"
-                      :content="translations?.[`${subMenu?.title?.toLowerCase().replace(' ', '_')}_text`]  ?? subMenu.title "
+                      :content="
+                        translations?.[
+                          `${subMenu?.title
+                            ?.toLowerCase()
+                            .replace(' ', '_')}_text`
+                        ] ?? subMenu.title
+                      "
                       :options="{
-                        placement: 'left'
+                        placement: 'left',
                       }"
                       :href="
                         subMenu.subMenu
@@ -92,7 +106,7 @@
                           v-if="$h.isset(subMenu.subMenu)"
                           class="side-menu__sub-icon"
                           :class="{
-                            'transform rotate-180': subMenu.activeDropdown
+                            'transform rotate-180': subMenu.activeDropdown,
                           }"
                         />
                       </div>
@@ -110,12 +124,18 @@
                           ) in subMenu.subMenu"
                           :key="lastSubMenuKey"
                         >
-                        <!-- :content="lastSubMenu.title" -->
+                          <!-- :content="lastSubMenu.title" -->
                           <Tippy
                             tag="a"
-                            :content="translations?.[`${lastSubMenu?.title?.toLowerCase().replace(' ', '_')}_text`]  ?? lastSubMenu?.title "
+                            :content="
+                              translations?.[
+                                `${lastSubMenu?.title
+                                  ?.toLowerCase()
+                                  .replace(' ', '_')}_text`
+                              ] ?? lastSubMenu?.title
+                            "
                             :options="{
-                              placement: 'left'
+                              placement: 'left',
                             }"
                             :href="
                               lastSubMenu.subMenu
@@ -132,7 +152,13 @@
                             </div>
                             <div class="side-menu__title">
                               <!-- {{ lastSubMenu.title }} -->
-                              {{translations?.[`${lastSubMenu?.title?.toLowerCase().replace(' ', '_')}_text`] ?? lastSubMenu.title }}
+                              {{
+                                translations?.[
+                                  `${lastSubMenu?.title
+                                    ?.toLowerCase()
+                                    .replace(" ", "_")}_text`
+                                ] ?? lastSubMenu.title
+                              }}
                             </div>
                           </Tippy>
                         </li>
@@ -150,7 +176,7 @@
         <SideMenuTooltip class="side-menu">
           <transition @enter="enter" @leave="leave">
             <router-link to="/" @click="onLogout" class="text-white">
-              <Log-outIcon class="side-menu__icon" /> Logout 
+              <Log-outIcon class="side-menu__icon" /> Logout
             </router-link></transition
           ></SideMenuTooltip
         >
@@ -167,45 +193,42 @@
 </template>
 
 <script>
-import { defineComponent, computed, onMounted, ref, watch, inject  } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { useStore } from '@/store'
-import { helper as $h } from '@/utils/helper'
-import TopBar from '@/components/top-bar/Main.vue'
-import MobileMenu from '@/components/mobile-menu/Main.vue'
-import DarkModeSwitcher from '@/components/dark-mode-switcher/Main.vue'
-import { linkTo, nestedMenu, enter, leave } from '@/layouts/side-menu'
-import $ from 'cash-dom'
+import { defineComponent, computed, onMounted, ref, watch, inject } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useStore } from "@/store";
+import { helper as $h } from "@/utils/helper";
+import TopBar from "@/components/top-bar/Main.vue";
+import MobileMenu from "@/components/mobile-menu/Main.vue";
+import DarkModeSwitcher from "@/components/dark-mode-switcher/Main.vue";
+import { linkTo, nestedMenu, enter, leave } from "@/layouts/side-menu";
+import $ from "cash-dom";
 export default defineComponent({
   components: {
     TopBar,
     MobileMenu,
-    DarkModeSwitcher
+    DarkModeSwitcher,
   },
   setup() {
-    const route = useRoute()
-    const router = useRouter()
-    const store = useStore()
-    const formattedMenu = ref([])
-    const translations = inject('translation_v3')
+    const route = useRoute();
+    const router = useRouter();
+    const store = useStore();
+    const formattedMenu = ref([]);
+    const translations = inject("translation_v3");
     const simpleMenu = computed(() =>
       nestedMenu(store.state.simpleMenu.menu, route)
-    )
+    );
 
     watch(
       computed(() => route.path),
       () => {
-        formattedMenu.value = $h.toRaw(simpleMenu.value)
+        formattedMenu.value = $h.toRaw(simpleMenu.value);
       }
-    )
+    );
 
     onMounted(() => {
-      $('body')
-        .removeClass('error-page')
-        .removeClass('login')
-        .addClass('main')
-      formattedMenu.value = $h.toRaw(simpleMenu.value)
-    })
+      $("body").removeClass("error-page").removeClass("login").addClass("main");
+      formattedMenu.value = $h.toRaw(simpleMenu.value);
+    });
 
     return {
       formattedMenu,
@@ -213,17 +236,16 @@ export default defineComponent({
       linkTo,
       enter,
       leave,
-      translations
-    }
+      translations,
+    };
   },
   methods: {
-   
-   capitalized(title) {
-     const capitalizedFirst = title[0].toUpperCase()
-     const rest = title?.slice(1)?.toLowerCase()
-     console.log('capitalizedFirst', capitalizedFirst + rest)
-     return capitalizedFirst + rest
-   }
- },
-})
+    capitalized(title) {
+      const capitalizedFirst = title[0].toUpperCase();
+      const rest = title?.slice(1)?.toLowerCase();
+      console.log("capitalizedFirst", capitalizedFirst + rest);
+      return capitalizedFirst + rest;
+    },
+  },
+});
 </script>

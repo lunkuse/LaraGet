@@ -3,7 +3,7 @@
   <div class="mobile-menu md:hidden">
     <div class="mobile-menu-bar">
       <a href class="flex mr-auto">
-        <img alt="Metadent" class="w-6" src="@/assets/images/logoswhite1.png"  />
+        <img alt="Metadent" class="w-6" src="@/assets/images/shield1.png" />
       </a>
       <AlignJustifyIcon class="w-8 h-8 text-white" @click="toggleMobileMenu" />
     </div>
@@ -31,15 +31,15 @@
               </div>
               <div class="menu__title text-white">
                 <!-- {{ menu.title }} -->
-                 {{
-                    capitalized(
-                      $t(
-                        `translation.${menu?.title
-                          ?.toLowerCase()
-                          .replace(' ', '_')}_text`
-                      )
+                {{
+                  capitalized(
+                    $t(
+                      `translation.${menu?.title
+                        ?.toLowerCase()
+                        .replace(" ", "_")}_text`
                     )
-                  }}
+                  )
+                }}
                 <!-- {{ capitalized(translations?.[`${menu?.title?.toLowerCase().replace(' ', '_')}_text`] ?? menu.title) }} -->
                 <div
                   v-if="menu.subMenu"
@@ -53,7 +53,10 @@
             <!-- BEGIN: Second Child -->
             <transition @enter="enter" @leave="leave">
               <ul v-if="menu.subMenu && menu.activeDropdown">
-                <li v-for="(subMenu, subMenuKey) in menu.subMenu" :key="subMenuKey">
+                <li
+                  v-for="(subMenu, subMenuKey) in menu.subMenu"
+                  :key="subMenuKey"
+                >
                   <a
                     href="javascript:;"
                     class="menu"
@@ -66,14 +69,14 @@
                     <div class="menu__title text-white">
                       <!-- {{ subMenu.title }} -->
                       {{
-                          capitalized(
-                            $t(
-                              `translation.${subMenu?.title
-                                ?.toLowerCase()
-                                .replace(' ', '_')}_text`
-                            )
+                        capitalized(
+                          $t(
+                            `translation.${subMenu?.title
+                              ?.toLowerCase()
+                              .replace(" ", "_")}_text`
                           )
-                        }}
+                        )
+                      }}
                       <div
                         v-if="subMenu.subMenu"
                         class="menu__sub-icon text-white"
@@ -103,7 +106,13 @@
                           </div>
                           <div class="menu__title text-white">
                             {{ lastSubMenu.title }}
-                            {{translations?.[`${lastSubMenu.title?.toLowerCase().replace(' ', '_')}_text`] ?? lastSubMenu.title }}
+                            {{
+                              translations?.[
+                                `${lastSubMenu.title
+                                  ?.toLowerCase()
+                                  .replace(" ", "_")}_text`
+                              ] ?? lastSubMenu.title
+                            }}
                           </div>
                         </a>
                       </li>
@@ -128,7 +137,13 @@ import { defineComponent, computed, onMounted, ref, watch, inject } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "@/store";
 import { helper as $h } from "@/utils/helper";
-import { activeMobileMenu, toggleMobileMenu, linkTo, enter, leave } from "./index";
+import {
+  activeMobileMenu,
+  toggleMobileMenu,
+  linkTo,
+  enter,
+  leave,
+} from "./index";
 import { nestedMenu } from "@/layouts/side-menu";
 
 export default defineComponent({
@@ -137,8 +152,10 @@ export default defineComponent({
     const router = useRouter();
     const store = useStore();
     const formattedMenu = ref([]);
-    const translations = inject('translation_v3')
-    const mobileMenu = computed(() => nestedMenu(store.state.sideMenu.menu, route));
+    const translations = inject("translation_v3");
+    const mobileMenu = computed(() =>
+      nestedMenu(store.state.sideMenu.menu, route)
+    );
 
     watch(
       computed(() => route.path),
@@ -159,17 +176,16 @@ export default defineComponent({
       linkTo,
       enter,
       leave,
-      translations 
+      translations,
     };
   },
   methods: {
-   
     capitalized(title) {
-      const capitalizedFirst = title[0].toUpperCase()
-      const rest = title?.slice(1)?.toLowerCase()
-      console.log('capitalizedFirst', capitalizedFirst + rest)
-      return capitalizedFirst + rest
-    }
+      const capitalizedFirst = title[0].toUpperCase();
+      const rest = title?.slice(1)?.toLowerCase();
+      console.log("capitalizedFirst", capitalizedFirst + rest);
+      return capitalizedFirst + rest;
+    },
   },
 });
 </script>

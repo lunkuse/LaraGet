@@ -40,9 +40,7 @@
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     />
                   </svg>
-                  <p>
-                    {{ $t('translation.printing_text') }}..
-                  </p>
+                  <p>{{ $t("translation.printing_text") }}..</p>
                 </div>
               </div>
             </div>
@@ -57,7 +55,7 @@
             </div>
             <div class="mt-20 lg:mt-0 lg:ml-auto lg:text-right">
               <div class="text-xl text-primary font-medium">
-                {{ settings?.app_name ?? 'Metadent' }}
+                {{ settings?.app_name ?? "Metadent" }}
               </div>
               <div class="mt-1">{{ settings?.phone }}</div>
               <div class="mt-1">{{ settings?.email }}</div>
@@ -70,7 +68,7 @@
           >
             <div>
               <div class="text-base text-slate-500">
-                <p>{{ $t('translation.personal_information_text') }}</p>
+                <p>{{ $t("translation.personal_information_text") }}</p>
               </div>
               <div class="text-lg font-medium text-theme-36 mt-2">
                 {{ currentUser.first_name }} {{ currentUser.last_name }}
@@ -80,13 +78,13 @@
             </div>
             <div class="mt-10 lg:mt-0 lg:ml-auto lg:text-left">
               <div class="text-base text-slate-500">
-                <p>{{ $t('translation.invoice_text') }}</p>
+                <p>{{ $t("translation.invoice_text") }}</p>
               </div>
               <div class="text-lg text-theme-36 font-medium mt-2">
                 {{ invoiceIDs }}
               </div>
               <div class="mt-1">
-                {{ moment(client_invoices.created_at).format('DD-MM-YYYY') }}
+                {{ moment(client_invoices.created_at).format("DD-MM-YYYY") }}
               </div>
             </div>
           </div>
@@ -97,9 +95,7 @@
             >
               <LoadingIcon icon="oval" class="w-10 h-10" />
               <span>
-                <p>{{
-                                  $t("translation.loading_text")
-                                }}</p>
+                <p>{{ $t("translation.loading_text") }}</p>
               </span>
             </span>
 
@@ -111,12 +107,12 @@
                 <thead>
                   <tr>
                     <th class="border-b-2 dark:border-darkmode-400">
-                      <p>{{ $t('translation.services_text') }}</p>
+                      <p>{{ $t("translation.services_text") }}</p>
                     </th>
                     <!-- <th class="border-b-2 dark:border-darkmode-400 text-left whitespace-nowrap">QTY</th> -->
                     <!-- <th class="border-b-2 dark:border-darkmode-400 text-left whitespace-nowrap">PRICE</th> -->
                     <th class="border-b-2 dark:border-darkmode-400 text-left">
-                      <p>{{ $t('translation.total_text') }}</p>
+                      <p>{{ $t("translation.total_text") }}</p>
                     </th>
                   </tr>
                 </thead>
@@ -173,7 +169,7 @@
 
                   <span v-else>
                     <p class="text-white">
-                      {{ $t('translation.make_payment_text') }}
+                      {{ $t("translation.make_payment_text") }}
                     </p>
                   </span>
                 </button>
@@ -202,20 +198,19 @@
               v-if="!loadingservices"
             >
               <div class="text-base text-slate-500">
-                <p>{{ $t('translation.paid_amount_text') }}</p>
+                <p>{{ $t("translation.paid_amount_text") }}</p>
               </div>
               <div class="text-xl text-primary font-medium mt-2">
-              $ {{ client_invoices.paidamount
- }}
+                $ {{ client_invoices.paidamount }}
               </div>
               <div class="text-base text-slate-500">
-                <p>{{ $t('translation.amount_due_text') }}</p>
+                <p>{{ $t("translation.amount_due_text") }}</p>
               </div>
               <div class="text-xl text-primary font-medium mt-2">
                 $ {{ client_invoices.balance_due }}
               </div>
               <div class="text-base text-slate-500">
-                <p>{{ $t('translation.total_amount_text') }}</p>
+                <p>{{ $t("translation.total_amount_text") }}</p>
               </div>
               <div
                 style="display: none"
@@ -236,7 +231,7 @@
                 class="flex mt-1"
                 :class="{
                   'text-theme-43': invoiceStatus == '0',
-                  'text-theme-42': invoiceStatus == '1'
+                  'text-theme-42': invoiceStatus == '1',
                 }"
               >
                 <AlertCircleIcon
@@ -249,10 +244,10 @@
                   class="w-4 h-4 mr-2"
                 />
                 <span v-if="invoiceStatus == '1'">
-                  <p>{{ $t('translation.paid_text') }}</p>
+                  <p>{{ $t("translation.paid_text") }}</p>
                 </span>
                 <span v-else>
-                  <p>{{ $t('translation.pending_text') }}</p>
+                  <p>{{ $t("translation.pending_text") }}</p>
                 </span>
               </div>
             </div>
@@ -267,7 +262,7 @@
         <!-- <div class="intro-y box p-5 mt-5"> -->
         <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
           <h2 class="text-lg font-medium mr-auto">
-            <p>{{ $t('translation.transactions_text') }}</p>
+            <p>{{ $t("translation.transactions_text") }}</p>
           </h2>
           <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
             <!-- END: Super Large Modal Toggle -->
@@ -291,25 +286,23 @@
       :patientId="currentUser.id"
       :invoiceId="client_invoices.id"
     />
-
-  
   </div>
 </template>
 
 <script>
-import { defineComponent, toRaw, inject } from 'vue'
+import { defineComponent, toRaw, inject } from "vue";
 // import axios from 'axios'
-import axios from '../../axios'
-import moment from 'moment'
-import Button from '@/components/shared/buttons/Button.vue'
-import TransactionTable from './transactions/TransactionContainer.vue'
-import Payment from '@/components/payments/Pay.vue'
-import logo from '@/assets/images/logos.png';
+import axios from "../../axios";
+import moment from "moment";
+import Button from "@/components/shared/buttons/Button.vue";
+import TransactionTable from "./transactions/TransactionContainer.vue";
+import Payment from "@/components/payments/Pay.vue";
+import logo from "@/assets/images/shield1.png";
 export default defineComponent({
   components: {
     Payment,
     Button,
-    TransactionTable
+    TransactionTable,
   },
   data() {
     return {
@@ -320,79 +313,79 @@ export default defineComponent({
       client_invoices: [],
       settings: [],
 
-      invoiceId: '',
-      invoiceStatus: '',
-      invoiceDueAmount: '',
-      service1: '',
-      service2: '',
-      service3: '',
-      service4: '',
-      service5: '',
-      price1: '',
-      price2: '',
-      price3: '',
-      price4: '',
-      price5: '',
-      servicelist: '',
-      invoiceIDs: '',
-      paidamount: '',
+      invoiceId: "",
+      invoiceStatus: "",
+      invoiceDueAmount: "",
+      service1: "",
+      service2: "",
+      service3: "",
+      service4: "",
+      service5: "",
+      price1: "",
+      price2: "",
+      price3: "",
+      price4: "",
+      price5: "",
+      servicelist: "",
+      invoiceIDs: "",
+      paidamount: "",
       logo: logo,
-      ourRequest: null
-    }
+      ourRequest: null,
+    };
   },
   setup() {},
   computed: {
     currentUser() {
       // console.log(toRaw(this.$store.state.auth.user))
-      return toRaw(this.$store.state.auth.user)
-    }
+      return toRaw(this.$store.state.auth.user);
+    },
   },
   watch: {
     loadingexport(newloadingexport, oldloadingexport) {
-      this.loadingexport = newloadingexport
-      console.log('this.loadingexport', this.loadingexport)
-    }
+      this.loadingexport = newloadingexport;
+      console.log("this.loadingexport", this.loadingexport);
+    },
   },
   methods: {
     moment,
     async exportInvoice() {
-      this.loadingexport = true
-      console.log('ne invoice print', this.loadingexport)
+      this.loadingexport = true;
+      console.log("ne invoice print", this.loadingexport);
       const config = {
         url:
-          '/patients/invoices/download-invoice/' +
+          "/patients/invoices/download-invoice/" +
           `${this.$route.params.invoiceId}`,
-        method: 'get',
-        responseType: 'blob'
-      }
+        method: "get",
+        responseType: "blob",
+      };
 
       await axios(config).then((response) => {
-        const blob = new Blob([response.data], { type: 'application/pdf' })
+        const blob = new Blob([response.data], { type: "application/pdf" });
 
         // window.open(URL.createObjectURL(blob)).print();
-        let iframe = document.createElement('iframe') //load content in an iframe to print later
-        document.body.appendChild(iframe)
+        let iframe = document.createElement("iframe"); //load content in an iframe to print later
+        document.body.appendChild(iframe);
 
-        iframe.style.display = 'none'
-        iframe.src = URL.createObjectURL(blob)
+        iframe.style.display = "none";
+        iframe.src = URL.createObjectURL(blob);
         iframe.onload = function () {
           setTimeout(function () {
-            iframe.focus()
-            iframe.contentWindow.print()
-          }, 1)
-        }
-      })
-      this.loadingexport = false
+            iframe.focus();
+            iframe.contentWindow.print();
+          }, 1);
+        };
+      });
+      this.loadingexport = false;
     },
 
     async fetchSettings() {
-      this.ourRequest = axios.CancelToken.source()
-      await this.$store.dispatch('allinvoices/FetchSettings', {  });
-       
-           const mysettings =  this.$store?.state?.allinvoices?.systemsettings;
-          //  console.log('mysettings', mysettings)
-          this.settings = mysettings
-          
+      this.ourRequest = axios.CancelToken.source();
+      await this.$store.dispatch("allinvoices/FetchSettings", {});
+
+      const mysettings = this.$store?.state?.allinvoices?.systemsettings;
+      //  console.log('mysettings', mysettings)
+      this.settings = mysettings;
+
       // await axios
       //   .get('patients/settings/all', { cancelToken: this.ourRequest.token })
       //   .then((response) => {
@@ -402,87 +395,87 @@ export default defineComponent({
     },
 
     makePayment() {
-      console.log('button clicked')
+      console.log("button clicked");
     },
     // Converting Date in table
     formatDate(value) {
       if (value) {
-        return moment(String(value)).format('MM/DD/YYYY')
+        return moment(String(value)).format("MM/DD/YYYY");
       }
     },
     // format sum of prices
     formatSum(value) {
       if (value) {
-        console.log('price value' + value)
-        const array = Number(value)
-        let sum = 0
+        console.log("price value" + value);
+        const array = Number(value);
+        let sum = 0;
 
         const total = String(value)
-          .split(',')
+          .split(",")
           .map((e) => parseFloat(e))
           .reduce((value, element) => {
-            return value + element
-          })
+            return value + element;
+          });
         // .toStringAsFixed(1)
-        const sum2 = 9
-        this.totalPrice = total
-        console.log('new total', total)
+        const sum2 = 9;
+        this.totalPrice = total;
+        console.log("new total", total);
         //   console.log('array sum',sum )
-        return total
+        return total;
       }
     },
 
     // Getting All Recent invoices
     getInvoiceDetails() {
-      this.loadingservices = true
-      const token = localStorage.getItem('token')
+      this.loadingservices = true;
+      const token = localStorage.getItem("token");
       axios
         .post(
           // 'patients/invoices/all',
-          'patients/invoices/show',
+          "patients/invoices/show",
           { invoiceId: this.$route.params.invoiceId },
           {
             headers: {
-              Authorization: 'Bearer ' + token,
+              Authorization: "Bearer " + token,
 
-              'Content-Type': 'application/json',
-              'X-Requested-With': 'XMLHttpRequest'
-            }
+              "Content-Type": "application/json",
+              "X-Requested-With": "XMLHttpRequest",
+            },
           }
         )
         .then((res) => {
-          this.loadingservices = false
-          console.log('getting invoices')
-          const all_client_invoices = res.data.payload
+          this.loadingservices = false;
+          console.log("getting invoices");
+          const all_client_invoices = res.data.payload;
           // this.client_invoices = all_client_invoices.filter(
           //   invoiceDetails => invoiceDetails.id == this.$route.params.invoiceId
           // )[0]
-          this.client_invoices = res.data.payload
-          this.invoiceStatus = this.client_invoices?.status
-          this.invoiceDueAmount = this.client_invoices?.balance_due
-          this.invoiceIDs = this.client_invoices?.invoice_id
+          this.client_invoices = res.data.payload;
+          this.invoiceStatus = this.client_invoices?.status;
+          this.invoiceDueAmount = this.client_invoices?.balance_due;
+          this.invoiceIDs = this.client_invoices?.invoice_id;
 
-          this.paidamount = this.client_invoices?.paidamount
-          console.log('this.paidamount', this.paidamount)
+          this.paidamount = this.client_invoices?.paidamount;
+          console.log("this.paidamount", this.paidamount);
           if (res.data.status === false) {
-            console.log('expired session')
-            this.$store.dispatch('auth/logout')
-            this.$router.push('/login')
+            console.log("expired session");
+            this.$store.dispatch("auth/logout");
+            this.$router.push("/login");
           }
         })
-        .catch((err) => console.log(err))
-    }
+        .catch((err) => console.log(err));
+    },
   },
   created() {
-    this.getInvoiceDetails()
-    this.fetchSettings()
+    this.getInvoiceDetails();
+    this.fetchSettings();
   },
   setup() {
-    return {}
+    return {};
   },
   mounted() {
-    this.getInvoiceDetails()
-    this.fetchSettings()
-  }
-})
+    this.getInvoiceDetails();
+    this.fetchSettings();
+  },
+});
 </script>

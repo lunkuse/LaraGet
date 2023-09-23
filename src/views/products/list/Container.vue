@@ -1,13 +1,10 @@
 <template>
-
-
   <div
     class="bg-white dark:bg-dark-1 flex overflow-hidden w-full h-full"
     @click="outsideDialogBox"
   >
-  
     <div
-      class="grid grid-cols-12 h-full sm:grid-cols-5 gap-2 w-full appointments-container"
+      class="grid grid-cols-12 h-full sm:grid-cols-5 gap-2 w-full product-container"
     >
       <div
         class="appointments-list h-full overflow-hidden col-span-12 border-r border-b border-gray-200"
@@ -18,11 +15,14 @@
             class="mx-auto text-slate-500"
             v-if="filteredAppointments.length > 0"
           >
-            <!-- {{ $t("translation.showing_text") }}-->
-               {{ lengthFrom }} 
-            {{ $t("translation.to_text") }} {{ lengthTo }}
-            <!-- {{ $t("translation.of_text") }} {{ lengthTotal }}
-            {{ $t("translation.appointments_text") }} -->
+            {{ $t("translation.showing_text") }}
+            {{ lengthFrom }}
+            {{ $t("translation.to_text") }}
+            3
+            <!-- {{ lengthTo }} -->
+            <!-- {{ $t("translation.of_text") }} -->
+            {{ lengthTotal }}
+            products
           </div>
           <div
             class="mx-auto text-slate-500"
@@ -30,7 +30,7 @@
           >
             {{ $t("translation.selected_text") }}
             {{ CheckedAppointmentlistMain.length }}
-            {{ $t("translation.appointments_text") }}
+            products
             <span
               @click="UncheckAllSelected"
               class="text-theme-1 hover:underline cursor-pointer"
@@ -224,9 +224,9 @@
                           calendarClassName=" dp-custom-calendar"
                           :placeholder="`${$t('translation.date_range_text')}`"
                           class="w-full"
-                          :locale=lang
+                          :locale="lang"
                           :select-text="`${$t('translation.select_text')}`"
-                        :cancel-text="`${$t('translation.cancel_text')}`"
+                          :cancel-text="`${$t('translation.cancel_text')}`"
                         />
                       </div>
                     </div>
@@ -243,7 +243,7 @@
                         calendarClassName="dp-custom-calendar"
                         :placeholder="`${$t('translation.month_range_text')}`"
                         class="w-full"
-                        :locale=lang
+                        :locale="lang"
                         :select-text="`${$t('translation.select_text')}`"
                         :cancel-text="`${$t('translation.cancel_text')}`"
                       />
@@ -253,7 +253,6 @@
                     class="flex w-full justify-end items-center bg-gray-100 h-10 calender-width"
                     v-if="isWeekView"
                   >
-                  
                     <div class="w-60 relative text-slate-500">
                       <Datepicker
                         v-model="date"
@@ -262,7 +261,7 @@
                         calendarClassName="dp-custom-calendar"
                         :placeholder="`${$t('translation.week_range_text')}`"
                         class="w-full"
-                        :locale=lang
+                        :locale="lang"
                         :select-text="`${$t('translation.select_text')}`"
                         :cancel-text="`${$t('translation.cancel_text')}`"
                       />
@@ -279,7 +278,7 @@
                         calendarClassName="dp-custom-calendar"
                         :placeholder="`${$t('translation.year_range_text')}`"
                         class="w-full"
-                        :locale=lang
+                        :locale="lang"
                         :select-text="`${$t('translation.select_text')}`"
                         :cancel-text="`${$t('translation.cancel_text')}`"
                       />
@@ -298,7 +297,7 @@
             >
               <Button
                 :label="`${$t('translation.clear_text')}`"
-                class="!text-sm !capitalize"
+                class="!text-sm !capitalize transparent"
                 icon="fa fa-refresh "
                 @click="clearall"
               ></Button>
@@ -306,7 +305,7 @@
               <Button
                 :label="`${$t('translation.export_text')}`"
                 icon="fa fa-arrow-up "
-                class="!text-sm !capitalize"
+                class="!text-sm !capitalize transparent"
                 @click="showFilterOptionsForExports"
               ></Button>
               <Button
@@ -496,8 +495,8 @@ import { ref, inject } from "vue";
 import debounce from "lodash.debounce";
 import Button from "@/components/shared/buttons/Button.vue";
 import { useI18n } from "vue-i18n";
-import {useStore} from "vuex";
-import { allappointments } from '../../../store/appointments';
+import { useStore } from "vuex";
+import { allappointments } from "../../../store/appointments";
 import {
   CalendarIcon,
   SearchIcon,
@@ -520,13 +519,12 @@ export default {
     Datepicker,
     XIcon,
   },
-  inject: ['showrecalls'],
+  inject: ["showrecalls"],
 
-  
   data() {
     return {
       filteredResponse: null,
-    
+
       isLoadingdoctors: true,
       isFilterDates: false,
       isShowDates: false,
@@ -542,10 +540,10 @@ export default {
       isFilterOptions: false,
       isFilterOptionsDate: false,
       // filterDates: ["1 Week", "1 Month", "1 Year", "Custom"],
-  //     oneWeek:'Week',
-  // oneMonth:'Maand',
-  // oneYear:'Jaar',
-  // customtext:'Aangepast',
+      //     oneWeek:'Week',
+      // oneMonth:'Maand',
+      // oneYear:'Jaar',
+      // customtext:'Aangepast',
       filterDates: [
         {
           name: this.t("translation.oneWeek"),
@@ -581,38 +579,13 @@ export default {
       onLoadApp: "yes",
 
       filterOptions: [
-        // {
-        //   name: this.t("translation.pending_text"),
-        //   value: "Pending",
-        // },
-        // {
-        //   name: this.t("translation.waiting_text"),
-        //   value: "Waiting",
-        // },
-        // {
-        //   name: this.t("translation.confirmed_text"),
-        //   value: "Confirmed",
-        // },
-        // { name: this.t("translation.missed_text"), value: "Missed" },
-        // {
-        //   name: this.t("translation.completed_text"),
-        //   value: "Completed",
-        // },
-        // {
-        //   name: this.t("translation.serving_text"),
-        //   value: "Serving",
-        // },
-        // {
-        //   name: this.t("translation.canceled_text"),
-        //   value: "Canceled",
-        // },
         {
-          name: this.t("translation.upcoming_appointments_text"),
-          value: "Upcoming appointments",
+          name: this.t("translation.product_text"),
+          value: "product",
         },
         {
-          name: this.t("translation.past_appointments_text"),
-          value: "Past appointments",
+          name: this.t("translation.service_text"),
+          value: "service",
         },
       ],
       filterOptionsfff: [
@@ -686,9 +659,10 @@ export default {
     };
   },
   created() {
-    this.appointments = [];
-    this.paginatedData = [];
-    this.fetchAppointmentTypes();
+    this.getDummyData();
+    // this.appointments = [];
+    // this.paginatedData = [];
+    // this.fetchAppointmentTypes();
   },
 
   methods: {
@@ -772,9 +746,107 @@ export default {
       this.paginatedAppointment;
     },
 
+    getDummyData() {
+      console.log("getting dummy");
+      const myappointments = {
+        currentPage: 1,
+        totalPages: 2163,
+        totalItems: 25946,
+        perPage: 12,
+        nextPageUrl:
+          "https://127.0.0.1:8000/api/v2/products/all-paginated?page=2",
+        prevPageUrl: null,
+        firstPageUrl:
+          "https://127.0.0.1:8000/api/v2/products/all-paginated?page=1",
+        lastPageUrl:
+          "https://127.0.0.1:8000/api/v2/products/all-paginated?page=2163",
+        data: [
+          {
+            id: 1,
+            name: "Product 1",
+            description: "This is a product description.",
+            category: "product",
+            brand: "Brand A",
+            discounted_price: 19.99,
+            quantity: 100,
+            SKU: "SKU12345",
+            weight: "1.5 lbs",
+            dimensions: "5 x 5 x 10 inches",
+            images: ["https://via.placeholder.com/150", "image2.jpg"],
+            specifications: {
+              color: "Red",
+              size: "Large",
+            },
+            availability: false,
+            rating: 4.5,
+            reviews: 25,
+            created_at: "2023-09-29T10:00:00Z",
+            vendor: "Vendor X",
+          },
+          {
+            id: 2,
+            name: "Service 1",
+            description: "This is a service description.",
+            category: "service",
+            brand: "Brand Q",
+               brand: "Brand B",
+            discounted_price: 50.00,
+            quantity: null,
+            SKU: null,
+            weight: null,
+            dimensions: null,
+            images: ["https://via.placeholder.com/150"],
+            specifications: {},
+            availability: true,
+            rating: 4.0,
+            reviews: 10,
+            created_at: "2023-09-29T11:30:00Z",
+            vendor: "Vendor Y",
+          },
+          {
+            id: 3,
+            name: "Product 2",
+            description: "Another product description.",
+            category: "product",
+            brand: "Brand B",
+            discounted_price: 29.99,
+            quantity: 50,
+            SKU: "SKU67890",
+            weight: "2.0 lbs",
+            dimensions: "6 x 6 x 12 inches",
+            images: ["https://via.placeholder.com/150", "image4.jpg"],
+            specifications: {
+              color: "Blue",
+              size: "Medium",
+            },
+            availability: true,
+            rating: 5.0,
+            reviews: 35,
+            created_at: "2023-09-29T12:15:00Z",
+            vendor: "Vendor Z",
+          },
+          // Add more products and services here as needed
+        ],
+      };
+      console.log("dummy products", myappointments?.data);
+
+      this.appointments = this.appointments.concat(myappointments?.data);
+      let currentPage = myappointments?.current_page;
+      this.last_page = myappointments?.last_page_url;
+      let next_page_url = myappointments?.next_page_url;
+      this.links = myappointments?.links;
+      this.pagination = {
+        last_page_url: myappointments?.last_page_url,
+        next_page_url: myappointments?.next_page_url,
+      };
+      // this.lengthFrom=response.data.payload.from
+      this.lengthTo = myappointments?.to;
+      this.lengthTotal = myappointments?.total;
+    },
+
     async fetchAll(data) {
       this.ourRequest = axios.CancelToken.source();
-      const store = useStore()
+      const store = useStore();
       // const token = localStorage.getItem('token')
       if (
         this.pagination.next_page_url !== this.pagination.last_page_url ||
@@ -783,28 +855,31 @@ export default {
         if (this.pagination.next_page_url !== null) {
           this.isLoading = true;
           let url = this.pagination.next_page_url;
-          const finalToken = this.ourRequest.token
-          
-         await this.$store.dispatch('allappointments/FetchAppointments', { url, data,finalToken });
-         this.isLoading = false; 
-         const myappointments =  this.$store?.state?.allappointments?.patientAppointments;
-          console.log('store appointments', myappointments?.data)
+          const finalToken = this.ourRequest.token;
+
+          await this.$store.dispatch("allappointments/FetchAppointments", {
+            url,
+            data,
+            finalToken,
+          });
+          this.isLoading = false;
+          const myappointments =
+            this.$store?.state?.allappointments?.patientAppointments;
+          console.log("store appointments", myappointments?.data);
           // let latest = response?.data?.data;
 
-this.appointments = this.appointments.concat(
-  myappointments?.data
-);
-let currentPage = myappointments?.current_page;
-this.last_page = myappointments?.last_page_url;
-let next_page_url = myappointments?.next_page_url;
-this.links = myappointments?.links;
-this.pagination = {
-  last_page_url: myappointments?.last_page_url,
-  next_page_url: myappointments?.next_page_url,
-};
-// this.lengthFrom=response.data.payload.from
-this.lengthTo = myappointments?.to;
-this.lengthTotal = myappointments?.total;
+          this.appointments = this.appointments.concat(myappointments?.data);
+          let currentPage = myappointments?.current_page;
+          this.last_page = myappointments?.last_page_url;
+          let next_page_url = myappointments?.next_page_url;
+          this.links = myappointments?.links;
+          this.pagination = {
+            last_page_url: myappointments?.last_page_url,
+            next_page_url: myappointments?.next_page_url,
+          };
+          // this.lengthFrom=response.data.payload.from
+          this.lengthTo = myappointments?.to;
+          this.lengthTotal = myappointments?.total;
           // try {
           //   AppointmentsService.fetchAppointments(
           //     url,
@@ -822,7 +897,6 @@ this.lengthTotal = myappointments?.total;
           //         this.$router.push("/login");
           //       }
 
-               
           //       let latest = response?.data?.data;
 
           //       this.appointments = this.appointments.concat(
@@ -836,7 +910,7 @@ this.lengthTotal = myappointments?.total;
           //         last_page_url: response?.data?.last_page_url,
           //         next_page_url: response?.data?.next_page_url,
           //       };
-               
+
           //       this.lengthTo = response?.data?.to;
           //       this.lengthTotal = response?.data?.total;
           //       console.log("cancelled response", response);
@@ -847,7 +921,7 @@ this.lengthTotal = myappointments?.total;
           //       if (thrown.message === "canceled") {
           //         console.log("Request canceled vvvvv", thrown.message);
           //       } else {
-              
+
           //       }
           //     });
           // } catch (err) {
@@ -856,7 +930,7 @@ this.lengthTotal = myappointments?.total;
         } else {
           this.pagination = {
             last_page_url: null,
-            next_page_url: "patients/appointments/all-paginated",
+            next_page_url: "products/appointments/all-paginated",
           };
         }
       }
@@ -882,7 +956,7 @@ this.lengthTotal = myappointments?.total;
     async printObject(
       type,
       filename = "Appointments",
-      url = "/patients/appointments/download-pdf"
+      url = "/products/appointments/download-pdf"
     ) {
       try {
         const appointment2 = await this.exportDataTable();
@@ -894,7 +968,7 @@ this.lengthTotal = myappointments?.total;
 
           params: {
             appointments: JSON.stringify(appointment2),
-            lang: this.lang
+            lang: this.lang,
           },
           headers: {
             Authorization: "Bearer " + token,
@@ -930,7 +1004,7 @@ this.lengthTotal = myappointments?.total;
       const appointment2 = await this.exportDataTable();
       const token = localStorage.getItem("token");
       const config = {
-        url: "/patients/appointments/download-pdf",
+        url: "/products/appointments/download-pdf",
         method: "get",
         responseType: "blob",
         params: {
@@ -1006,7 +1080,6 @@ this.lengthTotal = myappointments?.total;
       }, 200);
     },
     selectDate(option) {
-
       this.filter_date = option;
       this.isCustomView = false;
       this.isMonthView = false;
@@ -1015,7 +1088,7 @@ this.lengthTotal = myappointments?.total;
       this.dialogClear();
       if (option === "Custom") {
         this.isCustomView = true;
-        this.filter_date=this.t("translation.customtext")
+        this.filter_date = this.t("translation.customtext");
       } else if (option === "1 Month") {
         // this.isPending = false;
 
@@ -1025,7 +1098,7 @@ this.lengthTotal = myappointments?.total;
         this.isFilterOptions = false;
         this.isFilterOptionsDate = false;
         this.isMonthView = true;
-        this.filter_date=this.t("translation.oneMonth")
+        this.filter_date = this.t("translation.oneMonth");
       } else if (option === "1 Year") {
         // this.isPending = false;
 
@@ -1035,7 +1108,7 @@ this.lengthTotal = myappointments?.total;
         this.isFilterOptions = false;
         this.isFilterOptionsDate = false;
         this.isYearView = true;
-        this.filter_date=this.t("translation.oneYear")
+        this.filter_date = this.t("translation.oneYear");
       } else if (option === "1 Week") {
         // this.isPending = false;
         this.isFilterOptionsForExports = false;
@@ -1044,7 +1117,7 @@ this.lengthTotal = myappointments?.total;
         this.isFilterOptionsDate = false;
 
         this.isWeekView = true;
-        this.filter_date=this.t("translation.oneWeek")
+        this.filter_date = this.t("translation.oneWeek");
       }
       this.hideFilterDates();
     },
@@ -1208,10 +1281,10 @@ this.lengthTotal = myappointments?.total;
       } else if (option === "Canceled") {
         this.filter_option = this.t("translation.canceled_text");
       } else if (option === "Upcoming appointments") {
-        this.filter_option = this.t("translation.upcoming_appointments_text");
+        this.filter_option = this.t("translation.product_text");
         console.log("translated final value", this.filter_option);
       } else if (option === "Past appointments") {
-        this.filter_option = this.t("translation.past_appointments_text");
+        this.filter_option = this.t("translation.service_text");
       } else {
         this.filter_option = option;
       }
@@ -1364,10 +1437,9 @@ this.lengthTotal = myappointments?.total;
     },
   },
   computed: {
-  
     async paginatedAppointment() {
       // keyword
-      console.log('past_appointments'), this.past_appointments
+      console.log("past_appointments"), this.past_appointments;
       if (!!this.search_term) {
         this.fetchAll({ search_word: this.search_term });
       }
@@ -1379,7 +1451,9 @@ this.lengthTotal = myappointments?.total;
       // this.past_appointments
       else if (!!this.past_appointments) {
         const originalDate = this.past_appointments;
-const convertedDate = moment(originalDate, "DD-MM-YYYY").format("YYYY-MM-DD");
+        const convertedDate = moment(originalDate, "DD-MM-YYYY").format(
+          "YYYY-MM-DD"
+        );
         this.fetchAll({
           past_appointments: convertedDate,
         });
@@ -1388,9 +1462,11 @@ const convertedDate = moment(originalDate, "DD-MM-YYYY").format("YYYY-MM-DD");
       // this.upcoming_appointments
       else if (!!this.upcoming_appointments) {
         const originalDate = this.upcoming_appointments;
-const convertedDate = moment(originalDate, "DD-MM-YYYY").format("YYYY-MM-DD");
+        const convertedDate = moment(originalDate, "DD-MM-YYYY").format(
+          "YYYY-MM-DD"
+        );
 
-        console.log('this.upcoming_appointments', convertedDate)
+        console.log("this.upcoming_appointments", convertedDate);
         this.fetchAll({
           upcoming_appointments: convertedDate,
         });
@@ -1645,13 +1721,10 @@ const convertedDate = moment(originalDate, "DD-MM-YYYY").format("YYYY-MM-DD");
         this.filterStatus = 5;
         this.UncheckAllSelected();
         this.paginatedAppointment;
-      } else if (
-        newsearch_term === this.t("translation.past_appointments_text")
-      ) {
-        
+      } else if (newsearch_term === this.t("translation.service_text")) {
         this.ourRequest.cancel();
         this.past_appointments = moment(new Date()).format("DD-MM-YYYY");
-        console.log('requested past', this.past_appointments)
+        console.log("requested past", this.past_appointments);
         this.upcoming_appointments = null;
         this.appointments = [];
         this.month_range = null;
@@ -1662,7 +1735,7 @@ const convertedDate = moment(originalDate, "DD-MM-YYYY").format("YYYY-MM-DD");
         this.search_term = null;
         this.year = null;
         this.date_range = null;
-      
+
         this.pagination = {
           last_page_url: null,
           next_page_url: "patients/appointments/all-paginated",
@@ -1672,9 +1745,7 @@ const convertedDate = moment(originalDate, "DD-MM-YYYY").format("YYYY-MM-DD");
         this.filterStatus = null;
         this.UncheckAllSelected();
         this.paginatedAppointment;
-      } else if (
-        newsearch_term === this.t("translation.upcoming_appointments_text")
-      ) {
+      } else if (newsearch_term === this.t("translation.product_text")) {
         this.upcoming_appointments = moment(new Date()).format("DD-MM-YYYY");
         console.log("requested for upming", this.upcoming_appointments);
         this.appointments = [];
@@ -1827,7 +1898,7 @@ const convertedDate = moment(originalDate, "DD-MM-YYYY").format("YYYY-MM-DD");
   setup() {
     // const translation = inject("translation");
     const translations = inject("translation_v3");
-  
+    console.log("in set up");
     const date = ref();
     const month = ref();
     const onLoadApps = ref(true);
@@ -1844,7 +1915,7 @@ const convertedDate = moment(originalDate, "DD-MM-YYYY").format("YYYY-MM-DD");
     const lang = ref(defaultLang);
     return {
       t,
-    
+
       date,
       format,
       month,
@@ -1893,7 +1964,7 @@ const convertedDate = moment(originalDate, "DD-MM-YYYY").format("YYYY-MM-DD");
   overflow: auto;
 }
 
-.appointments-container {
+.product-container {
   height: calc(100vh - 80px);
 
   /* height: calc(100vh - 160px); */

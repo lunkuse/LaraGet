@@ -5,6 +5,8 @@ export const nl = {
   confirm_text: 'Bevestig',
   products_text:'Producten',
   orders_text:'Bestellingen',
+   product_text: 'product',
+  service_text: 'service',
   auth: {
     signIn: 'Inloggen',
     email: 'E-mail',

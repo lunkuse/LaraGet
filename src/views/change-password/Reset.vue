@@ -10,17 +10,17 @@
             <img
               alt="Metadent"
               class="w-10 h-10 font-medium"
-              src="../../assets/images/logos.png"
+              src="../../assets/images/shield1.png"
             />
-            <span class="text-4xl ml-1 font-medium leading-none text-theme-3">
-              <span class="font-medium">Metadent</span>
+            <span class="text-4xl ml-1 font-medium leading-none text-white">
+              <span class="font-medium">Mpola Pay</span>
             </span>
           </a>
           <div class="my-auto">
             <img
               alt="Portal"
               class="-intro-x w-1/2 -mt-16"
-              src="../../assets/images/doctor.png"
+              src="../../assets/images/illustration.svg"
             />
           </div>
         </div>
@@ -35,11 +35,9 @@
             class="my-auto mx-auto bg-white dark:bg-dark-1 xl:bg-white px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto xl:w-auto items-center content-center box"
           >
             <h2
-              class="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left text-theme-32 text-white"
+              class="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left text-gray-900 text-white"
             >
-             {{
-                  $t('translation.reset_password_text')
-                }}
+              {{ $t("translation.reset_password_text") }}
             </h2>
 
             <div
@@ -65,18 +63,16 @@
               v-if="showEmailForm"
             >
               <div class="intro-x mt-8">
-                <label for="crud-form-3" class="form-label"
-                  >{{
-                  $t('translation.enter_email_address')
-                }}</label
-                >
+                <label for="crud-form-3" class="form-label">{{
+                  $t("translation.enter_email_address")
+                }}</label>
                 <div
-                  class="input-group p-0 border-gray-200 focus:border-theme-36"
+                  class="input-group p-0 border-gray-200 focus:border-theme-1"
                 >
                   <Field
                     type="text"
                     name="identifier"
-                    class="intro-x login__input form-control py-3 px-4 block mt-4 border-gray-200 focus:border-theme-36"
+                    class="intro-x login__input form-control py-3 px-4 block mt-4 border-gray-200 focus:border-theme-1"
                     v-model="identifier"
                     :placeholder="`${$t('translation.email_text')}`"
                   />
@@ -92,12 +88,12 @@
               <!-- <div
                 class="intro-x flex text-gray-700 dark:text-gray-600 text-xs sm:text-sm mt-4"
               >
-                <a href="" class="text-theme-32">Forgot Password?</a>
+                <a href="" class="text-theme-1">Forgot Password?</a>
             
               </div> -->
               <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
                 <button
-                  class="btn py-3 px-4 w-full align-top bg-theme-32 text-white"
+                  class="btn py-3 px-4 w-full align-top bg-theme-1 text-white"
                   type="submit"
                 >
                   <LoadingIcon
@@ -107,21 +103,22 @@
                     class="w-4 h-4 ml-2"
                   />
 
-                  <span v-else>{{
-                  $t('translation.reset_text')
-                }}</span>
+                  <span v-else>{{ $t("translation.reset_text") }}</span>
                 </button>
               </div>
               <div
                 class="intro-x flex text-gray-700 dark:text-gray-600 text-xs sm:text-sm mt-4"
               >
                 <span>
-                  <a href="" class="font-bold"> {{ $t("translation.auth.already_have_an_account_text") }}?</a
+                  <a href="" class="font-bold">
+                    {{
+                      $t("translation.auth.already_have_an_account_text")
+                    }}?</a
                   ><router-link
                     to="/login"
                     class="
         "
-                    ><a class="text-theme-32 font-bold ml-2">
+                    ><a class="text-theme-1 font-bold ml-2">
                       {{ $t("translation.auth.signIn") }}</a
                     ></router-link
                   ></span
@@ -156,7 +153,7 @@
 
               <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
                 <button
-                  class="btn py-3 px-4 w-full align-top bg-theme-32 text-white"
+                  class="btn py-3 px-4 w-full align-top bg-theme-1 text-white"
                   type="submit"
                 >
                   <LoadingIcon
@@ -178,7 +175,7 @@
                     to="/login"
                     class="
         "
-                    ><a class="text-theme-32 font-bold ml-2">
+                    ><a class="text-theme-1 font-bold ml-2">
                       Sign In</a
                     ></router-link
                   ></span
@@ -196,7 +193,7 @@
             >
               <div class="intro-x mt-2">
                 <label for="crud-form-3" class="form-label">{{
-                  $t('translation.enter_new_password')
+                  $t("translation.enter_new_password")
                 }}</label>
 
                 <!-- <small class="text-theme-6 mt-2">{{ passwordError }}</small> -->
@@ -229,7 +226,7 @@
 
               <div class="intro-x mt-4">
                 <label for="crud-form-3" class="form-label">{{
-                  $t('translation.confirm_new_password_text')
+                  $t("translation.confirm_new_password_text")
                 }}</label>
 
                 <div class="flex">
@@ -265,7 +262,7 @@
               </div>
               <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
                 <button
-                  class="btn py-3 px-4 w-full align-top bg-theme-32 text-white"
+                  class="btn py-3 px-4 w-full align-top bg-theme-1 text-white"
                   type="submit"
                 >
                   <LoadingIcon
@@ -275,7 +272,7 @@
                     class="w-4 h-4 ml-2"
                   />
 
-                  <span v-else>{{ $t('translation.save_text') }}</span>
+                  <span v-else>{{ $t("translation.save_text") }}</span>
                 </button>
               </div>
               <div
@@ -287,7 +284,7 @@
                     to="/login"
                     class="
         "
-                    ><a class="text-theme-32 font-bold ml-2">
+                    ><a class="text-theme-1 font-bold ml-2">
                       Sign In</a
                     ></router-link
                   ></span
@@ -304,7 +301,7 @@
               <h4 class="font-bold">
                 <span> {{ $t("translation.auth.dontHaveAnAccount") }}? </span
                 ><router-link to="/register" class=""
-                  ><a class="text-theme-32 font-bold ml-2">
+                  ><a class="text-theme-1 font-bold ml-2">
                     {{ $t("translation.auth.signUp") }}</a
                   ></router-link
                 >
@@ -374,42 +371,39 @@
 </template>
 
 <script>
-import { defineComponent, onMounted } from 'vue'
-import DarkModeSwitcher from '@/components/dark-mode-switcher/Main.vue'
-import Toastify from 'toastify-js'
-import axios from 'axios'
-import router from '../../router'
-import $ from 'cash-dom'
+import { defineComponent, onMounted } from "vue";
+import DarkModeSwitcher from "@/components/dark-mode-switcher/Main.vue";
+import Toastify from "toastify-js";
+import axios from "axios";
+import router from "../../router";
+import $ from "cash-dom";
 // Validations
-import { Form, Field, ErrorMessage } from 'vee-validate'
-import * as yup from 'yup'
-import LanguageSwitcher from '@/components/language-switcher/LanguageSwitcher.vue'
+import { Form, Field, ErrorMessage } from "vee-validate";
+import * as yup from "yup";
+import LanguageSwitcher from "@/components/language-switcher/LanguageSwitcher.vue";
 export default defineComponent({
   components: {
     DarkModeSwitcher,
     Form,
     Field,
     ErrorMessage,
-    LanguageSwitcher
+    LanguageSwitcher,
   },
   setup() {
     onMounted(() => {
-      $('body')
-        .removeClass('main')
-        .removeClass('error-page')
-        .addClass('login')
-    })
+      $("body").removeClass("main").removeClass("error-page").addClass("login");
+    });
   },
   watch: {
     loginStatus: function () {
-      this.statusresponse = localStorage.getItem('loginstatus')
-    }
+      this.statusresponse = localStorage.getItem("loginstatus");
+    },
   },
   data() {
     // Define a validation schema
     const schema = yup.object().shape({
-      identifier: yup.string().email().required('Email is required')
-    })
+      identifier: yup.string().email().required("Email is required"),
+    });
     return {
       loading: false,
       loadingcode: false,
@@ -417,242 +411,242 @@ export default defineComponent({
 
       schema,
       error: {},
-      message: '',
-      successMessage: '',
-      identifier: '',
-      code: '',
-      // logo: require('@/assets/images/logos.png'),
-      statusresponse: '',
-      type: 'password',
-      loginfail: '',
+      message: "",
+      successMessage: "",
+      identifier: "",
+      code: "",
+      // logo: require('@/assets/images/shield1.png'),
+      statusresponse: "",
+      type: "password",
+      loginfail: "",
       showEmailForm: true,
       showCodeForm: false,
       showNewPasswordForm: false,
       showSetNewPasswordForm: false,
-      resetEmail: '',
-      resetToken: '',
-      type: 'password',
-      typeconfirm: 'password',
-      newpassword: '',
-      confirmpassword: ''
-    }
+      resetEmail: "",
+      resetToken: "",
+      type: "password",
+      typeconfirm: "password",
+      newpassword: "",
+      confirmpassword: "",
+    };
   },
   computed: {
     loggedIn() {
-      return this.$store.state.auth.status.loggedIn
-    }
+      return this.$store.state.auth.status.loggedIn;
+    },
   },
   created() {},
   methods: {
     showPassword() {
-      console.log('toggle password')
-      if (this.type === 'password') {
-        this.type = 'text'
-        document.getElementById('toggler').className = 'fa fa-eye-slash'
+      console.log("toggle password");
+      if (this.type === "password") {
+        this.type = "text";
+        document.getElementById("toggler").className = "fa fa-eye-slash";
         //  toggler.removeClass('fa fa-eye');
         //   toggler.addClass('fa fa-eye-slash');
       } else {
-        this.type = 'password'
-        document.getElementById('toggler').className = 'fa fa-eye'
+        this.type = "password";
+        document.getElementById("toggler").className = "fa fa-eye";
       }
     },
     showPasswordconfirm() {
-      console.log('toggle password')
-      if (this.typeconfirm === 'password') {
-        this.typeconfirm = 'text'
-        document.getElementById('togglerconfirm').className = 'fa fa-eye-slash'
+      console.log("toggle password");
+      if (this.typeconfirm === "password") {
+        this.typeconfirm = "text";
+        document.getElementById("togglerconfirm").className = "fa fa-eye-slash";
         //  toggler.removeClass('fa fa-eye');
         //   toggler.addClass('fa fa-eye-slash');
       } else {
-        this.typeconfirm = 'password'
-        document.getElementById('togglerconfirm').className = 'fa fa-eye'
+        this.typeconfirm = "password";
+        document.getElementById("togglerconfirm").className = "fa fa-eye";
       }
     },
     handleReset() {
-      this.message = ''
-      this.successMessage = ''
-      this.loading = true
-      console.log('reset button pressed')
-      const token = localStorage.getItem('token')
+      this.message = "";
+      this.successMessage = "";
+      this.loading = true;
+      console.log("reset button pressed");
+      const token = localStorage.getItem("token");
 
       axios
         .post(
-          'patients/auth/forgot_password',
+          "patients/auth/forgot_password",
           { email: this.identifier },
           {
             headers: {
-              Authorization: 'Bearer ' + token,
-              'X-Requested-With': 'XMLHttpRequest'
-            }
+              Authorization: "Bearer " + token,
+              "X-Requested-With": "XMLHttpRequest",
+            },
           }
         )
         .then((response) => {
-          this.loading = false
-          console.log('forgot password response:', response?.data?.payload)
+          this.loading = false;
+          console.log("forgot password response:", response?.data?.payload);
           if (response?.data?.status == true) {
             Toastify({
-              node: $('#success-notification-content')
+              node: $("#success-notification-content")
                 .clone()
-                .removeClass('hidden')[0],
+                .removeClass("hidden")[0],
               duration: 3000,
               newWindow: true,
               close: true,
-              gravity: 'top',
-              position: 'right',
-              stopOnFocus: true
-            }).showToast()
-            this.successMessage = response?.data?.payload
-            this.showEmailForm = false
-            this.showCodeForm = true
+              gravity: "top",
+              position: "right",
+              stopOnFocus: true,
+            }).showToast();
+            this.successMessage = response?.data?.payload;
+            this.showEmailForm = false;
+            this.showCodeForm = true;
           }
 
           if (response.data.status == false) {
-            this.loading = false
-            console.log('failed response:', response?.data?.error)
+            this.loading = false;
+            console.log("failed response:", response?.data?.error);
             Toastify({
-              node: $('#fail-notification-content')
+              node: $("#fail-notification-content")
                 .clone()
-                .removeClass('hidden')[0],
+                .removeClass("hidden")[0],
               duration: 3000,
               newWindow: true,
               close: true,
-              gravity: 'top',
-              position: 'right',
-              stopOnFocus: true
-            }).showToast()
-            this.message = response?.data?.error
+              gravity: "top",
+              position: "right",
+              stopOnFocus: true,
+            }).showToast();
+            this.message = response?.data?.error;
           }
-        })
+        });
     },
     sendCode() {
-      this.message = ''
-      this.successMessage = ''
-      this.loadingcode = true
-      console.log('code button pressed')
-      const token = localStorage.getItem('token')
+      this.message = "";
+      this.successMessage = "";
+      this.loadingcode = true;
+      console.log("code button pressed");
+      const token = localStorage.getItem("token");
 
       axios
         .post(
-          'patients/auth/verify',
+          "patients/auth/verify",
           { code: this.code },
           {
             headers: {
-              Authorization: 'Bearer ' + token,
-              'X-Requested-With': 'XMLHttpRequest'
-            }
+              Authorization: "Bearer " + token,
+              "X-Requested-With": "XMLHttpRequest",
+            },
           }
         )
         .then((response) => {
-          this.loadingcode = false
-          console.log('send code response:', response?.data?.payload)
+          this.loadingcode = false;
+          console.log("send code response:", response?.data?.payload);
           if (response?.data?.status == true) {
-            this.resetEmail = response?.data?.payload?.email
-            this.resetToken = response?.data?.payload?.token
-            console.log('email and token', this.resetEmail, this.resetToken)
+            this.resetEmail = response?.data?.payload?.email;
+            this.resetToken = response?.data?.payload?.token;
+            console.log("email and token", this.resetEmail, this.resetToken);
             Toastify({
-              node: $('#token-success-notification-content')
+              node: $("#token-success-notification-content")
                 .clone()
-                .removeClass('hidden')[0],
+                .removeClass("hidden")[0],
               duration: 3000,
               newWindow: true,
               close: true,
-              gravity: 'top',
-              position: 'right',
-              stopOnFocus: true
-            }).showToast()
-            this.successMessage = response?.data?.message
-            this.showEmailForm = false
-            this.showCodeForm = false
-            this.showSetNewPasswordForm = true
+              gravity: "top",
+              position: "right",
+              stopOnFocus: true,
+            }).showToast();
+            this.successMessage = response?.data?.message;
+            this.showEmailForm = false;
+            this.showCodeForm = false;
+            this.showSetNewPasswordForm = true;
           }
 
           if (response.data.status == false) {
-            this.loadingcode = false
-            console.log('failed response:', response?.data?.error)
+            this.loadingcode = false;
+            console.log("failed response:", response?.data?.error);
             Toastify({
-              node: $('#fail-notification-content')
+              node: $("#fail-notification-content")
                 .clone()
-                .removeClass('hidden')[0],
+                .removeClass("hidden")[0],
               duration: 3000,
               newWindow: true,
               close: true,
-              gravity: 'top',
-              position: 'right',
-              stopOnFocus: true
-            }).showToast()
-            this.message = response?.data?.error
+              gravity: "top",
+              position: "right",
+              stopOnFocus: true,
+            }).showToast();
+            this.message = response?.data?.error;
           }
-        })
+        });
     },
 
     setNewPassword() {
-      this.message = ''
-      this.successMessage = ''
-      this.loadingcode = true
-      console.log('password button pressed')
-      const token = localStorage.getItem('token')
+      this.message = "";
+      this.successMessage = "";
+      this.loadingcode = true;
+      console.log("password button pressed");
+      const token = localStorage.getItem("token");
 
       axios
         .post(
-          'patients/auth/reset_password',
+          "patients/auth/reset_password",
           {
             email: this.resetEmail,
             token: this.resetToken,
             password: this.newpassword,
-            password_confirmation: this.confirmpassword
+            password_confirmation: this.confirmpassword,
           },
           {
             headers: {
-              Authorization: 'Bearer ' + token,
-              'X-Requested-With': 'XMLHttpRequest'
-            }
+              Authorization: "Bearer " + token,
+              "X-Requested-With": "XMLHttpRequest",
+            },
           }
         )
         .then((response) => {
-          this.loadingcode = false
-          console.log('send code response:', response?.data?.payload)
+          this.loadingcode = false;
+          console.log("send code response:", response?.data?.payload);
           if (response?.data?.status == true) {
             Toastify({
-              node: $('#token-success-notification-content')
+              node: $("#token-success-notification-content")
                 .clone()
-                .removeClass('hidden')[0],
+                .removeClass("hidden")[0],
               duration: 3000,
               newWindow: true,
               close: true,
-              gravity: 'top',
-              position: 'right',
-              stopOnFocus: true
-            }).showToast()
-            this.successMessage = response?.data?.message
-            this.showEmailForm = false
-            this.showCodeForm = false
-            this.showSetNewPasswordForm = true
+              gravity: "top",
+              position: "right",
+              stopOnFocus: true,
+            }).showToast();
+            this.successMessage = response?.data?.message;
+            this.showEmailForm = false;
+            this.showCodeForm = false;
+            this.showSetNewPasswordForm = true;
             router.push({
-              name: 'login'
-            })
+              name: "login",
+            });
             //  this.$router.push('/dashboard').catch((msg) => console.log(msg))
           }
 
           if (response.data.status == false) {
-            this.loadingcode = false
-            console.log('failed response:', response?.data?.error)
+            this.loadingcode = false;
+            console.log("failed response:", response?.data?.error);
             Toastify({
-              node: $('#fail-notification-content')
+              node: $("#fail-notification-content")
                 .clone()
-                .removeClass('hidden')[0],
+                .removeClass("hidden")[0],
               duration: 3000,
               newWindow: true,
               close: true,
-              gravity: 'top',
-              position: 'right',
-              stopOnFocus: true
-            }).showToast()
-            this.message = response?.data?.error
+              gravity: "top",
+              position: "right",
+              stopOnFocus: true,
+            }).showToast();
+            this.message = response?.data?.error;
           }
-        })
-    }
-  }
-})
+        });
+    },
+  },
+});
 </script>
 
 <style scoped>

@@ -4,6 +4,9 @@ export const en = {
   view_recalls_text:"view recalls text",
   confirm_text: 'Confirm',
   products_text:'Products',
+  orders_text:'Orders',
+  product_text: 'product',
+  service_text: 'service',
   auth: {
     signIn: 'Sign In',
     email: 'Email',

@@ -139,7 +139,7 @@ export default defineComponent({
       loading: false,
       schema,
       error: {},
-      // logo: require('@/assets/images/logos.png'),
+      // logo: require('@/assets/images/shield1.png'),
       message: "",
       typeconfirm: "password",
       gender: "Male",

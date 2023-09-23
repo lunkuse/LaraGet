@@ -13,22 +13,29 @@
       />
     </div>
     <div
-      class="grid grid-cols-3 text-slate-800 w-full sm:grid-cols-3 xl:grid-cols-7 2xl:grid-cols-7 lg:grid-cols-7 md:grid-cols-6 sm:grid-cols-7"
+      class="grid grid-cols-8 text-slate-800 w-full sm:grid-cols-8 xl:grid-cols-8 2xl:grid-cols-8 lg:grid-cols-8 md:grid-cols-6 sm:grid-cols-8"
     >
-      <!-- treatment -->
+      <!-- image -->
+      <div class="flex items-center gap-2 capitalize ml-2">
+        <img :src="appointment?.images[0]" alt="Product Image" />
+      </div>
+
+      <!-- category -->
+      <div class="flex items-center gap-2 capitalize ml-2">
+        {{ appointment?.category }}
+      </div>
+      <!-- name -->
+      <div class="flex items-center gap-2 capitalize ml-2">
+        {{ appointment?.name }}
+      </div>
+      <!-- description -->
       <div class="flex items-center gap-2 capitalize ml-2">
         <div>
           <span class="relative inline-block text-sm duration-300 group">
-            {{
-              !appointment.treatment_type && !appointment.appointment_type
-                ? "untitled"
-                : appointment?.treatment_type !== null
-                ? truncateString(appointment?.treatment_type?.title, 16)
-                : truncateString(appointment?.appointment_type.title, 16)
-            }}
+            {{ truncateString(appointment?.description, 16) }}
             <!-- Tooltip text here -->
             <span
-              v-if="appointment?.treatment_type?.title?.length > 16"
+              v-if="appointment?.description?.length > 16"
               class="absolute mt-4 hidden group-hover:flex -left-5 -top-2 -translate-y-full w-48 px-2 py-1 text-black bg-white rounded-lg text-center text-sm after:content-[''] after:absolute after:left-1/2 after:top-[100%] after:-translate-x-1/2 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-white"
             >
               {{
@@ -43,86 +50,28 @@
         </div>
       </div>
 
+      <!-- discounted_price -->
+      <div class="flex items-center gap-2 capitalize ml-2">
+        {{ appointment?.discounted_price }}
+      </div>
+
+      <!-- brand -->
+      <div class="flex items-center gap-2 capitalize ml-2">
+        {{ appointment?.brand }}
+      </div>
       <!-- status -->
       <div class="flex gap-2 capitalize items-center w-20">
         <div
           class="h-4 w-4 rounded-full p-2"
           :class="{
-            'bg-theme-1': appointment.status.status === 'Waiting',
-            'bg-theme-9': appointment.status.status === 'Confirmed',
-            'bg-theme-6': appointment.status.status === 'Closed',
-            'bg-theme-47': appointment.status.status === 'Pending',
-            'bg-theme-44': appointment.status.status === 'Serving',
-            'bg-black': appointment.status.status === 'Canceled',
-            'bg-theme-43': appointment.status.status === 'Missed',
+            'bg-theme-9': appointment?.availability === true,
+            'bg-black': appointment?.availability === false,
           }"
         ></div>
         <div class="flex">
-          {{ getStatus(appointment.status.status) }}
+          {{ getStatus(appointment?.availability) }}
         </div>
       </div>
-
-      <!-- date -->
-
-      <div
-        class="flex items-center gap-2 capitalize xl:block lg:block md:block text-sm ml-1 2xl:ml-1 xl:ml-1 lg:ml-1 md:ml-4 pt-2 hidden 2xl:block xl:block lg:block md:block"
-      >
-        {{ appointment.date }}
-      </div>
-      <!-- slots -->
-      <div
-        class="flex items-center gap-2 text-sm ml-1 ml-2 hidden 2xl:block xl:block lg:block pt-2"
-      >
-        <span
-          >{{ appointment?.slots["start-time"] }}
-          -
-        </span>
-        <span>{{ appointment?.slots["end-time"] }}</span>
-        <!-- {{ appointment.slots[0]['start-time'] }} -
-        {{ appointment.slots[0]['end-time'] }} -->
-      </div>
-      <!-- by -->
-
-      <div
-        class="flex items-center gap-2 capitalize pt-2 text-sm ml-3 hidden 2xl:block xl:block lg:block md:block"
-      >
-        {{ getSource(appointment?.source?.source) }}
-        <!-- {{ appointment.source.source }} -->
-      </div>
-
-      <div
-        v-if="appointment?.is_qtn_required != 1"
-        class="flex items-center gap-2 capitalize pt-2 text-sm ml-3 cursor hidden 2xl:block xl:block lg:block md:block"
-      >
-        -
-      </div>
-
-      <div
-        v-else
-        class="flex items-center gap-2 capitalize pt-2 text-sm ml-3 cursor hidden 2xl:block xl:block lg:block md:block"
-      >
-        <span v-if="appointment?.is_question_answered != 0">
-          {{ getStatusASA(appointment?.is_question_answered) }}</span
-        >
-        <span v-else>
-          <router-link
-            :to="{
-              name: 'side-menu-dentalquestions',
-              params: {
-                appointmentId: appointment.id,
-                patientId: appointment.patient_id,
-              },
-            }"
-            v-if="appointment?.is_question_answered == 0"
-            class="flex items-center gap-2 capitalize hover:text-theme-1"
-          >
-            {{ getStatusASA(appointment?.is_question_answered) }}
-          </router-link></span
-        >
-      </div>
-      <!-- <div class="flex items-center text-gray-800">
-        <DotsHorizontalIcon class="h-6 w-6" @click="showMenu(appointment)"></DotsHorizontalIcon>
-      </div>-->
 
       <!-- action section -->
       <div class="flex items-center">
@@ -211,12 +160,7 @@
       :appointment="selectedAppointment"
       class="!z-50"
     />
-    <DentalQuestionModalModal
-      v-if="isQuestionAppDetailVisible === true"
-      @close="closeQuestionAppDetail"
-      :appointment="selectedAppointment"
-      class="!z-50"
-    />
+
     <!-- <EmployeeModal
       class
       v-if=" isAppDetailVisibleEmployee === true"
@@ -235,7 +179,7 @@ import {
   QuestionMarkCircleIcon,
 } from "@heroicons/vue/outline";
 import Modal from "./Modal.vue";
-import DentalQuestionModalModal from "./DentalQuestionModal.vue";
+
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import { useI18n } from "vue-i18n";
 export default defineComponent({
@@ -249,7 +193,7 @@ export default defineComponent({
     MailOpenIcon,
     ClockIcon,
     Modal,
-    DentalQuestionModalModal,
+
     Menu,
     MenuButton,
     MenuItems,
@@ -298,14 +242,7 @@ export default defineComponent({
       isAppDetailVisible.value = false;
       selectedAppointment.value = null;
     };
-    const closeQuestionAppDetail = () => {
-      isQuestionAppDetailVisible.value = false;
-      selectedAppointment.value = null;
-    };
-    const showQuestionAppDetail = (appointment) => {
-      selectedAppointment.value = appointment;
-      isQuestionAppDetailVisible.value = true;
-    };
+
     const closeRescheduleForm = () => {
       isRescheduleVisible.value = false;
       selectedAppointment.value = null;
@@ -434,9 +371,6 @@ export default defineComponent({
       selectedemployee,
       showAppEmployeeDetail,
       checkedAppointmentMethod,
-      isQuestionAppDetailVisible,
-      closeQuestionAppDetail,
-      showQuestionAppDetail,
     };
   },
 });

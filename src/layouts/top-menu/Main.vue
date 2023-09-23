@@ -4,18 +4,7 @@
     <MobileMenu />
     <!-- BEGIN: Top Bar -->
     <div
-      class="
-        border-b border-theme-29
-        -mt-10
-        md:-mt-5
-        -mx-3
-        sm:-mx-8
-        px-3
-        sm:px-8
-        pt-3
-        md:pt-0
-        mb-10
-      "
+      class="border-b border-theme-29 -mt-10 md:-mt-5 -mx-3 sm:-mx-8 px-3 sm:px-8 pt-3 md:pt-0 mb-10"
     >
       <div class="top-bar-boxed flex items-center">
         <!-- BEGIN: Logo -->
@@ -24,7 +13,7 @@
           tag="a"
           class="-intro-x hidden md:flex"
         >
-          <img alt=" Metadent" class="w-6" src="@/assets/images/logoswhite1.png"  />
+          <img alt=" Metadent" class="w-6" src="@/assets/images/shield.png" />
           <span class="text-white text-lg ml-3">
             <p>Metadent</p>
           </span>
@@ -34,10 +23,14 @@
         <div class="-intro-x breadcrumb breadcrumb--light mr-auto">
           <!-- <a href="" class="">Application</a> -->
           <div v-if="crumbs">
-            <ChevronRightIcon v-for="(crumb, index) in crumbs" :key="index" class="breadcrumb__icon" />
-            <a href="" class="breadcrumb--active">{{crumb.name}}</a>
+            <ChevronRightIcon
+              v-for="(crumb, index) in crumbs"
+              :key="index"
+              class="breadcrumb__icon"
+            />
+            <a href="" class="breadcrumb--active">{{ crumb.name }}</a>
           </div>
-          <ChevronRightIcon class="breadcrumb__icon" v-else/>
+          <ChevronRightIcon class="breadcrumb__icon" v-else />
           <a href="" class="breadcrumb--active">Dashboard</a>
         </div>
         <!-- END: Breadcrumb -->
@@ -46,13 +39,7 @@
           <div class="search hidden sm:block">
             <input
               type="text"
-              class="
-                search__input
-                form-control
-                dark:bg-dark-1
-                border-transparent
-                placeholder-theme-13
-              "
+              class="search__input form-control dark:bg-dark-1 border-transparent placeholder-theme-13"
               placeholder="Search..."
               @focus="showSearchDropdown"
               @blur="hideSearchDropdown"
@@ -68,16 +55,7 @@
               <div class="mb-5">
                 <a href class="flex items-center">
                   <div
-                    class="
-                      w-8
-                      h-8
-                      bg-theme-18
-                      text-theme-9
-                      flex
-                      items-center
-                      justify-center
-                      rounded-full
-                    "
+                    class="w-8 h-8 bg-theme-18 text-theme-9 flex items-center justify-center rounded-full"
                   >
                     <InboxIcon class="w-4 h-4" />
                   </div>
@@ -85,16 +63,7 @@
                 </a>
                 <a href class="flex items-center mt-2">
                   <div
-                    class="
-                      w-8
-                      h-8
-                      bg-theme-17
-                      text-theme-11
-                      flex
-                      items-center
-                      justify-center
-                      rounded-full
-                    "
+                    class="w-8 h-8 bg-theme-17 text-theme-11 flex items-center justify-center rounded-full"
                   >
                     <UsersIcon class="w-4 h-4" />
                   </div>
@@ -102,16 +71,7 @@
                 </a>
                 <a href class="flex items-center mt-2">
                   <div
-                    class="
-                      w-8
-                      h-8
-                      bg-theme-14
-                      text-theme-10
-                      flex
-                      items-center
-                      justify-center
-                      rounded-full
-                    "
+                    class="w-8 h-8 bg-theme-14 text-theme-10 flex items-center justify-center rounded-full"
                   >
                     <CreditCardIcon class="w-4 h-4" />
                   </div>
@@ -137,12 +97,7 @@
                   </div>
                   <div class="ml-3">{{ faker.users[0].name }}</div>
                   <div
-                    class="
-                      ml-auto
-                      w-48
-                      truncate
-                      text-gray-600 text-xs text-right
-                    "
+                    class="ml-auto w-48 truncate text-gray-600 text-xs text-right"
                   >
                     {{ faker.users[0].email }}
                   </div>
@@ -176,11 +131,7 @@
         <!-- BEGIN: Notifications -->
         <div class="intro-x dropdown mr-4 sm:mr-6">
           <div
-            class="
-              dropdown-toggle
-              notification notification--light notification--bullet
-              cursor-pointer
-            "
+            class="dropdown-toggle notification notification--light notification--bullet cursor-pointer"
             role="button"
             aria-expanded="false"
           >
@@ -188,12 +139,7 @@
           </div>
           <div class="notification-content pt-2 dropdown-menu">
             <div
-              class="
-                notification-content__box
-                dropdown-menu__content
-                box
-                dark:bg-dark-6
-              "
+              class="notification-content__box dropdown-menu__content box dark:bg-dark-6"
             >
               <div class="notification-content__title">Notifications</div>
               <div
@@ -209,16 +155,7 @@
                     :src="require(`@/assets/images/${faker.photos[0]}`).default"
                   />
                   <div
-                    class="
-                      w-3
-                      h-3
-                      bg-theme-9
-                      absolute
-                      right-0
-                      bottom-0
-                      rounded-full
-                      border-2 border-white
-                    "
+                    class="w-3 h-3 bg-theme-9 absolute right-0 bottom-0 rounded-full border-2 border-white"
                   ></div>
                 </div>
                 <div class="ml-2 overflow-hidden">
@@ -244,17 +181,7 @@
         <!-- BEGIN: Account Menu -->
         <div class="intro-x dropdown w-8 h-8">
           <div
-            class="
-              dropdown-toggle
-              w-8
-              h-8
-              rounded-full
-              overflow-hidden
-              shadow-lg
-              image-fit
-              zoom-in
-              scale-110
-            "
+            class="dropdown-toggle w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in scale-110"
             role="button"
             aria-expanded="false"
           >
@@ -265,13 +192,7 @@
           </div>
           <div class="dropdown-menu w-56">
             <div
-              class="
-                dropdown-menu__content
-                box
-                bg-theme-26
-                dark:bg-dark-6
-                text-white
-              "
+              class="dropdown-menu__content box bg-theme-26 dark:bg-dark-6 text-white"
             >
               <div class="p-4 border-b border-theme-27 dark:border-dark-3">
                 <div class="font-medium">{{ $f()[0].users[0].name }}</div>
@@ -282,69 +203,25 @@
               <div class="p-2">
                 <a
                   href=""
-                  class="
-                    flex
-                    items-center
-                    block
-                    p-2
-                    transition
-                    duration-300
-                    ease-in-out
-                    hover:bg-theme-1
-                    dark:hover:bg-dark-3
-                    rounded-md
-                  "
+                  class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md"
                 >
                   <UserIcon class="w-4 h-4 mr-2" /> Profile
                 </a>
                 <a
                   href=""
-                  class="
-                    flex
-                    items-center
-                    block
-                    p-2
-                    transition
-                    duration-300
-                    ease-in-out
-                    hover:bg-theme-1
-                    dark:hover:bg-dark-3
-                    rounded-md
-                  "
+                  class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md"
                 >
                   <EditIcon class="w-4 h-4 mr-2" /> Add Account
                 </a>
                 <a
                   href=""
-                  class="
-                    flex
-                    items-center
-                    block
-                    p-2
-                    transition
-                    duration-300
-                    ease-in-out
-                    hover:bg-theme-1
-                    dark:hover:bg-dark-3
-                    rounded-md
-                  "
+                  class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md"
                 >
                   <LockIcon class="w-4 h-4 mr-2" /> Reset Password
                 </a>
                 <a
                   href=""
-                  class="
-                    flex
-                    items-center
-                    block
-                    p-2
-                    transition
-                    duration-300
-                    ease-in-out
-                    hover:bg-theme-1
-                    dark:hover:bg-dark-3
-                    rounded-md
-                  "
+                  class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md"
                 >
                   <HelpCircleIcon class="w-4 h-4 mr-2" />
                   Help
@@ -353,18 +230,7 @@
               <div class="p-2 border-t border-theme-27 dark:border-dark-3">
                 <a
                   href=""
-                  class="
-                    flex
-                    items-center
-                    block
-                    p-2
-                    transition
-                    duration-300
-                    ease-in-out
-                    hover:bg-theme-1
-                    dark:hover:bg-dark-3
-                    rounded-md
-                  "
+                  class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md"
                 >
                   <ToggleRightIcon class="w-4 h-4 mr-2" />
                   Logout
@@ -390,7 +256,7 @@
             "
             class="top-menu"
             :class="{
-              'top-menu--active': menu.active
+              'top-menu--active': menu.active,
             }"
             @click="linkTo(menu, router, $event)"
           >
@@ -467,22 +333,26 @@
 </template>
 
 <script>
-import { defineComponent, computed, onMounted, ref, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { useStore } from '@/store'
-import { helper as $h } from '@/utils/helper'
-import TopBar from '@/components/top-bar/Main.vue'
-import MobileMenu from '@/components/mobile-menu/Main.vue'
-import DarkModeSwitcher from '@/components/dark-mode-switcher/Main.vue'
-import { searchDropdown, showSearchDropdown, hideSearchDropdown } from './index'
-import { nestedMenu, linkTo } from '@/layouts/side-menu'
-import $ from 'cash-dom'
+import { defineComponent, computed, onMounted, ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useStore } from "@/store";
+import { helper as $h } from "@/utils/helper";
+import TopBar from "@/components/top-bar/Main.vue";
+import MobileMenu from "@/components/mobile-menu/Main.vue";
+import DarkModeSwitcher from "@/components/dark-mode-switcher/Main.vue";
+import {
+  searchDropdown,
+  showSearchDropdown,
+  hideSearchDropdown,
+} from "./index";
+import { nestedMenu, linkTo } from "@/layouts/side-menu";
+import $ from "cash-dom";
 
 export default defineComponent({
   components: {
     TopBar,
     MobileMenu,
-    DarkModeSwitcher
+    DarkModeSwitcher,
   },
   // beforeEnter(to, from, next) {
   //   to.meta.crumbs = [
@@ -495,21 +365,21 @@ export default defineComponent({
   //   Path = from.path
   // },
   setup() {
-    const route = useRoute()
-    const router = useRouter()
-    const store = useStore()
-    const formattedMenu = ref([])
-    const crumbs = ref([])
-    const topMenu = computed(() => nestedMenu(store.state.topMenu.menu, route))
+    const route = useRoute();
+    const router = useRouter();
+    const store = useStore();
+    const formattedMenu = ref([]);
+    const crumbs = ref([]);
+    const topMenu = computed(() => nestedMenu(store.state.topMenu.menu, route));
 
     watch(
       computed(() => route.path),
       () => {
-        formattedMenu.value = $h.toRaw(topMenu.value)
-        console.log('RouteData', route)
-        crumbs.value = route.meta.crumbs
+        formattedMenu.value = $h.toRaw(topMenu.value);
+        console.log("RouteData", route);
+        crumbs.value = route.meta.crumbs;
       }
-    )
+    );
 
     // const crumbs = computed(() => {
     //   console.log('RouteData', route.meta)
@@ -517,14 +387,11 @@ export default defineComponent({
     // })
 
     onMounted(() => {
-      $('body')
-        .removeClass('error-page')
-        .removeClass('login')
-        .addClass('main')
-      formattedMenu.value = $h.toRaw(topMenu.value)
-      console.log('RouteData', route.meta)
-      crumbs.value = route.meta.crumbs
-    })
+      $("body").removeClass("error-page").removeClass("login").addClass("main");
+      formattedMenu.value = $h.toRaw(topMenu.value);
+      console.log("RouteData", route.meta);
+      crumbs.value = route.meta.crumbs;
+    });
 
     return {
       searchDropdown,
@@ -533,8 +400,8 @@ export default defineComponent({
       formattedMenu,
       router,
       linkTo,
-      crumbs
-    }
-  }
-})
+      crumbs,
+    };
+  },
+});
 </script>

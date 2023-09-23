@@ -4,7 +4,7 @@
 
     <div id="contentdiv" class="parent-container flex flex-col">
       <div
-        class="grid grid-cols-3 2xl:grid-cols-7 xl:grid-cols-7 lg:grid-cols-7 md:grid-cols-6 mt-2 border-b text-gray-800 dark:text-white dark:bg-dark-1 font-semibold border-gray-400 bg-gray-200 p-2 mx-1 h-14 items-center"
+        class="grid grid-cols-8 2xl:grid-cols-8 xl:grid-cols-8 lg:grid-cols-8 md:grid-cols-8 mt-2 border-b text-gray-800 dark:text-white dark:bg-dark-1 font-semibold border-gray-400 bg-gray-200 p-2 mx-1 h-14 items-center"
       >
         <div class="flex form-check custom-checkbox mx-1">
           <div>
@@ -16,26 +16,17 @@
               @change="checkedAppointmentAll"
             />
           </div>
-          <span class="ml-1">{{ $t("translation.treatment_text") }}</span>
+          <span class="ml-1">Image</span>
         </div>
 
-        <div class="ml-4 2xl:ml-4 xl:ml-4 lg:ml-4 md:ml-6">
-          {{ $t("translation.status_text") }}
+        <div class="ml-4 2xl:ml-4 xl:ml-4 lg:ml-4 md:ml-6">Category</div>
+        <div class="ml-3 ml-3 2xl:ml-3 xl:ml-3 lg:ml-3 md:ml-5">Name</div>
+        <div class="ml-3 ml-3 2xl:ml-3 xl:ml-3 lg:ml-3 md:ml-5">
+          Description
         </div>
-        <div
-          class="ml-3 ml-3 2xl:ml-3 xl:ml-3 lg:ml-3 md:ml-5 hidden 2xl:block xl:block lg:block md:block sm:block"
-        >
-          {{ $t("translation.date_text") }}
-        </div>
-        <div class="ml-2 hidden 2xl:block xl:block lg:block md:block">
-          {{ $t("translation.time_text") }}
-        </div>
-        <div class="ml-4 hidden 2xl:block xl:block lg:block md:block">
-          {{ $t("translation.source_text") }}
-        </div>
-        <div class="ml-2 hidden 2xl:block xl:block lg:block">
-          {{ $t("translation.anamnese_status_text") }}
-        </div>
+        <div class="ml-2">Price</div>
+        <div class="ml-4">Brand</div>
+        <div class="ml-2">Availability</div>
         <div class="flex justify-between ml-2">
           {{ $t("translation.action_text") }}
           <div>

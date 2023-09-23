@@ -10,7 +10,7 @@
             <img
               alt="Metadent"
               class="w-10 h-10 font-medium"
-              src="../../assets/images/logos.png"
+              src="../../assets/images/shield1.png"
             />
             <span class="text-4xl ml-1 font-medium leading-none text-theme-3">
               <span class="font-medium">Metadent</span>
@@ -433,7 +433,7 @@
                       placeholder="Date of birth*"
                       name="birthDate"
                       :options="{
-                         lang: lang, 
+                        lang: lang,
                         autoApply: true,
                         showWeekNumbers: true,
                         dropdowns: {
@@ -733,7 +733,7 @@ export default defineComponent({
     const lang = ref(defaultLang);
     return {
       t,
-      lang
+      lang,
     };
   },
   data() {
@@ -775,16 +775,19 @@ export default defineComponent({
       password_confirmation: yup
         .string()
         .required(this.t("translation.retypePassword"))
-        .oneOf([yup.ref("password"), null], this.t("translation.matchPassword")),
+        .oneOf(
+          [yup.ref("password"), null],
+          this.t("translation.matchPassword")
+        ),
     });
-    
+
     return {
       successful: false,
       type: "password",
       loading: false,
       schema,
       error: {},
-      // logo: require('@/assets/images/logos.png'),
+      // logo: require('@/assets/images/shield1.png'),
       message: "",
       typeconfirm: "password",
       gender: "Male",
@@ -844,7 +847,6 @@ export default defineComponent({
       }
     },
     handleRegister() {
-     
       const user = {
         firstName: this.first_name,
         lastName: this.last_name,

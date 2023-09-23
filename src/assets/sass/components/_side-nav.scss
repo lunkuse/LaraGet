@@ -148,7 +148,7 @@
         }
         &:hover:not(.side-menu--active):not(.side-menu--open)
           .side-menu__icon:before {
-          @apply bg-theme-4 dark:bg-dark-4;
+          @apply bg-theme-4 dark:bg-dark-4 ;
         }
       }
     }
