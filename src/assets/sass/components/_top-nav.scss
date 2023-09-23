@@ -48,7 +48,7 @@
           @apply rounded-full;
         }
         &.top-menu--active {
-          @apply bg-theme-30 dark:bg-dark-1;
+          @apply bg-theme-2 dark:bg-dark-1;
           &:before {
             content: '';
             width: 20px;
