@@ -29,7 +29,7 @@
         {{ appointment?.name }}
       </div>
       <!-- description -->
-      <div class="flex items-center gap-2 capitalize ml-2">
+      <div class="flex items-center gap-2  ml-2">
         <div>
           <span class="relative inline-block text-sm duration-300 group">
             {{ truncateString(appointment?.description, 16) }}

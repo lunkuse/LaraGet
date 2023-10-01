@@ -14,7 +14,7 @@
                 <a
                   href="javascript:;"
                   data-toggle="modal"
-                  data-target="#static-backdrop-modal-preview1"
+                  data-target="#static-backdrop-modal-preview"
                   class="btn mr-1 mb-2 bg-theme-1 text-white"
                 >
                   <PlusIcon />
@@ -68,7 +68,7 @@
     </div>
     <div></div>
     <div></div>
-    <!-- <ApplicationForm  /> -->
+    <AddProduct />
   </div>
   <!-- END: Super Large Modal Content -->
 </template>
@@ -85,7 +85,7 @@ import {
 } from "vue";
 // import TableAppointment from '../appointments/TableAppointment.vue'
 import ProductTable from "./list/Container.vue";
-// import ApplicationForm from '../appointments/AddAppointment.vue'
+import AddProduct from "./AddProduct.vue";
 
 import axios from "axios";
 import Toastify from "toastify-js";
@@ -101,7 +101,7 @@ import { useStore } from "vuex";
 export default defineComponent({
   components: {
     // TableAppointment,
-    // ApplicationForm,
+    AddProduct,
     ProductTable,
   },
 });
