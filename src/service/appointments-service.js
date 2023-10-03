@@ -1,6 +1,10 @@
 import dataTablesDataTables from 'datatables.net-dt/js/dataTables.dataTables';
 import axios from '../axios'
 import { useLocalStorage } from './local-starage-service'
+
+// import { useFetch } from "../utils";
+// import { Appointment, Paginated, AppointmentType, Slot } from "../types";
+
 export default class AppointmentsService {
   static async fetchAppointments(url, data, cancelToken) {
     console.log('service appointments url', url, data, cancelToken)
@@ -21,6 +25,17 @@ export default class AppointmentsService {
       return { success: false, data: {}, message: `${err}` };
     }
   }
+
+
+  // static async fetchAppointments(url, data, cancelToken?: string) {
+  //   return await useFetch<Paginated<Appointment>>({
+  //     url,
+  //     method: "post",
+  //     data,
+  //     cancelToken,
+  //   });
+  // }
+
 
   static async createAppointments(data) {
    
