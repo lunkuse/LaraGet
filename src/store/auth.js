@@ -14,10 +14,11 @@ export const auth = {
     login({ commit }, user) {
       return AuthService.login(user).then(
         res => {
-          if (res.status === true) {
-            console.log('store login: current lang', localStorage.getItem('lang'))
-            console.log('Login user', res.payload.patient)
-            commit('loginSuccess', res.payload.patient)
+          console.log('store res', res)
+          if (res.status === "success") {
+           
+            console.log('Login user', res.data)
+            commit('loginSuccess', res.data)
             return Promise.resolve(res)
           } else {
             return Promise.reject(res.error)

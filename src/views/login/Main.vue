@@ -373,58 +373,58 @@ export default defineComponent({
     handleSignIn() {
       console.log("login: current lang", localStorage.getItem("lang"));
 
-      this.$router.push("/dashboard");
+      // this.$router.push("/dashboard");
 
       // return;
-      // const user = {
-      //   identifier: this.identifier,
-      //   password: this.password,
-      // };
-      // this.loading = true;
+      const user = {
+        identifier: this.identifier,
+        password: this.password,
+      };
+      this.loading = true;
 
-      // this.$store.dispatch("auth/login", user).then(
-      //   (res) => {
-      //     this.loading = false;
+      this.$store.dispatch("auth/login", user).then(
+        (res) => {
+          this.loading = false;
+console.log('response finally', res)
+          if (res?.status === "success") {
 
-      //     if (res?.status === true) {
+            const store = useStore();
+            const patientId = computed(() => this.$store.state.auth.user);
+            this.$router.push("/dashboard");
+            // this.$store.dispatch("treatment/patientsFetch", patientId.value.id);
 
-      //       const store = useStore();
-      //       const patientId = computed(() => this.$store.state.auth.user);
+            // if (res?.status === "success") {
 
-      //       this.$store.dispatch("treatment/patientsFetch", patientId.value.id);
+            //   this.message = this.t("translation.emailCode");
+            // } else {
+            //   this.message = res?.message;
+            // }
 
-      //       if (res?.status === true) {
+            // this.codeToken = res?.payload?.token;
 
-      //         this.message = this.t("translation.emailCode");
-      //       } else {
-      //         this.message = res?.message;
-      //       }
+            // console.log("code message", this.codeToken, this.codeReceived);
+            // (this.verifyNow = true), (this.loginNow = false);
 
-      //       this.codeToken = res?.payload?.token;
+          }
+        },
+        (error) => {
+          if (
+            error ===
+            "The combination of email and password is incorrect please check your details & try again. 3 attempts remaining"
+          ) {
+            console.log("got new error", error);
+            this.message = this.t("translation.wrongEmailPassword");
+            this.failmessage = this.t("translation.wrongEmailPassword");
+          } else {
+            this.message = error;
+            this.failmessage = error;
+          }
 
-      //       console.log("code message", this.codeToken, this.codeReceived);
-      //       (this.verifyNow = true), (this.loginNow = false);
+          this.loading = false;
 
-      //     }
-      //   },
-      //   (error) => {
-      //     if (
-      //       error ===
-      //       "The combination of email and password is incorrect please check your details & try again. 3 attempts remaining"
-      //     ) {
-      //       console.log("got new error", error);
-      //       this.message = this.t("translation.wrongEmailPassword");
-      //       this.failmessage = this.t("translation.wrongEmailPassword");
-      //     } else {
-      //       this.message = error;
-      //       this.failmessage = error;
-      //     }
-
-      //     this.loading = false;
-
-      //     this.failtoast = true;
-      //   }
-      // );
+          this.failtoast = true;
+        }
+      );
     },
 
     verifyEmail() {

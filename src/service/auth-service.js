@@ -4,8 +4,8 @@ import store from "../store/index.js";
 class AuthService {
   login(user) {
     return axios
-      .post("patients/auth/login", {
-        identifier: user.identifier,
+      .post("auth/signin", {
+        email: user.identifier,
         password: user.password,
       })
       .then((response) => {
@@ -13,9 +13,9 @@ class AuthService {
           "service1 login: current lang",
           localStorage.getItem("lang")
         );
-        console.log("response.status check", response);
-        if (response.data.status === true) {
-          console.log("service2 login: current lang", response.data.payload);
+        console.log("response.status check", response.data.status );
+        if (response.data.status === "success") {
+          console.log("service2 login: current lang", response.data.data);
           // const { patient, expires_in, token } = response.data.payload
           // const { saveSession } = useLocalStorage()
           // saveSession(patient, token, expires_in)
@@ -29,7 +29,7 @@ class AuthService {
   }
 
   logout() {
-    store.mutations.RESET_STATE(store.allquestions.logoutQuestions);
+   
     useLocalStorage().clearSession();
   }
 
@@ -41,60 +41,10 @@ class AuthService {
         firstName: user?.firstName,
         middleName: user?.middleName,
         lastName: user?.lastName,
-        patientPhone: user?.patientPhone,
-        BSN: user?.BSN,
         email: user?.email,
         password: user?.password,
         password_confirmation: user?.password_confirmation,
-        homePhone: user?.homePhone,
-        secretNumber: user?.secretNumber,
-        privateNumber: user?.privateNumber,
-        birthDate: user?.birthDate,
-        maritalStatus: user?.maritalStatus,
-        is_disabled: user?.is_disabled,
-        gender: user?.gender,
-        address: user.address,
-        street: user.street,
-        nationality: user?.nationality,
-        country: user?.country,
-        countryCode: user?.countryCode,
-        city: user?.city,
-        province: user?.province,
-        ext: user?.ext,
-        mobileNumber: user?.mobileNumber,
-        telephoneNumber: user?.telephoneNumber,
-        fillIfNotFilled: user?.fillIfNotFilled,
-        guardianName: user?.guardianName,
-        guardianType: user?.guardianType,
-        street: user?.street,
-        municipality: user?.municipality,
-
-        houseNumber: user?.houseNumber,
-        postalCode: user?.postalCode,
-        patientInsurer: user?.patientInsurer,
-        insuranceUzoviCode: user?.insuranceUzoviCode,
-
-        insurancePolicyNumber: user?.insurancePolicyNumber,
-        additionalInsurance: user?.additionalInsurance,
-        additionalInsurancePolicyNo: user?.additionalInsurancePolicyNo,
-     
-        documentType: user?.documentType,
-        documentNumber: user?.documentNumber,
-
-        countryOfBirth: user?.countryOfBirth,
-        placeOfBirth: user?.placeOfBirth,
-        // firstName: user.firstName,
-        // lastName: user.lastName,
-        // phone: user.phone,
-        // address: user.address,
-        // email: user.email,
-        // birthDate: user.birthDate,
-        // password: user.password,
-        // password_confirmation: user.password_confirmation,
-        // gender: user.gender,
-        // additionalInsurance:user.additionalInsurance,
-        // documentType:user.documentType,
-        // documentNumber:user.documentNumber
+      
       })
       .then((response) => {
         console.log("response.status check", response);
