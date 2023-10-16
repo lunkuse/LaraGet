@@ -1,14 +1,15 @@
 <template>
-  <button :type="submission === true ? 'submit' : null " class="button-container uppercase"
-    :class="
-      {
-        'transparent': transparent,
-        'cancel': cancel,
-        'info': info,
-        'gradient': gradient,
-        'min-width': label === null,
-      }
-    ">
+  <button
+    :type="submission === true ? 'submit' : null"
+    class="button-container uppercase"
+    :class="{
+      transparent: transparent,
+      cancel: cancel,
+      info: info,
+      gradient: gradient,
+      'min-width': label === null,
+    }"
+  >
     <!--Icon Section of the button-->
     <div v-if="(icon !== null || svg !== null) && !loading">
       <div v-if="!svg && iconCircle" class="icon-area circle">
@@ -21,10 +22,19 @@
     </div>
     <!--End of the Icon Section of the button-->
 
-    <div v-if="label !== null " class="label" :class="{'margined': icon !== null}">
-      <span v-if="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    <div
+      v-if="label !== null"
+      class="label"
+      :class="{ margined: icon !== null }"
+    >
+      <span
+        v-if="loading"
+        class="spinner-border spinner-border-sm"
+        role="status"
+        aria-hidden="true"
+      ></span>
       <template v-else>{{ label }}</template>
-      </div>
+    </div>
   </button>
 </template>
 
@@ -81,8 +91,8 @@ export default {
     },
   },
   mounted() {
-    if (document.querySelector('svg-icon')) {
-      document.querySelector('svg-icon').classList.add('customize-svg');
+    if (document.querySelector("svg-icon")) {
+      document.querySelector("svg-icon").classList.add("customize-svg");
     }
   },
 };
@@ -96,10 +106,10 @@ export default {
   padding: 0px;
   margin-left: 0px;
 }
-.customize-svg.svg-icon svg g path{
-  fill: #ff782e !important;
+.customize-svg.svg-icon svg g path {
+  fill: crimson !important;
 }
-.svg-icon{
+.svg-icon {
   margin-right: 5px;
 }
 .icon-area.circle {
@@ -107,7 +117,7 @@ export default {
   height: 20px;
   border-radius: 50%;
   margin-right: 4px;
-  border:1px solid #fff;
+  border: 1px solid #fff;
   color: inherit;
   display: flex;
   justify-content: center;
@@ -116,12 +126,13 @@ export default {
 .icon-area {
   margin-right: 0px;
 }
-.icon-area i, i.icon-area {
+.icon-area i,
+i.icon-area {
   color: inherit !important;
   font-size: 14px !important;
 }
 .button-container:hover .icon-area {
-  border-color: #ff782e;
+  border-color: crimson;
 }
 
 .button-container.cancel:hover {
@@ -145,52 +156,52 @@ export default {
 }
 
 .button-container.info.transparent:hover {
-  background: #0088FF !important;
+  background: #0088ff !important;
   color: #fff;
-  border-color: #0088FF;
+  border-color: #0088ff;
 }
 .button-container.info.transparent {
-  color: #0088FF;
-  border-color: #0088FF;
+  color: #0088ff;
+  border-color: #0088ff;
 }
 .button-container.info:hover {
   background: #fff;
-  color: #0088FF;
-  border-color: #0088FF;
+  color: #0088ff;
+  border-color: #0088ff;
 }
 .button-container.info {
-  background: #0088FF;
+  background: #0088ff;
   color: #fff;
-  border-color: #0088FF;
+  border-color: #0088ff;
 }
 
 .button-container.transparent:hover {
-  background: #ff782e;
-  border-color: #ff782e;
+  background: crimson;
+  border-color: crimson;
   color: #fff;
 }
 .button-container.transparent {
   background: transparent;
   color: inherit;
-  border-color: #ff782e;
-  color: #ff782e;
+  border-color: crimson;
+  color: crimson;
 }
 .button-container.min-width {
   min-width: 40px !important;
 }
 .button-container:hover {
-  color: #ff782e;
+  color: crimson;
   background: transparent;
-  border-color:#ff782e;
+  border-color: crimson;
   cursor: pointer;
 }
 .button-container {
-  min-width: 60px ;
+  min-width: 60px;
   transition: all 200ms ease-in-out;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #ff782e;
+  background: crimson;
   color: #fff;
   padding: 5px 10px;
   border-radius: 5px;

@@ -5,7 +5,6 @@ import sideMenu from './side-menu'
 // import simpleMenu from './simple-menu'
 import topMenu from './top-menu'
 import langstore from './langstore'
-import { allquestions } from './questions'
 import { allappointments } from './appointments'
 import {allinvoices} from './invoices'
 
@@ -19,8 +18,7 @@ const store = createStore({
     auth,
     translations,
     langstore,
-    allquestions ,
-    slots,
+    
     allappointments,
     allinvoices
   }

@@ -21,8 +21,8 @@
               alt="Profile Image"
               class="rounded-full"
               :src="
-                currentUser.image
-                  ? currentUser.image
+                currentUser?.image
+                  ? currentUser?.image
                   : 'https://via.placeholder.com/150'
               "
             />
@@ -60,8 +60,8 @@
             <div
               class="w-24 sm:w-40 truncate sm:whitespace-normal font-medium text-lg"
             >
-              {{ currentUser.first_name }}
-              {{ currentUser.last_name }}
+              {{ currentUser.firstname }}
+              {{ currentUser.lastname }}
             </div>
             <div class="text-gray-600">{{ currentUser.unique_identifier }}</div>
           </div>
@@ -95,7 +95,7 @@
               href="javascript:;"
               data-toggle="modal"
               data-target="#update-info-modal"
-              class="btn btn-warning bg-theme-32 text-white w-25 mr-auto"
+              class="btn bg-theme-1 text-white w-25 mr-auto"
             >
               {{ $t("translation.update_profile_text") }}</a
             >
@@ -124,7 +124,7 @@
           data-toggle="tab"
           data-target="#address_tab"
           href="javascript:;"
-          class="py-4 sm:mr-8 flex items-center"
+          class="py-4 sm:mr-8 flex items-center hidden"
           role="tab"
           aria-selected="false"
         >
@@ -198,7 +198,7 @@
                 class="grid grid-cols-1 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 gap-4 overflow-x-auto"
               >
                 <!--bsn-->
-                <div>
+                <!-- <div>
                   <label for="update-profile-form-7" class="form-label">
                     <span class="flex">
                       <p class="w-40 font-medium text-bold mx-1">
@@ -218,7 +218,7 @@
                       >
                     </span>
                   </label>
-                </div>
+                </div> -->
 
                 <!-- firstname -->
                 <div>
@@ -231,12 +231,12 @@
                       <span
                         class="form-label capitalize"
                         :class="
-                          currentUser?.first_name == null
-                            ? currentUser?.first_name == null && 'text-gray-500'
+                          currentUser?.firstname == null
+                            ? currentUser?.firstname == null && 'text-gray-500'
                             : ''
                         "
                         >{{
-                          currentUser.first_name ?? $t("translation.notSetText")
+                          currentUser.firstname ?? $t("translation.notSetText")
                         }}</span
                       >
                     </span>
@@ -244,7 +244,7 @@
                 </div>
 
                 <!-- middlename -->
-                <div>
+                <!-- <div>
                   <label for="update-profile-form-7" class="form-label">
                     <span class="flex">
                       <p class="w-40 font-medium text-bold mx-1">
@@ -265,7 +265,7 @@
                       >
                     </span>
                   </label>
-                </div>
+                </div> -->
 
                 <!-- lastname -->
 
@@ -279,12 +279,12 @@
                       <span
                         class="form-label capitalize"
                         :class="
-                          currentUser?.last_name == null
-                            ? currentUser?.last_name == null && 'text-gray-500'
+                          currentUser?.lastname == null
+                            ? currentUser?.lastname == null && 'text-gray-500'
                             : ''
                         "
                         >{{
-                          currentUser.last_name ?? $t("translation.notSetText")
+                          currentUser.lastname ?? $t("translation.notSetText")
                         }}</span
                       >
                     </span>
@@ -293,7 +293,7 @@
 
                 <!-- gender -->
 
-                <div>
+                <div class="hidden">
                   <label for="update-profile-form-7" class="form-label">
                     <span class="flex">
                       <p class="w-40 font-medium text-bold mx-1">
@@ -318,7 +318,7 @@
 
                 <!-- dob -->
 
-                <div>
+                <div class="hidden">
                   <label for="update-profile-form-7" class="form-label">
                     <span class="flex">
                       <p class="w-40 font-medium text-bold mx-1">
@@ -326,7 +326,7 @@
                       </p>
 
                       <span
-                        class="form-label "
+                        class="form-label"
                         :class="
                           currentUser?.birth_date == null
                             ? currentUser?.birth_date == null && 'text-gray-500'
@@ -344,7 +344,7 @@
 
                 <!-- marital status -->
 
-                <div>
+                <div class="hidden">
                   <label for="update-profile-form-7" class="form-label">
                     <span class="flex">
                       <p class="w-40 font-medium text-bold mx-1">
@@ -352,7 +352,7 @@
                       </p>
 
                       <span
-                        class="form-label "
+                        class="form-label"
                         :class="
                           currentUser?.marital_status == null
                             ? currentUser?.marital_status == null &&
@@ -378,7 +378,7 @@
                       </p>
 
                       <span
-                        class="form-label "
+                        class="form-label"
                         :class="
                           currentUser?.email == null
                             ? currentUser?.email == null && 'text-gray-500'
@@ -395,7 +395,7 @@
 
                 <!-- patient phone -->
 
-                <div>
+                <div class="hidden">
                   <label for="update-profile-form-7" class="form-label">
                     <span class="flex">
                       <p class="w-40 font-medium text-bold mx-1">
@@ -424,12 +424,12 @@
               <div
                 class="flex items-center pt-2 border-b border-gray-200 dark:border-dark-5"
               >
-                <h2 class="font-medium text-base mr-auto">
+                <h2 class="hidden font-medium text-base mr-auto">
                   {{ $t("translation.next_of_kin_information_text") }}
                 </h2>
               </div>
               <div
-                class="p-5 grid grid-cols-1 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 gap-4 overflow-x-auto"
+                class="hidden p-5 grid grid-cols-1 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 gap-4 overflow-x-auto"
               >
                 <!-- nok name -->
                 <div>
@@ -503,19 +503,16 @@
                 </div>
               </div>
 
-
-
-
-<!-- family -->
-<div
-                class="flex items-center pt-2 border-b border-gray-200 dark:border-dark-5"
+              <!-- family -->
+              <div
+                class="hidden flex items-center pt-2 border-b border-gray-200 dark:border-dark-5"
               >
                 <h2 class="font-medium text-base mr-auto">
                   {{ $t("translation.family_information_text") }}
                 </h2>
               </div>
               <div
-                class="p-5 grid grid-cols-1 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 gap-4 overflow-x-auto"
+                class="hidden p-5 grid grid-cols-1 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 gap-4 overflow-x-auto"
               >
                 <!-- nok name -->
                 <div>
@@ -529,7 +526,7 @@
                         class="form-label capitalize"
                         :class="
                           currentUser?.fm_name == null
-                            ? currentUser?.fm_name== null && 'text-gray-500'
+                            ? currentUser?.fm_name == null && 'text-gray-500'
                             : ''
                         "
                         >{{
@@ -552,7 +549,7 @@
                         class="form-label capitalize"
                         :class="
                           currentUser?.fm_phone_number == null
-                            ? currentUser?.fm_phone_number== null &&
+                            ? currentUser?.fm_phone_number == null &&
                               'text-gray-500'
                             : ''
                         "
@@ -588,10 +585,6 @@
                   </label>
                 </div>
               </div>
-
-
-
-
             </div>
 
             <!-- family -->
@@ -974,8 +967,8 @@
                           :src="
                             uploadFile
                               ? uploadFile
-                              : currentUser.image
-                              ? currentUser.image
+                              : currentUser?.image
+                              ? currentUser?.image
                               : 'https://via.placeholder.com/150'
                           "
                           required
@@ -1007,7 +1000,7 @@
                         />
                       </div>
                       <button
-                        class="btn bg-theme-32 text-white w-40 mr-auto"
+                        class="btn bg-theme-1 text-white w-40 mr-auto"
                         type="submit"
                       >
                         <LoadingIcon

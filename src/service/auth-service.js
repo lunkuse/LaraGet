@@ -16,6 +16,10 @@ class AuthService {
         console.log("response.status check", response.data.status );
         if (response.data.status === "success") {
           console.log("service2 login: current lang", response.data.data);
+
+          localStorage.setItem('user', JSON.stringify(response.data.data))
+          // localStorage.setItem('userID', user?.id)
+          // localStorage.setItem('facilityID', user?.facility_id)
           // const { patient, expires_in, token } = response.data.payload
           // const { saveSession } = useLocalStorage()
           // saveSession(patient, token, expires_in)
@@ -24,6 +28,11 @@ class AuthService {
           console.log("login failed else", response.data);
           return response.data;
         }
+        else if (response.data.status === "error") {
+          console.log("login failed else", response?.message);
+          return response.data;
+        }
+
         throw response.data.error;
       });
   }
@@ -37,18 +46,18 @@ class AuthService {
     console.log("user to register", user);
     // return axios.post(API_URL + 'register', {
     return axios
-      .post("patients/auth/register", {
-        firstName: user?.firstName,
-        middleName: user?.middleName,
-        lastName: user?.lastName,
+      .post("auth/signup", {
+        firstname: user?.firstName,
+        // middleName: user?.middleName,
+        lastname: user?.lastName,
         email: user?.email,
         password: user?.password,
-        password_confirmation: user?.password_confirmation,
+        // password_confirmation: user?.password_confirmation,
       
       })
       .then((response) => {
         console.log("response.status check", response);
-        if (response.data.status === true) {
+        if (response.data.status === "success") {
           return response.data;
         }
         else if (response.data.status === false) {

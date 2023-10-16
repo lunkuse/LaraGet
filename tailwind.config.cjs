@@ -46,7 +46,8 @@ module.exports = {
               23: '#1A389F',
               24: '#163296',
               25: '#C7D2FF',
-              26: '#15329A',
+              // profile dropdown
+              26: '#fa2036',
               27: '#203FAD',
               28: '#BBC8FD',
               29: '#284EB2',

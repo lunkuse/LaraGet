@@ -15,11 +15,8 @@ import Invoice from '../views/invoices/Invoice.vue'
 // import Notification from '../views/notifications/Notification.vue'
 import Settings from '../views/settings/Settings.vue'
 
-import AppointmentsDetails from '../views/appointments/AppointmentDetails.vue'
-import Questions from '../views/appointments/appointments/answer_dental_questions.vue'
-import ViewAppointments from '../views/appointments/ViewAppointments.vue'
 
-import CompletedAppointments from '../views/appointments/CompletedAppointments.vue'
+
 import InvoiceDetails from '../views/invoices/SingleInvoice.vue'
 import SingleTransaction from '../views/invoices/SingleTransaction.vue'
 
@@ -141,29 +138,9 @@ const routes = [
      
      
 
-      {
-        path: 'viewappointments',
-        name: 'side-menu-view-appointments',
-        component: ViewAppointments,
-        meta: {
-          crumbs: [
-            { name: 'Dashboard', link: '/dashboard' },
-            { name: 'View Appointments', link: '' }
-          ]
-        }
-      },
+
       
-      {
-        path: 'completedappointments',
-        name: 'side-menu-completed-appointments',
-        component: CompletedAppointments,
-        meta: {
-          crumbs: [
-            { name: 'Dashboard', link: '/dashboard' },
-            { name: 'Appointments', link: '' }
-          ]
-        }
-      },
+     
 
 
       {
@@ -251,31 +228,9 @@ const routes = [
         }
       },
 
-      {
-        path: 'appointment-details/:appointmentId',
-        name: 'side-menu-appointment-details',
-        component: AppointmentsDetails,
-        meta: {
-          crumbs: [
-            { name: 'Dashboard', link: '/dashboard' },
-            { name: 'Appointments', link: '/dashboard/viewappointments' },
-            { name: 'Details', link: '' }
-          ]
-        }
-      },
+    
 
-      {
-        path: 'side-menu-dentalquestions/:appointmentId/:patientId',
-        name: 'side-menu-dentalquestions',
-        component: Questions,
-        meta: {
-          crumbs: [
-            { name: 'Dashboard', link: '/dashboard' },
-            { name: 'Appointments', link: '/dashboard/viewappointments' },
-            { name: 'Anamnese Questions', link: '' }
-          ]
-        }
-      },
+      
 
       {
         path: 'invoice-details/:invoiceId',
@@ -483,9 +438,9 @@ router.beforeEach((to, from, next) => {
     '/reset',
 
 
-    '/dashboard',
-    '/allproducts',
-    '/allorders'
+    // '/dashboard',
+    // '/allproducts',
+    // '/allorders'
   ]
   const authRequired = !publicPages.includes(to.path)
   const loggedIn = JSON.parse(localStorage.getItem('user'))

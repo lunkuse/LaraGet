@@ -589,7 +589,6 @@
           :type="element.type"
           :placeholder="element.placeholder"
           :v-model="element.vmodel"
-          @blur.passive="getHomeDetails(element.name, $event)"
         />
 
         <ErrorMessage
@@ -1053,17 +1052,17 @@ const schema = yup.object().shape({
     .string()
     .email(t("translation.errors.invalidEmail"))
     .required(t("translation.requiredText")),
-  telephoneNumber: yup.string().test({
-    name: "telephoneNumber",
-    test: (value) => {
-      if (!value) return true; // skip validation
-      return /^(?:(?:\+?\d{1,3}[-. ]?)?\(?\d{3}\)?[-. ]?)?\d{3}[-. ]?\d{4}$/.test(
-        value
-      );
-    },
-    message: t("translation.errors.invalidPhoneNumber"),
-  }),
-
+  // telephoneNumber: yup.string().test({
+  //   name: "telephoneNumber",
+  //   test: (value) => {
+  //     if (!value) return true; // skip validation
+  //     return /^(?:(?:\+?\d{1,3}[-. ]?)?\(?\d{3}\)?[-. ]?)?\d{3}[-. ]?\d{4}$/.test(
+  //       value
+  //     );
+  //   },
+  //   message: t("translation.errors.invalidPhoneNumber"),
+  // }),
+  telephoneNumber: yup.string(),
   city: yup
     .string()
     .matches(/^[a-zA-Z0-9_\-\. ]+$/, {
@@ -1087,26 +1086,24 @@ const schema = yup.object().shape({
   // address: yup.string().required(t("translation.addressRequired")),
   // gender: yup.string(),
 
-  password: yup
-    .string()
-    .required(t("translation.requiredText"))
-    .min(8)
-    .matches(
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&.]{8,}$/,
-      t("translation.containEight") +
-        "," +
-        " " +
-        t("translation.oneUppercase") +
-        "," +
-        " " +
-        t("translation.oneLowercase") +
-        "," +
-        " " +
-        t("translation.oneNumber") +
-        "," +
-        " " +
-        t("translation.oneSpecialCharacter")
-    ),
+  password: yup.string().required(t("translation.requiredText")),
+  // .min(8)
+  // .matches(
+  //   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&.]{8,}$/,
+  //   t("translation.containEight") +
+  //     "," +
+  //     " " +
+  //     t("translation.oneUppercase") +
+  //     "," +
+  //     " " +
+  //     t("translation.oneLowercase") +
+  //     "," +
+  //     " " +
+  //     t("translation.oneNumber") +
+  //     "," +
+  //     " " +
+  //     t("translation.oneSpecialCharacter")
+  // ),
   password_confirmation: yup
     .string()
     .required(t("translation.requiredText"))
@@ -1155,23 +1152,24 @@ const handleRegister = async (values) => {
 
   store.dispatch("auth/register", user).then((response) => {
     console.log("response.status regi ", response);
-    if (response.status == true) {
-      message.value = response.message;
+    if (response.status === "success") {
+      // message.value = response.message;
+      message.value = "Registered Successfully";
       // this.successful = true
       loading.value = false;
 
       // Notification
-      Toastify({
-        node: $("#success-notification-content")
-          .clone()
-          .removeClass("hidden")[0],
-        duration: 3000,
-        newWindow: true,
-        close: true,
-        gravity: "top",
-        position: "right",
-        stopOnFocus: true,
-      }).showToast();
+      // Toastify({
+      //   node: $("#success-notification-content")
+      //     .clone()
+      //     .removeClass("hidden")[0],
+      //   duration: 3000,
+      //   newWindow: true,
+      //   close: true,
+      //   gravity: "top",
+      //   position: "right",
+      //   stopOnFocus: true,
+      // }).showToast();
 
       // Redirect to login page
       router.push("/dashboard").catch((msg) => console.log(msg));
@@ -1186,8 +1184,4 @@ const handleRegister = async (values) => {
     }
   });
 };
-
-watch(street, (newStreetValue) => {
-  // Perform any actions you want when the street value changes
-});
 </script>

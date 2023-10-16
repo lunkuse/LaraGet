@@ -378,24 +378,27 @@
             :class="{ hidden: !menuVisible }"
             @click="hideMenu"
           >
-            <div
+            <!-- <div
               class="dropdown-menu__content box bg-theme-26 dark:bg-dark-6 text-white"
+            > -->
+            <div
+              class="dropdown-menu__content box bg-theme-1 dark:bg-dark-6 text-white"
             >
               <div class="p-4 border-b border-white dark:border-dark-3">
                 <div v-if="currentUser" class="font-medium">
-                  {{ currentUser?.first_name }} {{ currentUser?.last_name }}
+                  {{ currentUser?.firstname }} {{ currentUser?.lastname }}
                 </div>
                 <div v-if="currentUser" class="font-medium">
                   {{ currentUser?.email }}
                 </div>
-                <div v-if="currentUser" class="font-medium">
+                <!-- <div v-if="currentUser" class="font-medium">
                   +{{ currentUser?.patient_phone }}
-                </div>
+                </div> -->
               </div>
               <div class="p-2">
                 <router-link
                   to="/dashboard/profile"
-                  class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-white hover:text-theme-36 dark:hover:bg-dark-3 rounded-md"
+                  class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-white hover:text-gray-700 dark:hover:bg-dark-3 rounded-md"
                 >
                   <UserIcon class="w-4 h-4 mr-2" />{{
                     $t("translation.profile_text")
@@ -407,7 +410,7 @@
                 <router-link
                   to="/"
                   @click="onLogout"
-                  class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-white hover:text-theme-36 dark:hover:bg-dark-3 rounded-md close"
+                  class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-white hover:text-gray-700 dark:hover:bg-dark-3 rounded-md close"
                 >
                   <Log-outIcon class="w-4 h-4 mr-2" />{{
                     $t("translation.logout_text")

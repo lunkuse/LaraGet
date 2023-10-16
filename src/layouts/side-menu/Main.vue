@@ -18,9 +18,7 @@
           </a>
         </router-link>
         <!-- END: Logo -->
-        <div
-          class="side-nav__devider my-6 bg-theme-3 text-theme-3 md:bg-theme-3"
-        ></div>
+        <div class="side-nav__devider my-6 !bg-white !text-white"></div>
         <ul>
           <!-- BEGIN: First Child -->
           <template v-for="(menu, menuKey) in formattedMenu">

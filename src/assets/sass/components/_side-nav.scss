@@ -22,7 +22,7 @@
     }
   }
   .side-nav__devider {
-    @apply w-full h-px bg-theme-3 z-10 relative dark:bg-dark-3;
+    @apply w-full h-px bg-white z-10 relative dark:bg-dark-3;
   }
   .side-menu {
     height: 50px;
@@ -120,7 +120,7 @@
             @apply absolute top-0 right-0 -mr-5;
           }
           .side-menu__icon {
-            @apply text-theme-3 dark:text-white;
+            @apply text-gray-800 dark:text-white;
             &:before {
               content: '';
               z-index: -1;

@@ -9,7 +9,7 @@ export const useLocalStorage = () => {
   }
 
   const saveUser = user => {
-    console.log('save user login: current lang', localStorage.getItem('lang'))
+    console.log('save user login: current')
     storage.setItem('user', JSON.stringify(user))
     storage.setItem('userID', user?.id)
     storage.setItem('facilityID', user?.facility_id)
