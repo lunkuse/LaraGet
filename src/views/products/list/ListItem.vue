@@ -7,7 +7,7 @@
         type="checkbox"
         class="form-check-input"
         id="checkbox1"
-        :value="appointment.id"
+        :value="appointment?.id"
         :checked="selected"
         @change="checkedAppointmentMethod($event, appointment)"
       />

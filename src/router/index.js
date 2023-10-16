@@ -437,10 +437,6 @@ router.beforeEach((to, from, next) => {
     '/contact',
     '/reset',
 
-
-    // '/dashboard',
-    // '/allproducts',
-    // '/allorders'
   ]
   const authRequired = !publicPages.includes(to.path)
   const loggedIn = JSON.parse(localStorage.getItem('user'))

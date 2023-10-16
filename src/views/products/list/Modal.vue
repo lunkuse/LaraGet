@@ -118,9 +118,9 @@
                       SKU
                       <span
                         class="text-gray-700 dark:text-white font-normal text-sm"
-                        :class="!appointment.SKU && 'text-theme-1'"
+                        :class="!appointment?.SKU && 'text-theme-1'"
                       >
-                        {{ appointment.SKU || "no SKU" }}
+                        {{ appointment?.SKU || "no SKU" }}
                       </span>
                     </div>
 
@@ -132,9 +132,9 @@
                       Dimension
                       <span
                         class="text-gray-700 dark:text-white font-normal text-sm"
-                        :class="!appointment.dimension && 'text-theme-1'"
+                        :class="!appointment?.dimension && 'text-theme-1'"
                       >
-                        {{ appointment.dimension || "no dimension" }}
+                        {{ appointment?.dimension || "no dimension" }}
                       </span>
                     </div>
 
@@ -180,9 +180,9 @@
                       Quantity
                       <span
                         class="text-gray-700 dark:text-gray-200 font-normal text-sm"
-                        :class="!appointment.quantity && 'text-theme-1'"
+                        :class="!appointment?.quantity && 'text-theme-1'"
                       >
-                        {{ appointment.quantity || "no quantity" }}
+                        {{ appointment?.quantity || "no quantity" }}
                       </span>
                     </div>
                     <!-- weight -->
@@ -193,7 +193,7 @@
                       Weight
                       <span
                         class="text-gray-700 dark:text-white font-normal text-sm"
-                        :class="!appointment.weight && 'text-theme-1'"
+                        :class="!appointment?.weight && 'text-theme-1'"
                         >{{ appointment?.weight || "no weight" }}</span
                       >
                     </div>

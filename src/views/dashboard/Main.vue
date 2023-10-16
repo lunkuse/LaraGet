@@ -10,7 +10,7 @@
             <div class="col-span-12 grid grid-cols-12 gap-6">
               <!-- products -->
               <router-link
-                to="/dashboard/viewappointments"
+                to="/allproducts"
                 class="col-span-12 sm:col-span-6 2xl:col-span-3 intro-y zoom-in rounded-2xl border-theme-43 border-r-4"
               >
                 <div
@@ -39,7 +39,7 @@
 
               <!-- orders -->
               <router-link
-                to="/dashboard/invoice"
+                to="/allorders"
                 class="col-span-12 sm:col-span-6 2xl:col-span-3 intro-y zoom-in rounded-2xl border-theme-44 border-r-4"
               >
                 <div
@@ -66,11 +66,41 @@
                 </div>
               </router-link>
 
+
+                <!-- invoices -->
+                <router-link
+                to="/dashboard/invoice"
+                class="col-span-12 sm:col-span-6 2xl:col-span-3 intro-y zoom-in rounded-2xl border-theme-44 border-r-4"
+              >
+                <div
+                  class="col-span-12 sm:col-span-6 2xl:col-span-3 intro-y rounded-2xl"
+                >
+                  <div class="box p-5 zoom-in rounded-2xl">
+                    <div class="flex">
+                      <div class="text-lg font-medium truncate mr-3">
+                       Invoices
+                      </div>
+                      <!-- <div class="text-lg font-medium truncate mr-3" v-else>Statements & Invoices</div> -->
+                      <div
+                        class="text-theme-44 py-1 px-2 flex items-center rounded-full text-xs bg-slate-100 dark:bg-darkmode-400 text-slate-500 cursor-pointer ml-auto truncate"
+                      >
+                        {{ no_of_invoices }}
+                      </div>
+                    </div>
+                    <div class="mt-1">
+                      <div>
+                        <CreditCardIcon class="text-theme-44" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </router-link>
+
               <!-- order types -->
-              <router-link
+              <!-- <router-link
                 to="/dashboard/communication"
                 class="col-span-12 sm:col-span-6 2xl:col-span-3 intro-y zoom-in rounded-2xl border-theme-43 border-r-4"
-              >
+              > -->
                 <div
                   class="col-span-12 sm:col-span-6 2xl:col-span-3 intro-y rounded-2xl"
                 >
@@ -92,7 +122,7 @@
                     </div>
                   </div>
                 </div>
-              </router-link>
+              <!-- </router-link> -->
             </div>
           </div>
         </div>

@@ -6,7 +6,7 @@ function getLocale() {
   if (localLocale) {
     return localLocale
   }
-  return 'nl'
+  return 'en'
 }
 
 export const i18n = createI18n({

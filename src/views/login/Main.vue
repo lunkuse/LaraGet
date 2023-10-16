@@ -408,17 +408,11 @@ console.log('response finally', res)
           }
         },
         (error) => {
-          if (
-            error ===
-            "The combination of email and password is incorrect please check your details & try again. 3 attempts remaining"
-          ) {
-            console.log("got new error", error);
-            this.message = this.t("translation.wrongEmailPassword");
-            this.failmessage = this.t("translation.wrongEmailPassword");
-          } else {
+          console.log("error here", error)
+         
             this.message = error;
             this.failmessage = error;
-          }
+          
 
           this.loading = false;
 

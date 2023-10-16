@@ -61,9 +61,9 @@
           <div v-if="appointments?.length > 0">
             <ListItem
               v-for="appointment in appointments"
-              :key="appointment.id"
+              :key="appointment?.id"
               :appointment="appointment"
-              :selected="appointmentSelected(appointment.id)"
+              :selected="appointmentSelected(appointment?.id)"
               @onSelected="onSelected"
             />
           </div>
@@ -221,10 +221,10 @@ export default defineComponent({
     const checkedAppointments = ref([]);
     const onSelected = (appointment, isChecked) => {
       if (isChecked) {
-        checkedAppointments.value.push(appointment.id);
+        checkedAppointments.value.push(appointment?.id);
       } else {
         checkedAppointments.value.splice(
-          checkedAppointments.value.indexOf(appointment.id),
+          checkedAppointments.value.indexOf(appointment?.id),
           1
         );
       }
