@@ -103,6 +103,8 @@ export const en = {
     ext: "Extension",
     streetAddress: "Street Address",
     city: "City",
+    business_name:"Business Name",
+    business_account:"Business Account",
     receiver: "Receiver",
     guardian: "Guardian",
     nationality: "Nationality",
@@ -146,6 +148,8 @@ export const en = {
     lastNameOfPartner: "Partner's Last Name",
     countryOfBirth: "Country Of Birth",
     placeOfBirth: "Place Of Birth",
+    idNumber: "Id Number",
+    location:"location",
   },
   errors: {
     RequestFailed: "Request Failed",

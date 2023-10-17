@@ -13,7 +13,7 @@ class AuthService {
           "service1 login: current lang",
           localStorage.getItem("lang")
         );
-        console.log("response.status check", response.data.status );
+        console.log("response.status check", response.data.status);
         if (response.data.status === "success") {
           console.log("service2 login: current lang", response.data.data);
 
@@ -38,7 +38,7 @@ class AuthService {
   }
 
   logout() {
-   
+
     useLocalStorage().clearSession();
   }
 
@@ -48,12 +48,24 @@ class AuthService {
     return axios
       .post("auth/signup", {
         firstname: user?.firstName,
-        // middleName: user?.middleName,
         lastname: user?.lastName,
         email: user?.email,
         password: user?.password,
-        // password_confirmation: user?.password_confirmation,
-      
+        DOB: user?.birthDate,
+        Id_number: user?.idNumber,
+        country: user?.country,
+        phone_number: user?.phone_number,
+        gender: user?.gender,
+        user_Type:"vendor",
+        city:user?.city,
+        business_name:user?.business_name,
+        account_number:user?.business_account,
+        business_documents: [
+          "https://media.istockphoto.com/id/1434947710/photo/businessman-headphones-and-laptop-webinar-in-office-with-coffee-on-table-video-call-or.jpg?s=1024x1024&w=is&k=20&c=NvC5p29pg1jBXw-IEzCTYg3Mv1A11k8BGVFqRw-DCDk=",
+          "https://media.istockphoto.com/id/1434947710/photo/businessman-headphones-and-laptop-webinar-in-office-with-coffee-on-table-video-call-or.jpg?s=1024x1024&w=is&k=20&c=NvC5p29pg1jBXw-IEzCTYg3Mv1A11k8BGVFqRw-DCDk=",
+          "https://media.istockphoto.com/id/1434947710/photo/businessman-headphones-and-laptop-webinar-in-office-with-coffee-on-table-video-call-or.jpg?s=1024x1024&w=is&k=20&c=NvC5p29pg1jBXw-IEzCTYg3Mv1A11k8BGVFqRw-DCDk="
+        ],
+
       })
       .then((response) => {
         console.log("response.status check", response);
