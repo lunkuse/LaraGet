@@ -469,7 +469,7 @@
 
           <!-- exports filter -->
         </div>
-
+here{{products}}
         <List
           :appointments="filteredAppointments"
           :isLoading="isLoading"
@@ -486,7 +486,7 @@
     </div>
   </div>
 </template>
-<script >
+<script lang="ts" >
 import moment from "moment";
 // import axios from 'axios'
 import axios from "../../../axios";
@@ -497,6 +497,8 @@ import Button from "@/components/shared/buttons/Button.vue";
 import { useI18n } from "vue-i18n";
 import { useStore } from "vuex";
 import { allappointments } from "../../../store/appointments";
+import { allProductsStore } from "../../../store/products";
+import { storeToRefs } from "pinia";
 import {
   CalendarIcon,
   SearchIcon,
@@ -1896,6 +1898,13 @@ export default {
   },
 
   setup() {
+
+    const { fetchVendorProducts } = allProductsStore();
+    const { products } = storeToRefs(allProductsStore());
+    allProductsStore().fetchVendorProducts({
+      VenderId: 3
+    });
+    allProductsStore().fetchAllProducts();
     // const translation = inject("translation");
     const translations = inject("translation_v3");
     console.log("in set up");
@@ -1915,7 +1924,7 @@ export default {
     const lang = ref(defaultLang);
     return {
       t,
-
+products,
       date,
       format,
       month,
