@@ -96,8 +96,30 @@ const url = "products/allItems"
     return await useFetch<Product>({
       url: "products/vendorItems",
       method: "post",
-      data: { vendorId:3},
+      data: { VenderId:3},
     });
+  }
+
+
+  async fetchVendorProducts(VendorId)  {
+    
+    // console.log('service create appointments url', url, data)
+    try {
+const url = "products/vendorItems"
+      const response = await axios
+        .post(
+          url,
+          { VenderId:3}
+        )
+      // let data = response.data;
+      console.log('vendor type data ', response.data);
+    
+        return { status: response?.data?.status, data: response.data.data, message: "Products retrieved successfully"
+        };
+     
+    } catch (err) {
+      return { status: false, data: {}, message: `${err}` };
+    }
   }
 
 }

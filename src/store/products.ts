@@ -27,12 +27,13 @@ export const allProductsStore = defineStore("allProductsStore", {
 
 
 
-		const { payload, success } = await ProductService.fetchVendorProducts(
+		const { data, success } = await ProductService.fetchVendorProducts(
 			parameters
 		  );
-		if(success) {
-			this.vendorProducts = payload
-		}
+		  console.log('all vendor products', data)
+		// if(success) {
+			this.vendorProducts = data.data
+		// }
 	
 	  },
 

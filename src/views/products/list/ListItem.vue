@@ -17,33 +17,29 @@
     >
       <!-- image -->
       <div class="flex items-center gap-2 capitalize ml-2">
-        <img :src="appointment?.images[0]" alt="Product Image" />
+        <img :src="appointment?.Images[0]" alt="Product Image" />
       </div>
 
       <!-- category -->
       <div class="flex items-center gap-2 capitalize ml-2">
-        {{ appointment?.category }}
+        {{ appointment?.Category }}
       </div>
       <!-- name -->
       <div class="flex items-center gap-2 capitalize ml-2">
-        {{ appointment?.name }}
+        {{ appointment?.Name }}
       </div>
       <!-- description -->
       <div class="flex items-center gap-2  ml-2">
         <div>
           <span class="relative inline-block text-sm duration-300 group">
-            {{ truncateString(appointment?.description, 16) }}
+            {{ truncateString(appointment?.Description, 16) }}
             <!-- Tooltip text here -->
             <span
-              v-if="appointment?.description?.length > 16"
+              v-if="appointment?.Description?.length > 16"
               class="absolute mt-4 hidden group-hover:flex -left-5 -top-2 -translate-y-full w-48 px-2 py-1 text-black bg-white rounded-lg text-center text-sm after:content-[''] after:absolute after:left-1/2 after:top-[100%] after:-translate-x-1/2 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-white"
             >
               {{
-                !appointment.treatment_type && !appointment.appointment_type
-                  ? "untitled"
-                  : appointment?.treatment_type !== null
-                  ? appointment?.treatment_type.title
-                  : appointment?.appointment_type.title
+              appointment?.Description
               }}
             </span>
           </span>
@@ -52,24 +48,25 @@
 
       <!-- discounted_price -->
       <div class="flex items-center gap-2 capitalize ml-2">
-        {{ appointment?.discounted_price }}
+        {{ appointment?.Discounted_Price }}
       </div>
 
       <!-- brand -->
       <div class="flex items-center gap-2 capitalize ml-2">
-        {{ appointment?.brand }}
+        {{ appointment?.Brand }}
       </div>
       <!-- status -->
       <div class="flex gap-2 capitalize items-center w-20">
-        <div
+        <!-- <div
           class="h-4 w-4 rounded-full p-2"
           :class="{
-            'bg-theme-9': appointment?.availability === true,
-            'bg-black': appointment?.availability === false,
+            'bg-theme-9': appointment?.Availability" === true,
+            'bg-black': appointment?.Availability" === false,
           }"
-        ></div>
+        >
+      </div> -->
         <div class="flex">
-          {{ getStatus(appointment?.availability) }}
+          {{ getStatus(appointment?.Availability) }}
         </div>
       </div>
 
@@ -258,6 +255,7 @@ export default defineComponent({
       selectedAppointment.value = null;
     };
     const truncateString = (string, limit) => {
+      console.log('description string', string)
       if (string.length > limit) {
         return string.substring(0, limit) + "...";
       }

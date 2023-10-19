@@ -469,7 +469,7 @@
 
           <!-- exports filter -->
         </div>
-here{{products}}
+
         <List
           :appointments="filteredAppointments"
           :isLoading="isLoading"
@@ -491,7 +491,7 @@ import moment from "moment";
 // import axios from 'axios'
 import axios from "../../../axios";
 import AppointmentsService from "../../../service/appointments-service";
-import { ref, inject } from "vue";
+import { ref, inject,  toRaw, watch} from "vue";
 import debounce from "lodash.debounce";
 import Button from "@/components/shared/buttons/Button.vue";
 import { useI18n } from "vue-i18n";
@@ -661,7 +661,7 @@ export default {
     };
   },
   created() {
-    this.getDummyData();
+   
     // this.appointments = [];
     // this.paginatedData = [];
     // this.fetchAppointmentTypes();
@@ -748,103 +748,7 @@ export default {
       this.paginatedAppointment;
     },
 
-    getDummyData() {
-      console.log("getting dummy");
-      const myappointments = {
-        currentPage: 1,
-        totalPages: 2163,
-        totalItems: 25946,
-        perPage: 12,
-        nextPageUrl:
-          "https://127.0.0.1:8000/api/v2/products/all-paginated?page=2",
-        prevPageUrl: null,
-        firstPageUrl:
-          "https://127.0.0.1:8000/api/v2/products/all-paginated?page=1",
-        lastPageUrl:
-          "https://127.0.0.1:8000/api/v2/products/all-paginated?page=2163",
-        data: [
-          {
-            id: 1,
-            name: "Product 1",
-            description: "This is a product description.",
-            category: "product",
-            brand: "Brand A",
-            discounted_price: 19.99,
-            quantity: 100,
-            SKU: "SKU12345",
-            weight: "1.5 lbs",
-            dimensions: "5 x 5 x 10 inches",
-            images: ["https://via.placeholder.com/150", "image2.jpg"],
-            specifications: {
-              color: "Red",
-              size: "Large",
-            },
-            availability: false,
-            rating: 4.5,
-            reviews: 25,
-            created_at: "2023-09-29T10:00:00Z",
-            vendor: "Vendor X",
-          },
-          {
-            id: 2,
-            name: "Service 1",
-            description: "This is a service description.",
-            category: "service",
-            brand: "Brand Q",
-               brand: "Brand B",
-            discounted_price: 50.00,
-            quantity: null,
-            SKU: null,
-            weight: null,
-            dimensions: null,
-            images: ["https://via.placeholder.com/150"],
-            specifications: {},
-            availability: true,
-            rating: 4.0,
-            reviews: 10,
-            created_at: "2023-09-29T11:30:00Z",
-            vendor: "Vendor Y",
-          },
-          {
-            id: 3,
-            name: "Product 2",
-            description: "Another product description.",
-            category: "product",
-            brand: "Brand B",
-            discounted_price: 29.99,
-            quantity: 50,
-            SKU: "SKU67890",
-            weight: "2.0 lbs",
-            dimensions: "6 x 6 x 12 inches",
-            images: ["https://via.placeholder.com/150", "image4.jpg"],
-            specifications: {
-              color: "Blue",
-              size: "Medium",
-            },
-            availability: true,
-            rating: 5.0,
-            reviews: 35,
-            created_at: "2023-09-29T12:15:00Z",
-            vendor: "Vendor Z",
-          },
-          // Add more products and services here as needed
-        ],
-      };
-      console.log("dummy products", myappointments?.data);
-
-      this.appointments = this.appointments.concat(myappointments?.data);
-      let currentPage = myappointments?.current_page;
-      this.last_page = myappointments?.last_page_url;
-      let next_page_url = myappointments?.next_page_url;
-      this.links = myappointments?.links;
-      this.pagination = {
-        last_page_url: myappointments?.last_page_url,
-        next_page_url: myappointments?.next_page_url,
-      };
-      // this.lengthFrom=response.data.payload.from
-      this.lengthTo = myappointments?.to;
-      this.lengthTotal = myappointments?.total;
-    },
+   
 
     async fetchAll(data) {
       this.ourRequest = axios.CancelToken.source();
@@ -1439,6 +1343,11 @@ export default {
     },
   },
   computed: {
+    currentUser() {
+   
+      return toRaw(this.$store.state.auth.user);
+  
+  },
     async paginatedAppointment() {
       // keyword
       console.log("past_appointments"), this.past_appointments;
@@ -1499,8 +1408,10 @@ export default {
     },
 
     filteredAppointments() {
+      console.log('products vendor id',toRaw(this.$store.state.auth.user));
+      console.log('filtered appointments',this.vendorProducts)
       // let allAppointments = this.appointments;
-      let allAppointments = [...this.appointments];
+      let allAppointments = [...this.vendorProducts];
 
       this.filteredResponse = allAppointments;
       return allAppointments;
@@ -1546,6 +1457,8 @@ export default {
     },
   },
   watch: {
+    
+   
     // keyword
     search_term: debounce(function (e) {
       if (!!this.search_term) {
@@ -1900,7 +1813,8 @@ export default {
   setup() {
 
     const { fetchVendorProducts } = allProductsStore();
-    const { products } = storeToRefs(allProductsStore());
+    const { vendorProducts } = storeToRefs(allProductsStore());
+    // const { products } = storeToRefs(allProductsStore());
     allProductsStore().fetchVendorProducts({
       VenderId: 3
     });
@@ -1922,9 +1836,16 @@ export default {
     const storedLang = localStorage.getItem("lang");
     const defaultLang = storedLang ?? "nl";
     const lang = ref(defaultLang);
+
+    watch(vendorProducts, (newVendorProducts, oldVendorProducts) => {
+      vendorProducts.value=newVendorProducts
+      console.log("vendorProducts changed:",vendorProducts.value);
+
+    });
     return {
       t,
-products,
+      vendorProducts,
+// products,
       date,
       format,
       month,
