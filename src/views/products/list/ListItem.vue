@@ -66,7 +66,7 @@
         >
       </div> -->
         <div class="flex">
-          {{ getStatus(appointment?.Availability) }}
+          <!-- {{ getStatus(appointment?.Availability) }} -->
         </div>
       </div>
 

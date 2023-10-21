@@ -43,7 +43,7 @@ export default class AppointmentsService {
 
       const response = await axios
         .post(
-          'patients/appointments/create',
+          'products/create',
           data
         )
       // let data = response.data;

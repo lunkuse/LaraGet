@@ -42,7 +42,8 @@
                   <h3
                     class="text-xl font-bold font-sans text-theme-1 text-white pb-3"
                   >
-                    {{ appointment?.name }}
+                    {{ appointment?.Name }}
+                   
                   </h3>
                   <button
                     type="button"
@@ -74,9 +75,9 @@
                   <div class="flex space-x-2 bg-gray-200 rounded-md p-2 w-max">
                     <h5
                       class="font-sans font-normal text-sm"
-                      :class="!appointment?.description && 'text-theme-1'"
+                      :class="!appointment?.Description && 'text-theme-1'"
                     >
-                      {{ appointment?.description || "no description" }}
+                      {{ appointment?.Description || "no description" }}
                     </h5>
                   </div>
                 </div>
@@ -93,9 +94,9 @@
                       Name
                       <span
                         class="text-gray-700 dark:text-white font-normal text-sm"
-                        :class="!appointment?.name && 'text-theme-1'"
+                        :class="!appointment?.Name && 'text-theme-1'"
                       >
-                        {{ appointment?.name || "no name" }}
+                        {{ appointment?.Name || "no name" }}
                       </span>
                     </div>
                     <!-- brand -->
@@ -106,8 +107,8 @@
                       Brand
                       <span
                         class="text-gray-700 dark:text-white font-normal text-sm"
-                        :class="!appointment?.brand && 'text-theme-1'"
-                        >{{ appointment?.brand || "no brand" }}</span
+                        :class="!appointment?.Brand && 'text-theme-1'"
+                        >{{ appointment?.Brand || "no brand" }}</span
                       >
                     </div>
                     <!-- sku -->
@@ -134,7 +135,7 @@
                         class="text-gray-700 dark:text-white font-normal text-sm"
                         :class="!appointment?.dimension && 'text-theme-1'"
                       >
-                        {{ appointment?.dimension || "no dimension" }}
+                        {{ appointment?.Dimension || "no dimension" }}
                       </span>
                     </div>
 
@@ -162,14 +163,14 @@
                       id="date"
                       class="text-gray-800 dark:text-white font-sans font-bold flex flex-col"
                     >
-                      Pice
+                      Price
                       <span
                         class="text-gray-700 dark:text-white font-normal text-sm"
                         :class="
-                          !appointment?.discounted_price && 'text-theme-1'
+                          !appointment?.Discounted_Price && 'text-theme-1'
                         "
                       >
-                        {{ appointment?.discounted_price }}
+                        {{ appointment?.Discounted_Price }}
                       </span>
                     </div>
                     <!-- quantity -->
@@ -180,9 +181,9 @@
                       Quantity
                       <span
                         class="text-gray-700 dark:text-gray-200 font-normal text-sm"
-                        :class="!appointment?.quantity && 'text-theme-1'"
+                        :class="!appointment?.Quantity && 'text-theme-1'"
                       >
-                        {{ appointment?.quantity || "no quantity" }}
+                        {{ appointment?.Quantity || "no quantity" }}
                       </span>
                     </div>
                     <!-- weight -->
@@ -193,8 +194,8 @@
                       Weight
                       <span
                         class="text-gray-700 dark:text-white font-normal text-sm"
-                        :class="!appointment?.weight && 'text-theme-1'"
-                        >{{ appointment?.weight || "no weight" }}</span
+                        :class="!appointment?.Weight && 'text-theme-1'"
+                        >{{ appointment?.Weight || "no weight" }}</span
                       >
                     </div>
 

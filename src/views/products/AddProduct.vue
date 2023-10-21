@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <div
@@ -19,9 +18,6 @@
               <h2 class="text-lg font-medium mr-auto">Add New Product</h2>
             </div>
             <div class="grid grid-cols-12 gap-6 mt-1 px-5 box">
-
-
-
               <div class="intro-y col-span-12 lg:col-span-12">
                 <!-- BEGIN: Form Layout -->
 
@@ -31,27 +27,24 @@
                   autocomplete="off"
                 >
                   <div class="grid grid-cols-12">
-
-
-<!-- category-->
+                    <!-- category-->
                     <div class="col-span-12 mt-2">
-              <label class="block font-bold">Product Name:</label>
-              <input
-                      class="intro-x form-control py-3 px-4 block border-gray-200 focus:border-theme-36" 
-                      v-model="product_name"  required />
-         
-            </div>
+                      <label class="block font-bold">Product Name:</label>
+                      <input
+                        class="intro-x form-control py-3 px-4 block border-gray-200 focus:border-theme-36"
+                        v-model="product_name"
+                        required
+                      />
+                    </div>
 
-
-
-            <div class="col-span-12 mt-2">
+                    <div class="col-span-12 mt-2">
                       <!-- select category-->
                       <div class="mt-2">
                         <label
                           for="update-profile-form-12"
                           class="form-label font-semibold text-black dark:!text-white"
                         >
-                         Category
+                          Category
                           <span class="text-theme-6">*</span>
                         </label>
 
@@ -72,48 +65,45 @@
                             {{ category.title }}
                           </option>
                         </TomSelect>
-                       
                       </div>
                     </div>
 
+                    <div class="col-span-12 mt-2">
+                      <label class="block font-bold">Description:</label>
+                      <ClassicEditor
+                        v-model="description"
+                        :config="editorConfig"
+                        @focus="changeFocus"
+                      />
+                    </div>
 
                     <div class="col-span-12 mt-2">
-              <label class="block font-bold">Description:</label>
-              <ClassicEditor v-model="description"
-        :config="editorConfig"
-        @focus="changeFocus"
-        />
-         
-            </div>
+                      <label class="block font-bold">Discounted Price:</label>
+                      <input
+                        class="intro-x form-control py-3 px-4 block border-gray-200 focus:border-theme-36"
+                        v-model="price"
+                        required
+                      />
+                    </div>
 
+                    <div class="col-span-12 mt-2">
+                      <label class="block font-bold">Quantity:</label>
+                      <input
+                        class="intro-x form-control py-3 px-4 block border-gray-200 focus:border-theme-36"
+                        v-model="quantity"
+                        required
+                      />
+                    </div>
 
-
-            <div class="col-span-12 mt-2">
-              <label class="block font-bold">Discounted Price:</label>
-              <input
-                      class="intro-x form-control py-3 px-4 block border-gray-200 focus:border-theme-36" 
-                      v-model="price"  required />
-         
-            </div>
-
-            <div class="col-span-12 mt-2">
-              <label class="block font-bold">Quantity:</label>
-              <input
-                      class="intro-x form-control py-3 px-4 block border-gray-200 focus:border-theme-36" 
-                      v-model="quantity"  required />
-         
-            </div>
-
-
-                   <!-- okay -->
-            <div class="col-span-12 mt-2">
+                    <!-- okay -->
+                    <div class="col-span-12 mt-2">
                       <!-- select category-->
                       <div class="mt-2">
                         <label
                           for="update-profile-form-12"
                           class="form-label font-semibold text-black dark:!text-white"
                         >
-                       Brand
+                          Brand
                           <span class="text-theme-6">*</span>
                         </label>
 
@@ -129,40 +119,44 @@
                           <option
                             v-for="(brand, id) in productBrands"
                             :key="id"
-                            :value="brand.id"
+                            :value="brand.title"
                           >
                             {{ brand.title }}
                           </option>
                         </TomSelect>
-                       
                       </div>
                     </div>
                   </div>
-<!-- sku -->
+                  <!-- sku -->
                   <div class="col-span-12 mt-2">
-              <label class="block font-bold">SKU:</label>
-              <input
-                      class="intro-x form-control py-3 px-4 block border-gray-200 focus:border-theme-36" 
-                      v-model="SKU"  required />
-         
-            </div>
-<!-- Weight-->
-<div class="col-span-12 mt-2">
-              <label class="block font-bold">Weight:</label>
-              <input
-                      class="intro-x form-control py-3 px-4 block border-gray-200 focus:border-theme-36" 
-                      v-model="weight"  required />
-         
-            </div>
-                 
- <!-- Image Uploader -->
- <div class="col-span-12 mt-2">
-      <label class="block font-bold">Images:</label>
-      <input type="file" accept="image/*" @change="handleImageUpload" multiple />
-    </div>
+                    <label class="block font-bold">SKU:</label>
+                    <input
+                      class="intro-x form-control py-3 px-4 block border-gray-200 focus:border-theme-36"
+                      v-model="SKU"
+                      required
+                    />
+                  </div>
+                  <!-- Weight-->
+                  <div class="col-span-12 mt-2">
+                    <label class="block font-bold">Weight:</label>
+                    <input
+                      class="intro-x form-control py-3 px-4 block border-gray-200 focus:border-theme-36"
+                      v-model="weight"
+                      required
+                    />
+                  </div>
 
+                  <!-- Image Uploader -->
+                  <div class="col-span-12 mt-2">
+                    <label class="block font-bold">Images:</label>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      @change="handleImageUpload"
+                      multiple
+                    />
+                  </div>
 
-            
                   <!-- Notification Alert Start -->
                   <div
                     id="basic-non-sticky-notification-content"
@@ -185,7 +179,7 @@
                     <CheckCircleIcon class="text-theme-9" />
                     <div class="ml-4 mr-4">
                       <!-- <div class="font-medium">Appointment has been Successfully created</div> -->
-                      <div class="font-medium">{{ successMessage }}</div>
+                      <div class="font-medium">It has been successfully added</div>
                     </div>
                   </div>
                   <!-- END: Success Notification Content -->
@@ -266,7 +260,7 @@
 import { defineComponent, toRaw, reactive, toRefs, inject, ref } from "vue";
 import Toastify from "toastify-js";
 import moment from "moment";
- import ClassicEditor from '../../global-components/ckeditor/ClassicEditor.vue';
+import ClassicEditor from "../../global-components/ckeditor/ClassicEditor.vue";
 
 // Validations
 import { required, maxValue, minValue } from "@vuelidate/validators";
@@ -276,7 +270,7 @@ import { useI18n } from "vue-i18n";
 import $ from "cash-dom";
 import { Form, ErrorMessage, Field, useFormValues } from "vee-validate";
 export default defineComponent({
-  components: {ClassicEditor},
+  components: { ClassicEditor },
 
   data() {
     // Basic non sticky notification
@@ -314,98 +308,78 @@ export default defineComponent({
     };
     const validate = useVuelidate(rules, toRefs(formData));
 
-    const handleSubmit = () => {
-      this.formData.selected_appointment_type = this.selected_appointment_type;
-      this.formData.appointment_date = moment(this.appointment_date).format(
-        "YYYY-MM-DD"
-      );
-      this.formData.startTime = this.newStartTime;
-      validate.value.$touch();
-      if (validate.value.$invalid) {
-        Toastify({
-          node: $("#failed-notification-content")
-            .clone()
-            .removeClass("hidden")[0],
-          duration: 3000,
-          newWindow: true,
-          close: true,
-          gravity: "top",
-          position: "right",
-          stopOnFocus: true,
-        }).showToast();
-      } else {
-        // const token = localStorage.getItem('token')
-        this.loading = true;
+    const handleSubmit12 = () => {
+      // const token = localStorage.getItem('token')
+      this.loading = true;
 
-        // We will handle form submission here
-        const data = {
-          statusId: 2,
-          sourceId: 2,
-          periodId: 3,
-          appointmentTypeId: this.formData.selected_appointment_type,
-          doctors: [],
-          date: this.formData.appointment_date,
-          frequencyId: 1,
-          interval: this.timeInterval,
-          comments: this.comment,
-          facility_id: 1,
-          // data.append('slots', this.selectedSlot)
-          slots: {
-            "start-time": this.formData.startTime,
+      // We will handle form submission here
+      const data = {
+        statusId: 2,
+        sourceId: 2,
+        periodId: 3,
+        appointmentTypeId: this.formData.selected_appointment_type,
+        doctors: [],
+        date: this.formData.appointment_date,
+        frequencyId: 1,
+        interval: this.timeInterval,
+        comments: this.comment,
+        facility_id: 1,
+        // data.append('slots', this.selectedSlot)
+        slots: {
+          "start-time": this.formData.startTime,
 
-            "end-time": this.newEndTime,
-          },
-        };
-        try {
-          AppointmentsService.createAppointments(data)
-            .then((response) => {
-              const notification = document.querySelector(
-                ".toastify-content .notification-message"
-              );
-              if (response.status == true) {
-                this.loading = false;
-                this.successMessage = response.message;
+          "end-time": this.newEndTime,
+        },
+      };
+      try {
+        AppointmentsService.createAppointments(data)
+          .then((response) => {
+            const notification = document.querySelector(
+              ".toastify-content .notification-message"
+            );
+            if (response.status == true) {
+              this.loading = false;
+              this.successMessage = response.message;
 
-                Toastify({
-                  node: $("#success-notification-content")
-                    .clone()
-                    .removeClass("hidden")[0],
-                  duration: 3000,
-                  newWindow: true,
-                  close: true,
-                  gravity: "top",
-                  position: "right",
-                  stopOnFocus: true,
-                }).showToast();
-                // this.clearVariables()
-                // router.push('/dashboard/viewappointments')
-                // document.querySelector(".closeBTN").click();
+              Toastify({
+                node: $("#success-notification-content")
+                  .clone()
+                  .removeClass("hidden")[0],
+                duration: 3000,
+                newWindow: true,
+                close: true,
+                gravity: "top",
+                position: "right",
+                stopOnFocus: true,
+              }).showToast();
+              // this.clearVariables()
+              // router.push('/dashboard/viewappointments')
+              // document.querySelector(".closeBTN").click();
 
-                document.querySelector(".closeBTN").click();
-                this.$router.push({
-                  name: "side-menu-view-appointments",
-                });
-                //           this.$nextTick(() => {
-                //             router.push({
-                //               name: "side-menu-view-appointments",
-                //             });
-                // });
-              } else {
-                this.loading = false;
-                notification.textContent = "Appointment Creation Failed";
-              }
-              this.basicNonStickyNotificationToggle();
-              console.log("response", response);
-              // this.$router.push({
-              //   name: 'side-menu-view-appointments'
-              // })
-            })
-            .catch((error) => {
-              console.log("Error", error);
-            });
-        } catch (err) {
-          console.log("error: ", err);
-        }
+              document.querySelector(".closeBTN").click();
+              this.$router.push({
+                name: "side-menu-view-appointments",
+              });
+              //           this.$nextTick(() => {
+              //             router.push({
+              //               name: "side-menu-view-appointments",
+              //             });
+              // });
+            } else {
+              this.loading = false;
+              notification.textContent = "Appointment Creation Failed";
+            }
+            this.basicNonStickyNotificationToggle();
+            console.log("response", response);
+            // this.$router.push({
+            //   name: 'side-menu-view-appointments'
+            // })
+          })
+          .catch((error) => {
+            console.log("Error", error);
+          });
+      } catch (err) {
+        console.log("error: ", err);
       }
     };
 
@@ -439,7 +413,7 @@ export default defineComponent({
       newEndTime: "",
       highlightedRange: "",
 
-      handleSubmit,
+      // handleSubmit,
       formData,
       validate,
       loading: false,
@@ -455,12 +429,8 @@ export default defineComponent({
       allTimeSlotsArray: "",
     };
   },
-  mounted() {
-  
-  },
-  created() {
- 
-  },
+  mounted() {},
+  created() {},
   props: ["endDate"],
 
   computed: {
@@ -537,16 +507,14 @@ export default defineComponent({
       this.appointmentTypeId = "";
       this.date = "";
     },
-   
-    onchange(id) {
-     
-    },
-  
+
+    onchange(id) {},
+
     handleImageUpload(event) {
       const selectedImages = event.target.files;
       // Process the selected images as needed
       // You can upload them to your server, display previews, etc.
-      console.log('Selected Images:', selectedImages);
+      console.log("Selected Images:", selectedImages);
       const imagePreviews = [];
       for (let i = 0; i < selectedImages.length; i++) {
         const reader = new FileReader();
@@ -559,33 +527,89 @@ export default defineComponent({
         reader.readAsDataURL(selectedImages[i]);
       }
     },
-  
   },
-  watch: {
-   
-  },
+  watch: {},
   setup() {
     const { t } = useI18n({});
     const productCategories = [
-    { id: 1, title: 'Product' },
-    { id: 2, title: 'Service' }
-];
-const productBrands = [
-    { id: 1, title: 'Brand 1' },
-    { id: 2, title: 'Brand 2' }
-];
-   
+      { id: 1, title: "Product" },
+      { id: 2, title: "Service" },
+    ];
+    const productBrands = [
+      { id: 1, title: "Brand 1" },
+      { id: 2, title: "Brand 2" },
+    ];
 
-  
     const storedLang = localStorage.getItem("lang");
     const defaultLang = storedLang ?? "nl";
     const lang = ref(defaultLang);
+    const product_name = ref("");
+    const selected_category = ref(null);
+    const description = ref("");
+    const price = ref("");
+    const quantity = ref("");
+    const selected_brand = ref(null);
+    const SKU = ref("");
+    const weight = ref("");
+
+    const handleSubmit = () => {
+      const data = {
+        Name: product_name.value,
+        Description: description.value,
+        Category: selected_category.value,
+        Brand: selected_brand.value,
+        Discounted_Price: price.value,
+        Quantity: quantity.value,
+        SKU: SKU.value,
+        Weight: weight.value,
+        VenderId:3,
+        Images:["https://gumtreeau-res.cloudinary.com/image/private/t_$_s-l800/move/e19ec80a-a139-411e-a244-8dda1f04f1ab","https://m.media-amazon.com/images/I/71cZWwc6ZOL._AC_SX466_.jpg","https://m.media-amazon.com/images/I/61hg9npTqvL._AC_SX466_.jpg"],
+       
+        // Add other form fields as needed
+      };
+
+      try {
+        AppointmentsService.createAppointments(data)
+          .then((response) => {
+            
+            Toastify({
+                node: $("#success-notification-content")
+                  .clone()
+                  .removeClass("hidden")[0],
+                duration: 3000,
+                newWindow: true,
+                close: true,
+                gravity: "top",
+                position: "right",
+                stopOnFocus: true,
+              }).showToast();
+              // this.clearVariables()
+              // router.push('/dashboard/viewappointments')
+              // document.querySelector(".closeBTN").click();
+
+              document.querySelector(".closeBTN").click();
+          })
+          .catch((error) => {
+            // Handle errors
+          });
+      } catch (err) {
+        // Handle unexpected errors
+      }
+    };
     return {
       t,
-   
       lang,
       productCategories,
-      productBrands
+      productBrands,
+      product_name,
+      selected_category,
+      description,
+      price,
+      quantity,
+      selected_brand,
+      SKU,
+      weight,
+      handleSubmit,
     };
   },
 });
@@ -623,4 +647,3 @@ input[name="panel"]:checked ~ .accordion__content {
   overflow: auto;
 }
 </style>
-
