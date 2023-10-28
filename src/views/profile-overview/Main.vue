@@ -293,7 +293,7 @@
 
                 <!-- gender -->
 
-                <div class="hidden">
+                <div>
                   <label for="update-profile-form-7" class="form-label">
                     <span class="flex">
                       <p class="w-40 font-medium text-bold mx-1">
@@ -309,7 +309,7 @@
                         "
                         >{{
                           getGender(currentUser?.gender) ??
-                          $t("translation.notSetText")
+                            $t("translation.notSetText")
                         }}</span
                       >
                     </span>
@@ -318,7 +318,7 @@
 
                 <!-- dob -->
 
-                <div class="hidden">
+                <div>
                   <label for="update-profile-form-7" class="form-label">
                     <span class="flex">
                       <p class="w-40 font-medium text-bold mx-1">
@@ -328,40 +328,14 @@
                       <span
                         class="form-label"
                         :class="
-                          currentUser?.birth_date == null
-                            ? currentUser?.birth_date == null && 'text-gray-500'
+                          currentUser?.DOB == null
+                            ? currentUser?.DOB == null && 'text-gray-500'
                             : ''
                         "
                         >{{
-                          moment(currentUser.birth_date, "DD-MM-YYYY").format(
+                          moment(currentUser.DOB, "DD-MM-YYYY").format(
                             "DD-MM-YYYY"
                           ) ?? $t("translation.notSetText")
-                        }}</span
-                      >
-                    </span>
-                  </label>
-                </div>
-
-                <!-- marital status -->
-
-                <div class="hidden">
-                  <label for="update-profile-form-7" class="form-label">
-                    <span class="flex">
-                      <p class="w-40 font-medium text-bold mx-1">
-                        {{ $t("translation.marital_status_text") }}
-                      </p>
-
-                      <span
-                        class="form-label"
-                        :class="
-                          currentUser?.marital_status == null
-                            ? currentUser?.marital_status == null &&
-                              'text-gray-500'
-                            : ''
-                        "
-                        >{{
-                          getMarital(currentUser?.marital_status) ??
-                          $t("translation.notSetText")
                         }}</span
                       >
                     </span>
@@ -386,40 +360,137 @@
                         "
                         >{{
                           getMarital(currentUser?.email) ??
-                          $t("translation.notSetText")
+                            $t("translation.notSetText")
                         }}</span
                       >
                     </span>
                   </label>
                 </div>
 
-                <!-- patient phone -->
+                <!--  phone -->
 
-                <div class="hidden">
+                <div>
                   <label for="update-profile-form-7" class="form-label">
                     <span class="flex">
                       <p class="w-40 font-medium text-bold mx-1">
-                        {{ $t("translation.patient_phone_text") }}
+                        {{ $t("translation.phone_text") }}
                       </p>
 
                       <span
                         class="form-label capitalize"
                         :class="
-                          currentUser?.patient_phone == null
-                            ? currentUser?.patient_phone == null &&
+                          currentUser?.phone_number == null
+                            ? currentUser?.phone_number == null &&
                               'text-gray-500'
                             : ''
                         "
                         >{{
-                          currentUser?.patient_phone ??
-                          $t("translation.notSetText")
+                          currentUser?.phone_number ??
+                            $t("translation.notSetText")
                         }}</span
                       >
                     </span>
                   </label>
                 </div>
 
-                <!-- patient phone -->
+                <!-- country -->
+
+                <div>
+                  <label for="update-profile-form-7" class="form-label">
+                    <span class="flex">
+                      <p class="w-40 font-medium text-bold mx-1">
+                        {{ $t("translation.forms.country") }}
+                      </p>
+
+                      <span
+                        class="form-label"
+                        :class="
+                          currentUser?.country == null
+                            ? currentUser?.country == null && 'text-gray-500'
+                            : ''
+                        "
+                        >{{
+                          getMarital(currentUser?.country) ??
+                            $t("translation.notSetText")
+                        }}</span
+                      >
+                    </span>
+                  </label>
+                </div>
+
+                <!-- city -->
+
+                <div>
+                  <label for="update-profile-form-7" class="form-label">
+                    <span class="flex">
+                      <p class="w-40 font-medium text-bold mx-1">
+                        {{ $t("translation.forms.city") }}
+                      </p>
+
+                      <span
+                        class="form-label"
+                        :class="
+                          currentUser?.city == null
+                            ? currentUser?.city == null && 'text-gray-500'
+                            : ''
+                        "
+                        >{{
+                          getMarital(currentUser?.city) ??
+                            $t("translation.notSetText")
+                        }}</span
+                      >
+                    </span>
+                  </label>
+                </div>
+
+                <!-- location -->
+
+                <div>
+                  <label for="update-profile-form-7" class="form-label">
+                    <span class="flex">
+                      <p class="w-40 font-medium text-bold mx-1">
+                        {{ $t("translation.forms.location") }}
+                      </p>
+
+                      <span
+                        class="form-label"
+                        :class="
+                          currentUser?.location == null
+                            ? currentUser?.location == null && 'text-gray-500'
+                            : ''
+                        "
+                        >{{
+                          getMarital(currentUser?.location) ??
+                            $t("translation.notSetText")
+                        }}</span
+                      >
+                    </span>
+                  </label>
+                </div>
+
+                <!-- id number -->
+                <div>
+                  <label for="update-profile-form-7" class="form-label">
+                    <span class="flex">
+                      <p class="w-40 font-medium text-bold mx-1">
+                        {{ $t("translation.forms.idNumber") }}
+                      </p>
+
+                      <span
+                        class="form-label"
+                        :class="
+                          currentUser?.Id_number == null
+                            ? currentUser?.Id_number == null && 'text-gray-500'
+                            : ''
+                        "
+                        >{{
+                          getMarital(currentUser?.Id_number) ??
+                            $t("translation.notSetText")
+                        }}</span
+                      >
+                    </span>
+                  </label>
+                </div>
               </div>
               <div
                 class="flex items-center pt-2 border-b border-gray-200 dark:border-dark-5"
@@ -448,7 +519,7 @@
                         "
                         >{{
                           getMarital(currentUser?.nok_name) ??
-                          $t("translation.notSetText")
+                            $t("translation.notSetText")
                         }}</span
                       >
                     </span>
@@ -472,7 +543,7 @@
                         "
                         >{{
                           getMarital(currentUser?.nok_phone_number) ??
-                          $t("translation.notSetText")
+                            $t("translation.notSetText")
                         }}</span
                       >
                     </span>
@@ -495,7 +566,7 @@
                         "
                         >{{
                           getMarital(currentUser?.nok_email) ??
-                          $t("translation.notSetText")
+                            $t("translation.notSetText")
                         }}</span
                       >
                     </span>
@@ -531,7 +602,7 @@
                         "
                         >{{
                           getMarital(currentUser?.fm_name) ??
-                          $t("translation.notSetText")
+                            $t("translation.notSetText")
                         }}</span
                       >
                     </span>
@@ -555,7 +626,7 @@
                         "
                         >{{
                           getMarital(currentUser?.fm_phone_number) ??
-                          $t("translation.notSetText")
+                            $t("translation.notSetText")
                         }}</span
                       >
                     </span>
@@ -578,7 +649,7 @@
                         "
                         >{{
                           getMarital(currentUser?.fm_email) ??
-                          $t("translation.notSetText")
+                            $t("translation.notSetText")
                         }}</span
                       >
                     </span>
@@ -871,7 +942,7 @@
                     "
                     >{{
                       currentUser.country_of_birth ??
-                      $t("translation.notSetText")
+                        $t("translation.notSetText")
                     }}</span
                   >
                 </span>
