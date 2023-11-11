@@ -11,10 +11,7 @@
       >
         <div class="w-auto gap-2 text-sm mt-2 content-center flex items-center">
           <!-- length checked -->
-          <div
-            class="mx-auto text-slate-500"
-            v-if="filteredAppointments.length > 0"
-          >
+          <div class="mx-auto text-slate-500">
             {{ $t("translation.showing_text") }}
             {{ lengthFrom }}
             {{ $t("translation.to_text") }}
@@ -469,9 +466,9 @@
 
           <!-- exports filter -->
         </div>
-
+        here: {{ orders }}
         <List
-          :appointments="filteredAppointments"
+          :appointments="orders"
           :isLoading="isLoading"
           @clearFilter="clearFilters"
           :isPending="isPending"
@@ -491,13 +488,13 @@ import moment from "moment";
 // import axios from 'axios'
 import axios from "../../../axios";
 import AppointmentsService from "../../../service/appointments-service";
-import { ref, inject,  toRaw, watch} from "vue";
+import { ref, inject, toRaw, watch } from "vue";
 import debounce from "lodash.debounce";
 import Button from "@/components/shared/buttons/Button.vue";
 import { useI18n } from "vue-i18n";
 import { useStore } from "vuex";
 import { allappointments } from "../../../store/appointments";
-import { allProductsStore } from "../../../store/products";
+import { allOrdersStore } from "../../../store/orders";
 import { storeToRefs } from "pinia";
 import {
   CalendarIcon,
@@ -661,7 +658,6 @@ export default {
     };
   },
   created() {
-   
     // this.appointments = [];
     // this.paginatedData = [];
     // this.fetchAppointmentTypes();
@@ -747,8 +743,6 @@ export default {
 
       this.paginatedAppointment;
     },
-
-   
 
     async fetchAll(data) {
       this.ourRequest = axios.CancelToken.source();
@@ -1344,10 +1338,8 @@ export default {
   },
   computed: {
     currentUser() {
-   
       return toRaw(this.$store.state.auth.user);
-  
-  },
+    },
     async paginatedAppointment() {
       // keyword
       console.log("past_appointments"), this.past_appointments;
@@ -1408,13 +1400,12 @@ export default {
     },
 
     filteredAppointments() {
-      console.log('products vendor id',toRaw(this.$store.state.auth.user));
-      console.log('filtered appointments',this.vendorProducts)
-      // let allAppointments = this.appointments;
-      let allAppointments = [...this.vendorProducts];
-
-      this.filteredResponse = allAppointments;
-      return allAppointments;
+      // console.log("products vendor id", toRaw(this.$store.state.auth.user));
+      // console.log("filtered appointments", this.vendorProducts);
+      // // let allAppointments = this.appointments;
+      // let allAppointments = [...this.orders];
+      // this.filteredResponse = allAppointments;
+      // return allAppointments;
     },
     filteredTreatments() {
       let treatmentList = this.types;
@@ -1457,8 +1448,6 @@ export default {
     },
   },
   watch: {
-    
-   
     // keyword
     search_term: debounce(function (e) {
       if (!!this.search_term) {
@@ -1811,15 +1800,10 @@ export default {
   },
 
   setup() {
+    const { fetchOrders } = allOrdersStore();
+    const { orders } = storeToRefs(allOrdersStore());
+    allOrdersStore().fetchOrders({});
 
-    const { fetchVendorProducts } = allProductsStore();
-    const { vendorProducts } = storeToRefs(allProductsStore());
-    // const { products } = storeToRefs(allProductsStore());
-    allProductsStore().fetchVendorProducts({
-     
-    });
-    // allProductsStore().fetchAllProducts();
-    // const translation = inject("translation");
     const translations = inject("translation_v3");
     console.log("in set up");
     const date = ref();
@@ -1837,15 +1821,14 @@ export default {
     const defaultLang = storedLang ?? "nl";
     const lang = ref(defaultLang);
 
-    watch(vendorProducts, (newVendorProducts, oldVendorProducts) => {
-      vendorProducts.value=newVendorProducts
-      console.log("vendorProducts changed:",vendorProducts.value);
-
+    watch(orders, (neworders, oldorders) => {
+      orders.value = neworders;
+      console.log("orders changed:", orders.value);
     });
     return {
       t,
-      vendorProducts,
-// products,
+      orders,
+      // products,
       date,
       format,
       month,

@@ -179,7 +179,9 @@
                     <CheckCircleIcon class="text-theme-9" />
                     <div class="ml-4 mr-4">
                       <!-- <div class="font-medium">Appointment has been Successfully created</div> -->
-                      <div class="font-medium">It has been successfully added</div>
+                      <div class="font-medium">
+                        It has been successfully added
+                      </div>
                     </div>
                   </div>
                   <!-- END: Success Notification Content -->
@@ -307,81 +309,6 @@ export default defineComponent({
       startTime: { required },
     };
     const validate = useVuelidate(rules, toRefs(formData));
-
-    const handleSubmit12 = () => {
-      // const token = localStorage.getItem('token')
-      this.loading = true;
-
-      // We will handle form submission here
-      const data = {
-        statusId: 2,
-        sourceId: 2,
-        periodId: 3,
-        appointmentTypeId: this.formData.selected_appointment_type,
-        doctors: [],
-        date: this.formData.appointment_date,
-        frequencyId: 1,
-        interval: this.timeInterval,
-        comments: this.comment,
-        facility_id: 1,
-        // data.append('slots', this.selectedSlot)
-        slots: {
-          "start-time": this.formData.startTime,
-
-          "end-time": this.newEndTime,
-        },
-      };
-      try {
-        AppointmentsService.createAppointments(data)
-          .then((response) => {
-            const notification = document.querySelector(
-              ".toastify-content .notification-message"
-            );
-            if (response.status == true) {
-              this.loading = false;
-              this.successMessage = response.message;
-
-              Toastify({
-                node: $("#success-notification-content")
-                  .clone()
-                  .removeClass("hidden")[0],
-                duration: 3000,
-                newWindow: true,
-                close: true,
-                gravity: "top",
-                position: "right",
-                stopOnFocus: true,
-              }).showToast();
-              // this.clearVariables()
-              // router.push('/dashboard/viewappointments')
-              // document.querySelector(".closeBTN").click();
-
-              document.querySelector(".closeBTN").click();
-              this.$router.push({
-                name: "side-menu-view-appointments",
-              });
-              //           this.$nextTick(() => {
-              //             router.push({
-              //               name: "side-menu-view-appointments",
-              //             });
-              // });
-            } else {
-              this.loading = false;
-              notification.textContent = "Appointment Creation Failed";
-            }
-            this.basicNonStickyNotificationToggle();
-            console.log("response", response);
-            // this.$router.push({
-            //   name: 'side-menu-view-appointments'
-            // })
-          })
-          .catch((error) => {
-            console.log("Error", error);
-          });
-      } catch (err) {
-        console.log("error: ", err);
-      }
-    };
 
     return {
       loadingSlotsdash: false,
@@ -553,6 +480,8 @@ export default defineComponent({
     const weight = ref("");
 
     const handleSubmit = () => {
+      const user = localStorage.getItem("user");
+      const Id = JSON.parse(user)?.id;
       const data = {
         Name: product_name.value,
         Description: description.value,
@@ -562,32 +491,35 @@ export default defineComponent({
         Quantity: quantity.value,
         SKU: SKU.value,
         Weight: weight.value,
-        VenderId:3,
-        Images:["https://gumtreeau-res.cloudinary.com/image/private/t_$_s-l800/move/e19ec80a-a139-411e-a244-8dda1f04f1ab","https://m.media-amazon.com/images/I/71cZWwc6ZOL._AC_SX466_.jpg","https://m.media-amazon.com/images/I/61hg9npTqvL._AC_SX466_.jpg"],
-       
+        VenderId: Id,
+        Images: [
+          "https://gumtreeau-res.cloudinary.com/image/private/t_$_s-l800/move/e19ec80a-a139-411e-a244-8dda1f04f1ab",
+          "https://m.media-amazon.com/images/I/71cZWwc6ZOL._AC_SX466_.jpg",
+          "https://m.media-amazon.com/images/I/61hg9npTqvL._AC_SX466_.jpg",
+        ],
+
         // Add other form fields as needed
       };
 
       try {
         AppointmentsService.createAppointments(data)
           .then((response) => {
-            
             Toastify({
-                node: $("#success-notification-content")
-                  .clone()
-                  .removeClass("hidden")[0],
-                duration: 3000,
-                newWindow: true,
-                close: true,
-                gravity: "top",
-                position: "right",
-                stopOnFocus: true,
-              }).showToast();
-              // this.clearVariables()
-              // router.push('/dashboard/viewappointments')
-              // document.querySelector(".closeBTN").click();
+              node: $("#success-notification-content")
+                .clone()
+                .removeClass("hidden")[0],
+              duration: 3000,
+              newWindow: true,
+              close: true,
+              gravity: "top",
+              position: "right",
+              stopOnFocus: true,
+            }).showToast();
+            // this.clearVariables()
+            // router.push('/dashboard/viewappointments')
+            // document.querySelector(".closeBTN").click();
 
-              document.querySelector(".closeBTN").click();
+            document.querySelector(".closeBTN").click();
           })
           .catch((error) => {
             // Handle errors

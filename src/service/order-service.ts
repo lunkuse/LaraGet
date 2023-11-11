@@ -6,15 +6,15 @@ import { useFetch } from "../utils";
 
 
 
-class ProductService {
+class OrderService {
 
-  async fetchAll()  {
+  async fetchAll1()  {
     
     // console.log('service create appointments url', url, data)
     try {
-const url = "products/allItems"
+const url = "products/vendorOrders"
       const response = await axios
-        .get(
+        .post(
           url
         )
       // let data = response.data;
@@ -28,24 +28,12 @@ const url = "products/allItems"
     }
   }
 
-
-  // get products for single vendor 
-  async fetchVendorProducts1({vendorId}: ProductRequestObj) {
-    console.log("vendor id",vendorId);
-    return await useFetch<Product>({
-      url: "products/vendorItems",
-      method: "post",
-      data: { VenderId:3},
-    });
-  }
-
-
-  async fetchVendorProducts(VendorId)  {
+  async fetchAll()  {
     const user = localStorage.getItem('user')
     const Id = JSON.parse(user)?.id;
     console.log('logged user',Id)
     try {
-const url = "products/vendorItems"
+const url = "products/vendorOrders"
       const response = await axios
         .post(
           url,
@@ -61,10 +49,5 @@ const url = "products/vendorItems"
       return { status: false, data: {}, message: `${err}` };
     }
   }
-
 }
-
-
-  
-
-export default new ProductService()
+export default new OrderService()
