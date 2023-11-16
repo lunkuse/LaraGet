@@ -9,7 +9,9 @@
       <div
         class="appointments-list h-full overflow-hidden col-span-12 border-r border-b border-gray-200"
       >
-        <div class="w-auto gap-2 text-sm mt-2 content-center flex items-center">
+        <div
+          class="hidden w-auto gap-2 text-sm mt-2 content-center flex items-center"
+        >
           <!-- length checked -->
           <div
             class="mx-auto text-slate-500"
@@ -491,7 +493,7 @@ import moment from "moment";
 // import axios from 'axios'
 import axios from "../../../axios";
 import AppointmentsService from "../../../service/appointments-service";
-import { ref, inject,  toRaw, watch} from "vue";
+import { ref, inject, toRaw, watch } from "vue";
 import debounce from "lodash.debounce";
 import Button from "@/components/shared/buttons/Button.vue";
 import { useI18n } from "vue-i18n";
@@ -661,7 +663,6 @@ export default {
     };
   },
   created() {
-   
     // this.appointments = [];
     // this.paginatedData = [];
     // this.fetchAppointmentTypes();
@@ -748,99 +749,7 @@ export default {
       this.paginatedAppointment;
     },
 
-   
-
-    async fetchAll(data) {
-      this.ourRequest = axios.CancelToken.source();
-      const store = useStore();
-      // const token = localStorage.getItem('token')
-      if (
-        this.pagination.next_page_url !== this.pagination.last_page_url ||
-        this.pagination.next_page_url === this.pagination.last_page_url
-      ) {
-        if (this.pagination.next_page_url !== null) {
-          this.isLoading = true;
-          let url = this.pagination.next_page_url;
-          const finalToken = this.ourRequest.token;
-
-          await this.$store.dispatch("allappointments/FetchAppointments", {
-            url,
-            data,
-            finalToken,
-          });
-          this.isLoading = false;
-          const myappointments =
-            this.$store?.state?.allappointments?.patientAppointments;
-          console.log("store appointments", myappointments?.data);
-          // let latest = response?.data?.data;
-
-          this.appointments = this.appointments.concat(myappointments?.data);
-          let currentPage = myappointments?.current_page;
-          this.last_page = myappointments?.last_page_url;
-          let next_page_url = myappointments?.next_page_url;
-          this.links = myappointments?.links;
-          this.pagination = {
-            last_page_url: myappointments?.last_page_url,
-            next_page_url: myappointments?.next_page_url,
-          };
-          // this.lengthFrom=response.data.payload.from
-          this.lengthTo = myappointments?.to;
-          this.lengthTotal = myappointments?.total;
-          // try {
-          //   AppointmentsService.fetchAppointments(
-          //     url,
-          //     data,
-          //     this.ourRequest.token
-          //   )
-          //     .then((response) => {
-          //       this.isLoading = false;
-          //       console.log(
-          //         "new response eeeee response ",
-          //         response?.data?.data
-          //       );
-          //       if (response?.data?.error === "Token is Expired") {
-          //         this.$store.dispatch("auth/logout");
-          //         this.$router.push("/login");
-          //       }
-
-          //       let latest = response?.data?.data;
-
-          //       this.appointments = this.appointments.concat(
-          //         response?.data?.data
-          //       );
-          //       let currentPage = response?.data?.current_page;
-          //       this.last_page = response?.data?.last_page_url;
-          //       let next_page_url = response?.data?.next_page_url;
-          //       this.links = response?.data?.links;
-          //       this.pagination = {
-          //         last_page_url: response?.data?.last_page_url,
-          //         next_page_url: response?.data?.next_page_url,
-          //       };
-
-          //       this.lengthTo = response?.data?.to;
-          //       this.lengthTotal = response?.data?.total;
-          //       console.log("cancelled response", response);
-          //     })
-          //     .catch(function (thrown) {
-          //       console.log("Request cancelling error", thrown);
-
-          //       if (thrown.message === "canceled") {
-          //         console.log("Request canceled vvvvv", thrown.message);
-          //       } else {
-
-          //       }
-          //     });
-          // } catch (err) {
-          //   console.log("error: ", err);
-          // }
-        } else {
-          this.pagination = {
-            last_page_url: null,
-            next_page_url: "products/appointments/all-paginated",
-          };
-        }
-      }
-    },
+    async fetchAll(data) {},
 
     async exportDataTable() {
       console.log("length", this.CheckedAppointmentlistMain.length);
@@ -1344,10 +1253,8 @@ export default {
   },
   computed: {
     currentUser() {
-   
       return toRaw(this.$store.state.auth.user);
-  
-  },
+    },
     async paginatedAppointment() {
       // keyword
       console.log("past_appointments"), this.past_appointments;
@@ -1408,8 +1315,8 @@ export default {
     },
 
     filteredAppointments() {
-      console.log('products vendor id',toRaw(this.$store.state.auth.user));
-      console.log('filtered appointments',this.vendorProducts)
+      console.log("products vendor id", toRaw(this.$store.state.auth.user));
+      console.log("filtered appointments", this.vendorProducts);
       // let allAppointments = this.appointments;
       let allAppointments = [...this.vendorProducts];
 
@@ -1457,8 +1364,6 @@ export default {
     },
   },
   watch: {
-    
-   
     // keyword
     search_term: debounce(function (e) {
       if (!!this.search_term) {
@@ -1696,45 +1601,6 @@ export default {
       this.UncheckAllSelected();
       this.paginatedAppointment;
     },
-    source(newsource, oldsource) {
-      this.source = newsource;
-    },
-
-    //  url
-    pagination(newsearch_term, oldsearch_term) {
-      this.pagination.last_page_url = newsearch_term.last_page_url;
-    },
-    // doctor
-    selected_doctorsIDs: {
-      handler: function (val, oldVal) {
-        if (val) {
-          console.log("val.length", val.length);
-          if (val.length > 0) {
-            this.ourRequest.cancel();
-
-            this.selected_doctorsIDs = val;
-            this.search_term = null;
-            this.year = null;
-            this.filterStatus = null;
-            this.date_range = null;
-            // this.filter_option= null;
-            this.appointments = [];
-            this.paginatedData = [];
-            this.past_appointments = null;
-            this.upcoming_appointments = null;
-            this.past_appointments = null;
-            this.pagination = {
-              last_page_url: null,
-              next_page_url: "patients/appointments/all-paginated",
-            };
-
-            this.UncheckAllSelected();
-            this.paginatedAppointment;
-          }
-        }
-      },
-      deep: true,
-    },
 
     // year
     year: debounce(function (e) {
@@ -1750,10 +1616,10 @@ export default {
         this.past_appointments = null;
         this.selected_doctorsIDs = [];
         this.year_range = moment(new Date(this.year, 1)).format("YYYY");
-        this.pagination = {
-          last_page_url: null,
-          next_page_url: "patients/appointments/all-paginated",
-        };
+        // this.pagination = {
+        //   last_page_url: null,
+        //   next_page_url: "patients/appointments/all-paginated",
+        // };
         this.UncheckAllSelected();
         this.paginatedAppointment;
       }
@@ -1811,13 +1677,10 @@ export default {
   },
 
   setup() {
-
     const { fetchVendorProducts } = allProductsStore();
     const { vendorProducts } = storeToRefs(allProductsStore());
     // const { products } = storeToRefs(allProductsStore());
-    allProductsStore().fetchVendorProducts({
-     
-    });
+    allProductsStore().fetchVendorProducts({});
     // allProductsStore().fetchAllProducts();
     // const translation = inject("translation");
     const translations = inject("translation_v3");
@@ -1838,14 +1701,13 @@ export default {
     const lang = ref(defaultLang);
 
     watch(vendorProducts, (newVendorProducts, oldVendorProducts) => {
-      vendorProducts.value=newVendorProducts
-      console.log("vendorProducts changed:",vendorProducts.value);
-
+      vendorProducts.value = newVendorProducts;
+      console.log("vendorProducts changed:", vendorProducts.value);
     });
     return {
       t,
       vendorProducts,
-// products,
+      // products,
       date,
       format,
       month,

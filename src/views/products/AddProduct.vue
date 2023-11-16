@@ -60,7 +60,7 @@
                           <option
                             v-for="(category, id) in productCategories"
                             :key="id"
-                            :value="category.id"
+                            :value="category.title"
                           >
                             {{ category.title }}
                           </option>
@@ -74,6 +74,15 @@
                         v-model="description"
                         :config="editorConfig"
                         @focus="changeFocus"
+                      />
+                    </div>
+
+                    <div class="col-span-12 mt-2">
+                      <label class="block font-bold">Price:</label>
+                      <input
+                        class="intro-x form-control py-3 px-4 block border-gray-200 focus:border-theme-36"
+                        v-model="originalprice"
+                        required
                       />
                     </div>
 
@@ -462,9 +471,14 @@ export default defineComponent({
       { id: 1, title: "Product" },
       { id: 2, title: "Service" },
     ];
+
     const productBrands = [
-      { id: 1, title: "Brand 1" },
-      { id: 2, title: "Brand 2" },
+      { id: 1, title: "Apple" },
+      { id: 2, title: "Samsung" },
+      { id: 2, title: "Sony" },
+      { id: 1, title: "Nike" },
+      { id: 2, title: "Adidas" },
+      { id: 2, title: "Zara" },
     ];
 
     const storedLang = localStorage.getItem("lang");
@@ -478,7 +492,7 @@ export default defineComponent({
     const selected_brand = ref(null);
     const SKU = ref("");
     const weight = ref("");
-
+    const originalprice = ref("");
     const handleSubmit = () => {
       const user = localStorage.getItem("user");
       const Id = JSON.parse(user)?.id;
@@ -487,6 +501,7 @@ export default defineComponent({
         Description: description.value,
         Category: selected_category.value,
         Brand: selected_brand.value,
+        Price: originalprice.value,
         Discounted_Price: price.value,
         Quantity: quantity.value,
         SKU: SKU.value,
@@ -536,6 +551,7 @@ export default defineComponent({
       product_name,
       selected_category,
       description,
+      originalprice,
       price,
       quantity,
       selected_brand,
