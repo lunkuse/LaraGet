@@ -471,8 +471,20 @@
 
           <!-- exports filter -->
         </div>
-
-        <List
+       
+<Table 
+:appointments="filteredAppointments"
+          :isLoading="isLoading"
+          @clearFilter="clearFilters"
+          :isPending="isPending"
+          :isTarget="isTarget"
+          :filterOption="filter_option"
+          :endScope="pagination.next_page_url === pagination.last_page_url"
+          :isUnchenkallstatus="isUnchenkallstatus"
+          @refreshAppointments="fetchMoreData"
+          @checkedAppointmentList="checkedAppointmentList"
+/>
+        <!-- <List
           :appointments="filteredAppointments"
           :isLoading="isLoading"
           @clearFilter="clearFilters"
@@ -483,7 +495,7 @@
           :isUnchenkallstatus="isUnchenkallstatus"
           @refreshAppointments="fetchMoreData"
           @checkedAppointmentList="checkedAppointmentList"
-        ></List>
+        ></List> -->
       </div>
     </div>
   </div>
@@ -511,6 +523,8 @@ import {
 import List from "./List.vue";
 import Datepicker from "@vuepic/vue-datepicker";
 
+import Table from './Table.vue'
+
 export default {
   name: "Container",
   components: {
@@ -522,6 +536,7 @@ export default {
     // Button,
     Datepicker,
     XIcon,
+    Table
   },
   inject: ["showrecalls"],
 

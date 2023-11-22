@@ -73,7 +73,7 @@
           >
             <img
               v-if="!isLoading"
-              src="../../../assets/images/nodata.svg"
+              src="../../../assets/images/emptybox.png"
               alt="Image"
               class="w-1/2"
             />
@@ -91,7 +91,7 @@
             </span>
           </div>
 
-          <Observer @intersect="loadMoreData" class="mb-60" />
+          <!-- <Observer @intersect="loadMoreData" class="mb-60" /> -->
         </div>
       </div>
     </div>
@@ -104,7 +104,7 @@ import { defineComponent, ref, onMounted } from "vue";
 import ListItem from "./ListItem.vue";
 import { ArrowsExpandIcon } from "@heroicons/vue/outline";
 // import Observer from "./Observer.vue";
-import Observer from "../../global/Observer.vue";
+// import Observer from "../../global/Observer.vue";
 
 import Loader from "@/components/shared/BigLoader.vue";
 import { useI18n } from "vue-i18n";
@@ -122,7 +122,7 @@ export default defineComponent({
   components: {
     ListItem,
     ArrowsExpandIcon,
-    Observer,
+    // Observer,
     Loader,
   },
   data() {

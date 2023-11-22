@@ -73,7 +73,7 @@
           >
             <img
               v-if="!isLoading"
-              src="../../../assets/images/nodata.svg"
+              src="../../../assets/images/emptybox.png"
               alt="Image"
               class="w-1/2"
             />
