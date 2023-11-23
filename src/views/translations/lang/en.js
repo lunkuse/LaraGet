@@ -7,6 +7,7 @@ export const en = {
   orders_text:'Orders',
   product_text: 'product',
   service_text: 'service',
+  product_details_text: 'Product Details',
   auth: {
     signIn: 'Sign In',
     email: 'Email',

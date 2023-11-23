@@ -34,6 +34,7 @@ import RegularTable from '../views/regular-table/Main.vue'
 import PaymentSuccessPage from '../views/invoices/SuccessPayment.vue'
 
 import AllProducts from '../views/products/allProducts.vue'
+import OpenProduct from '../views/products/OpenProduct.vue'
 import AllOrders from '../views/orders/allOrders.vue'
 
 
@@ -214,7 +215,17 @@ const routes = [
         }
       },
 
-
+      {
+        path: '/side-menu/open-product/:productID',
+        name: 'side-menu-open-product',
+        component: OpenProduct,
+        meta: {
+          crumbs: [
+            { name: 'Dashboard', link: '/dashboard' },
+            { name: 'Product Details', link: '' }
+          ]
+        }
+      },
 
       {
         path: 'chat',

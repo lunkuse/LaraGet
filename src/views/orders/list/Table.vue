@@ -1,7 +1,6 @@
 <template>
   <div>
     <div>
-     
       <div class="intro-y box p-5 mt-5 overflow-auto">
         <!-- loader text -->
         <span
@@ -12,7 +11,7 @@
           <span>loading...</span>
         </span>
 
-        <div v-if="appointments?.length > 0">
+        <div v-if="orders?.length > 0">
           <div id="contentdiv" class="bg-white">
             <table
               class="display table table-report sm:mt-2"
@@ -35,67 +34,65 @@
                         class="form-check-input"
                         id="checkbox1"
                         :checked="
-                          checkedAppointments.length === appointments.length
+                          checkedorders.length === orders.length
                         "
-                        @change="checkedAppointmentAll"
+                        @change="checkedOrderAll"
                       />
                     </div>
-                    <span class="ml-2">Image</span>
-                  </th>
-
-                  <th class="whitespace-nowrap">
-                    Category
-                  </th>
-
-                  <th class="whitespace-nowrap">
-                    Name
-                  </th>
-
-                  <th class="whitespace-nowrap">
-                    Description
+                    <span class="ml-2">Item</span>
                   </th>
 
                   <th class="whitespace-nowrap">
                     Price
                   </th>
-				  <th class="whitespace-nowrap">
-                  Discounted  Price
+
+                  <th class="whitespace-nowrap">
+                    Quantity
+                  </th>
+
+                  <th class="whitespace-nowrap">
+                    Total Amount
+                  </th>
+
+                  <th class="whitespace-nowrap">
+                    Status
                   </th>
                   <th class="whitespace-nowrap">
-                    Brand
+                    Shipping Address
                   </th>
                   <th class="whitespace-nowrap">
-                    Availability
+                    Order Date
+                  </th>
+                  <th class="whitespace-nowrap">
+                    Date Created
                   </th>
                   <th class="flex justify-between">
-                    
-                      {{ $t("translation.action_text") }}
-                      <div>
-                        <span
-                          class="fullScreenBTN cursor-pointer text-xl hover:text-yellow-650"
-                          @click="setFullScreen"
-                          v-if="!isFullscreen"
-                        >
-                          <ArrowsExpandIcon class="w-6 h-6" />
-                        </span>
-                        <span
-                          class="exitfullScreenBTN cursor-pointer hover:text-yellow-650 pr-2"
-                          @click="exitFullScreen"
-                          v-if="isFullscreen"
-                        >
-                          <i class="fa fa-compress"></i>
-                        </span>
-                   
+                    {{ $t("translation.action_text") }}
+                    <div>
+                      <span
+                        class="fullScreenBTN cursor-pointer text-xl hover:text-yellow-650"
+                        @click="setFullScreen"
+                        v-if="!isFullscreen"
+                      >
+                        <ArrowsExpandIcon class="w-6 h-6" />
+                      </span>
+                      <span
+                        class="exitfullScreenBTN cursor-pointer hover:text-yellow-650 pr-2"
+                        @click="exitFullScreen"
+                        v-if="isFullscreen"
+                      >
+                        <i class="fa fa-compress"></i>
+                      </span>
                     </div>
                   </th>
                 </tr>
               </thead>
               <tbody>
                 <tr
-                  v-for="appointment in appointments"
-                  :key="appointment?.id"
+                  v-for="order in orders"
+                  :key="order?.id"
                   class="intro-x hover:bg-gray-200 flex-1 zoom-in"
-                  @click="openAppointment(appointment)"
+                  @click="openOrder(order)"
                   :checked="selected"
                 >
                   <td class="whitespace-nowrap">
@@ -105,50 +102,33 @@
                         type="checkbox"
                         :value="email?.id"
                         :checked="emailSelected(email?.id)"
-                        @change="checkedAppointmentMethod($event, email)"
+                        @change="checkedOrderMethod($event, email)"
                         @click.stop
                       />
 
-                      <img :src="appointment?.Images[0]" alt="Product Image" />
+                      {{ order?.itemId }}
                     </div>
                   </td>
 
+                  <td class="whitespace-nowrap"></td>
                   <td class="whitespace-nowrap">
-                    {{ appointment?.Category }}
-                  </td>
-                  <td class="whitespace-nowrap">
-                    {{ appointment?.Name }}
+                    {{ order?.quantity }}
                   </td>
                   <td class="whitespace-nowrap">
-                    <div class="flex items-center gap-2 ml-2">
-                      <div>
-                        <span
-                          class="relative inline-block text-sm duration-300 group"
-                        >
-                          <!-- Use v-html to render HTML content -->
-                          <span
-                            v-html="
-                              truncateString(appointment?.Description, 16)
-                            "
-                          ></span>
-                          <!-- Tooltip text here -->
-                         
-                        
-                        </span>
-                      </div>
-                    </div>
-                  </td>
-				  <td class="whitespace-nowrap">
-                    {{ appointment?.Price }}
+                    {{ order?.total_amount }}
                   </td>
                   <td class="whitespace-nowrap">
-                    {{ appointment?.Discounted_Price }}
+                    {{ order?.status }}
                   </td>
                   <td class="whitespace-nowrap">
-                    {{ appointment?.Brand }}
+                    {{ order?.shipping_address }}
                   </td>
-				  <!-- for availability -->
-				  <td></td>
+                  <td class="whitespace-nowrap">
+                    {{ moment(order?.order_date).format("DD-MM-YYYY") }}
+                  </td>
+                  <td>
+                    {{ moment(order?.created_at).format("DD-MM-YYYY") }}
+                  </td>
                   <td class="whitespace-nowrap">
                     <div class="flex items-center">
                       <Menu as="div" class="relative inline-block text-left">
@@ -175,7 +155,7 @@
                           >
                             <div
                               class="px-1 py-1"
-                              @click="showAppDetail(appointment)"
+                              @click="showAppDetail(order)"
                             >
                               <MenuItem v-slot="{ active }">
                                 <button
@@ -251,7 +231,7 @@ import {
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 export default defineComponent({
   props: {
-    appointments: Array,
+    orders: Array,
     isLoading: Boolean,
     filterOption: String,
     endScope: Boolean,
@@ -278,8 +258,8 @@ export default defineComponent({
 
   methods: {},
   setup(props, { emit }) {
-    const checkedAppointments = ref([]);
-    const checkedAppointmentMethod = (event, email) => {
+    const checkedorders = ref([]);
+    const checkedOrderMethod = (event, email) => {
       // emit("onSelected", email, event.target.checked);
       onSelected(email, event.target.checked);
     };
@@ -297,46 +277,45 @@ export default defineComponent({
     };
     const onSelected = (email, isChecked) => {
       if (isChecked) {
-        checkedAppointments.value.push(email?.id);
+        checkedorders.value.push(email?.id);
       } else {
-        checkedAppointments.value.splice(
-          checkedAppointments.value.indexOf(email?.id),
+        checkedorders.value.splice(
+          checkedorders.value.indexOf(email?.id),
           1
         );
       }
-      emit("checkedEmailList", checkedAppointments.value);
+      emit("checkedEmailList", checkedorders.value);
     };
 
-    const openAppointment = (order) => {
-    //   console.log("open sent email", email);
-    //   const messageID = email?.id;
-
-    //   router.push({
-    //     name: "side-menu-open-email",
-    //     params: {
-    //       newmessageID: messageID,
-    //     },
-    //   });
+    const openOrder = (order) => {
+      //   console.log("open sent email", email);
+      //   const messageID = email?.id;
+      //   router.push({
+      //     name: "side-menu-open-email",
+      //     params: {
+      //       newmessageID: messageID,
+      //     },
+      //   });
     };
-    const checkedAppointmentAll = (event) => {
-      checkedAppointments.value = [];
+    const checkedOrderAll = (event) => {
+      checkedorders.value = [];
       if (event.target.checked) {
-        const AppointmentIds = props.emails.map((p) => p.id);
-        console.log("isUnchenkallstatusnnnn first", AppointmentIds);
-        checkedAppointments.value.push(...AppointmentIds);
+        const OrderIds = props.emails.map((p) => p.id);
+        console.log("isUnchenkallstatusnnnn first", OrderIds);
+        checkedorders.value.push(...OrderIds);
       }
       if (props.isUnchenkallstatus) {
         console.log("isUnchenkallstatusnnnn", props.isUnchenkallstatus);
       }
-      emit("checkedEmailList", checkedAppointments.value);
+      emit("checkedEmailList", checkedorders.value);
     };
     const emailSelected = (emailId) => {
       console.log(
         "ggggggggg",
-        emailId === checkedAppointments.value.find((ele) => ele === emailId)
+        emailId === checkedorders.value.find((ele) => ele === emailId)
       );
       return (
-        emailId === checkedAppointments.value.find((ele) => ele === emailId)
+        emailId === checkedorders.value.find((ele) => ele === emailId)
       );
     };
 
@@ -388,14 +367,14 @@ export default defineComponent({
     };
 
     return {
-      checkedAppointmentMethod,
+      checkedOrderMethod,
       StatusClassunread,
       truncateString,
       moment,
       onSelected,
-      checkedAppointments,
-      openAppointment,
-      checkedAppointmentAll,
+      checkedorders,
+      openOrder,
+      checkedOrderAll,
       emailSelected,
       processText,
       isFullscreen,

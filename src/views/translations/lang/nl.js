@@ -7,6 +7,7 @@ export const nl = {
   orders_text:'Bestellingen',
    product_text: 'product',
   service_text: 'service',
+  product_details_text: 'Product Details',
   auth: {
     signIn: 'Inloggen',
     email: 'E-mail',
