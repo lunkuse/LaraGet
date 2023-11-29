@@ -23,6 +23,10 @@ import './assets/sass/components/_datatable.scss'
 import './translate.css'
 import { i18n } from './translations.js'
 import { createPinia } from 'pinia';
+// import DropZone from 'dropzone-vue';
+
+// optionally import default styles
+// import 'dropzone-vue/dist/dropzone-vue.common.css';
 const pinia =  createPinia();
 const app = createApp(App)
   .use(store)
@@ -32,6 +36,7 @@ const app = createApp(App)
   .use(print)
   .use(i18n)
   .use(pinia)
+  // .use(DropZone)
 // .use(Chat)
 
 globalComponents(app)

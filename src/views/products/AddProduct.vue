@@ -55,7 +55,7 @@
                           id="appointment_type_select"
                         >
                           <option value>
-                            {{ $t("translation.select_appointment_type_text") }}
+                            Select category
                           </option>
                           <option
                             v-for="(category, id) in productCategories"
@@ -159,6 +159,7 @@
                   <div class="col-span-12 mt-2">
                     <label class="block font-bold">Images:</label>
                     <input
+                    id="imageList"
                       type="file"
                       accept="image/*"
                       @change="handleImageUpload"
@@ -280,6 +281,10 @@ import AppointmentsService from "../../service/appointments-service";
 import { useI18n } from "vue-i18n";
 import $ from "cash-dom";
 import { Form, ErrorMessage, Field, useFormValues } from "vee-validate";
+import { initializeApp } from "firebase/app";
+
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+
 export default defineComponent({
   components: { ClassicEditor },
 
@@ -373,32 +378,6 @@ export default defineComponent({
     currentUser() {
       return toRaw(this.$store.state.auth.user);
     },
-    morningSlots() {
-      console.log("kkkkk");
-
-      if (selected_appointment_type !== null) {
-        console.log("this.timeSlotsArray", this.timeSlotsArray);
-        return this.timeSlotsArray.filter((slot) => {
-          // Filter slots that fall within the morning time range (e.g., 6 AM - 11:59 AM)
-          const startTime = Number(slot.start_time.split(":")[0]);
-          return startTime >= 6 && startTime <= 11;
-        });
-      }
-    },
-    afternoonSlots() {
-      return this.timeSlotsArray.filter((slot) => {
-        // Filter slots that fall within the afternoon time range (e.g., 12 PM - 5:59 PM)
-        const startTime = Number(slot.start_time.split(":")[0]);
-        return startTime >= 12 && startTime <= 17;
-      });
-    },
-    eveningSlots() {
-      return this.timeSlotsArray.filter((slot) => {
-        // Filter slots that fall within the evening time range (e.g., 6 PM - 11:59 PM)
-        const startTime = Number(slot.start_time.split(":")[0]);
-        return startTime >= 18 && startTime <= 23;
-      });
-    },
   },
   methods: {
     moment,
@@ -446,7 +425,7 @@ export default defineComponent({
 
     onchange(id) {},
 
-    handleImageUpload(event) {
+    handleImageUpload1(event) {
       const selectedImages = event.target.files;
       // Process the selected images as needed
       // You can upload them to your server, display previews, etc.
@@ -461,6 +440,44 @@ export default defineComponent({
           }
         };
         reader.readAsDataURL(selectedImages[i]);
+      }
+    },
+
+    async handleImageUpload(event) {
+      const selectedImages = event.target.files;
+
+      // Initialize Firebase
+      const firebaseApp = initializeApp({
+        apiKey: "AIzaSyC9EwmCh3N1jBRY4QjBnuI2ryopr-QB1jU",
+        authDomain: "ecommerce-28b98.firebaseapp.com",
+        databaseURL: "https://ecommerce-28b98.firebaseio.com",
+        projectId: "ecommerce-28b98",
+        storageBucket: "ecommerce-28b98.appspot.com",
+        messagingSenderId: "339179420462",
+        appId: "1:339179420462:web:de14f25cd5df68bf5598bf",
+        measurementId: "G-4S0ZFWS5P7",
+        
+      });
+
+      // Get a Firestore instance
+      const db = getFirestore(firebaseApp);
+
+      // Create a reference to the Firestore collection where you want to store image URLs
+      const imagesCollection = collection(db, "images");
+
+      // Upload each selected image
+      for (let i = 0; i < selectedImages.length; i++) {
+        const imageFile = selectedImages[i];
+
+        // Add the file to the Firestore collection
+        const docRef = await addDoc(imagesCollection, {
+          imageUrl: "", // You can update this property with the actual download URL
+        });
+
+        // Now, you can get the document ID and update the imageUrl with the actual download URL
+        console.log("Document ID:", docRef.id);
+
+        // Handle the actual file upload logic here, as shown in the previous response
       }
     },
   },
@@ -493,7 +510,128 @@ export default defineComponent({
     const SKU = ref("");
     const weight = ref("");
     const originalprice = ref("");
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
+  const user = localStorage.getItem("user");
+  const Id = JSON.parse(user)?.id;
+
+  // Upload images and get their URLs
+  const uploadedImageURLs = await uploadImages();
+
+  // Check if image upload was successful
+  if (uploadedImageURLs.length > 0) {
+    // Use the actual image URLs in the data object
+    const data = {
+      Name: product_name.value,
+      Description: description.value,
+      Category: selected_category.value,
+      Brand: selected_brand.value,
+      Price: originalprice.value,
+      Discounted_Price: price.value,
+      Quantity: quantity.value,
+      SKU: SKU.value,
+      Weight: weight.value,
+      VenderId: Id,
+      Images: uploadedImageURLs,
+      // Add other form fields as needed
+    };
+
+    try {
+      // Call your service or API to save the data to the backend
+      const response = await AppointmentsService.createAppointments(data);
+
+      // Show success notification or handle success as needed
+      Toastify({
+        node: $("#success-notification-content")
+          .clone()
+          .removeClass("hidden")[0],
+        duration: 3000,
+        newWindow: true,
+        close: true,
+        gravity: "top",
+        position: "right",
+        stopOnFocus: true,
+      }).showToast();
+
+      // Close the modal or navigate to another page
+      document.querySelector(".closeBTN").click();
+    } catch (error) {
+      // Handle errors
+      console.error("Error creating appointment:", error);
+
+      // Show error notification or handle error as needed
+      Toastify({
+        node: $("#failed-notification-content")
+          .clone()
+          .removeClass("hidden")[0],
+        duration: 3000,
+        newWindow: true,
+        close: true,
+        gravity: "top",
+        position: "right",
+        stopOnFocus: true,
+      }).showToast();
+    }
+  } else {
+    // Show an error notification or handle the case when image upload fails
+    console.error("Image upload failed");
+
+    Toastify({
+      node: $("#failed-notification-content")
+        .clone()
+        .removeClass("hidden")[0],
+      duration: 3000,
+      newWindow: true,
+      close: true,
+      gravity: "top",
+      position: "right",
+      stopOnFocus: true,
+    }).showToast();
+  }
+};
+
+// Function to upload images to Firebase and get their URLs
+const uploadImages = async () => {
+  const selectedImages = document.querySelector("#imageList").files;
+  const uploadedImageURLs = [];
+
+  // Initialize Firebase
+  const firebaseApp = initializeApp({
+   apiKey: "AIzaSyC9EwmCh3N1jBRY4QjBnuI2ryopr-QB1jU",
+        authDomain: "ecommerce-28b98.firebaseapp.com",
+        databaseURL: "https://ecommerce-28b98.firebaseio.com",
+        projectId: "ecommerce-28b98",
+        storageBucket: "ecommerce-28b98.appspot.com",
+        messagingSenderId: "339179420462",
+        appId: "1:339179420462:web:de14f25cd5df68bf5598bf",
+        measurementId: "G-4S0ZFWS5P7",
+  });
+
+  // Get a Firestore instance
+  const db = getFirestore(firebaseApp);
+
+  // Create a reference to the Firestore collection where you want to store image URLs
+  const imagesCollection = collection(db, "images");
+
+  // Upload each selected image
+  for (let i = 0; i < selectedImages.length; i++) {
+    const imageFile = selectedImages[i];
+
+    // Add the file to the Firestore collection
+    const docRef = await addDoc(imagesCollection, {
+      imageUrl: "", // You can update this property with the actual download URL
+    });
+
+    // Now, you can get the document ID and update the imageUrl with the actual download URL
+    const imageURL = `https://ecommerce-28b98.appspot.coml/${docRef.id}`; // Replace with your storage bucket URL
+    uploadedImageURLs.push(imageURL);/image.jpg
+
+    console.log(`Document ID: ${docRef.id}, Image URL: ${imageURL}`);
+  }
+
+  return uploadedImageURLs;
+};
+
+    const handleSubmit1 = () => {
       const user = localStorage.getItem("user");
       const Id = JSON.parse(user)?.id;
       const data = {
@@ -543,6 +681,16 @@ export default defineComponent({
         // Handle unexpected errors
       }
     };
+    // const firebaseApp = initializeApp({
+    //   apiKey: "your-api-key",
+    //   authDomain: "your-auth-domain",
+    //   projectId: "your-project-id",
+    //   storageBucket: "your-storage-bucket",
+    //   messagingSenderId: "your-messaging-sender-id",
+    //   appId: "your-app-id",
+    // });
+    // const db = getFirestore(firebaseApp)
+
     return {
       t,
       lang,
