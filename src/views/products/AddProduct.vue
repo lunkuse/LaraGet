@@ -163,8 +163,25 @@
                       accept="image/*"
                       @change="handleImageUpload"
                       multiple
+                    
                     />
                   </div>
+
+
+
+
+                  <!-- Image Uploader -->
+                  <div class="col-span-12 mt-2">
+                    <label class="block font-bold">Firebase Images:</label>
+                    <input
+                      type="file"
+                      accept="image/*"
+                    
+                      multiple
+                      ref="myfileRef"
+                    />
+                  </div>
+                  <button @click="upload">upload</button>
 
                   <!-- Notification Alert Start -->
                   <div
@@ -280,6 +297,9 @@ import AppointmentsService from "../../service/appointments-service";
 import { useI18n } from "vue-i18n";
 import $ from "cash-dom";
 import { Form, ErrorMessage, Field, useFormValues } from "vee-validate";
+
+import {storage } from "../../firebase"
+import { ref as storageRefs, uploadBytes, getDownloadURL } from 'firebase/storage'
 export default defineComponent({
   components: { ClassicEditor },
 
@@ -448,8 +468,6 @@ export default defineComponent({
 
     handleImageUpload(event) {
       const selectedImages = event.target.files;
-      // Process the selected images as needed
-      // You can upload them to your server, display previews, etc.
       console.log("Selected Images:", selectedImages);
       const imagePreviews = [];
       for (let i = 0; i < selectedImages.length; i++) {
@@ -463,6 +481,13 @@ export default defineComponent({
         reader.readAsDataURL(selectedImages[i]);
       }
     },
+
+    upload: function(){
+      const storageRef = storageRefs(storage, 'products/myfile.gif');
+      uploadBytes(storageRef, this.$refs.myfile.files[0]).then((snapshot)=>{
+        console.log("uploaded")
+      })
+    }
   },
   watch: {},
   setup() {
@@ -493,7 +518,27 @@ export default defineComponent({
     const SKU = ref("");
     const weight = ref("");
     const originalprice = ref("");
-    const handleSubmit = () => {
+    const myfileRef = ref(null);
+    const uploadImages = async () => {
+      
+  const imageFiles = myfileRef.value.files;
+
+  const uploadPromises = Array.from(imageFiles).map((file) => {
+    const imageName = `products/${file.name}`;
+    const storageRef = storageRefs(storage, imageName);
+
+    return uploadBytes(storageRef, file).then((snapshot) => {
+      // Get download URL after successful upload
+      return getDownloadURL(storageRef);
+    });
+  });
+
+  return Promise.all(uploadPromises);
+};
+    const handleSubmit = async() => {
+      const imageUrls = await uploadImages();
+
+   
       const user = localStorage.getItem("user");
       const Id = JSON.parse(user)?.id;
       const data = {
@@ -507,11 +552,13 @@ export default defineComponent({
         SKU: SKU.value,
         Weight: weight.value,
         VenderId: Id,
-        Images: [
-          "https://gumtreeau-res.cloudinary.com/image/private/t_$_s-l800/move/e19ec80a-a139-411e-a244-8dda1f04f1ab",
-          "https://m.media-amazon.com/images/I/71cZWwc6ZOL._AC_SX466_.jpg",
-          "https://m.media-amazon.com/images/I/61hg9npTqvL._AC_SX466_.jpg",
-        ],
+        Images:imageUrls
+        // Images: [
+        //   "https://gumtreeau-res.cloudinary.com/image/private/t_$_s-l800/move/e19ec80a-a139-411e-a244-8dda1f04f1ab",
+        //   "https://m.media-amazon.com/images/I/71cZWwc6ZOL._AC_SX466_.jpg",
+        //   "https://m.media-amazon.com/images/I/61hg9npTqvL._AC_SX466_.jpg",
+        // ],
+      
 
         // Add other form fields as needed
       };
@@ -558,6 +605,7 @@ export default defineComponent({
       SKU,
       weight,
       handleSubmit,
+      myfileRef
     };
   },
 });
