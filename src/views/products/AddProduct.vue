@@ -168,7 +168,7 @@
 
                   <!-- Image Uploader -->
                   <div class="col-span-12 mt-2">
-                    <label class="block font-bold">Firebase Images:</label>
+                    <label class="block font-bold">Images:</label>
                     <input
                       type="file"
                       accept="image/*"
