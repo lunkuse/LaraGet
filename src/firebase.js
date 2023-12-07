@@ -14,13 +14,13 @@ const firebaseConfig = {
   storageBucket: "budget-e9ab5.appspot.com",
   messagingSenderId: "463579991578",
   appId: "1:463579991578:web:7b29a0bd265353017d8ba3",
-  measurementId: "G-7KD8SV8MJR"
+  measurementId: "G-7KD8SV8MJR",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-import {getStorage} from "firebase/storage"
+import { getStorage } from "firebase/storage";
 
 const storage = getStorage(app);
-export {storage}
+export { storage };

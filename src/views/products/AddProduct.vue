@@ -156,19 +156,15 @@
                   </div>
 
                   <!-- Image Uploader -->
-                  <div class="col-span-12 mt-2">
+                  <!-- <div class="col-span-12 mt-2">
                     <label class="block font-bold">Images:</label>
                     <input
                       type="file"
                       accept="image/*"
                       @change="handleImageUpload"
                       multiple
-                    
                     />
-                  </div>
-
-
-
+                  </div> -->
 
                   <!-- Image Uploader -->
                   <div class="col-span-12 mt-2">
@@ -176,12 +172,14 @@
                     <input
                       type="file"
                       accept="image/*"
-                    
                       multiple
                       ref="myfileRef"
+                      @change="handleFileChange"
                     />
                   </div>
-                  <button @click="upload">upload</button>
+
+                  
+                  <!-- <button @click="upload">upload</button> -->
 
                   <!-- Notification Alert Start -->
                   <div
@@ -298,8 +296,12 @@ import { useI18n } from "vue-i18n";
 import $ from "cash-dom";
 import { Form, ErrorMessage, Field, useFormValues } from "vee-validate";
 
-import {storage } from "../../firebase"
-import { ref as storageRefs, uploadBytes, getDownloadURL } from 'firebase/storage'
+import { storage } from "../../firebase";
+import {
+  ref as storageRefs,
+  uploadBytes,
+  getDownloadURL,
+} from "firebase/storage";
 export default defineComponent({
   components: { ClassicEditor },
 
@@ -393,32 +395,6 @@ export default defineComponent({
     currentUser() {
       return toRaw(this.$store.state.auth.user);
     },
-    morningSlots() {
-      console.log("kkkkk");
-
-      if (selected_appointment_type !== null) {
-        console.log("this.timeSlotsArray", this.timeSlotsArray);
-        return this.timeSlotsArray.filter((slot) => {
-          // Filter slots that fall within the morning time range (e.g., 6 AM - 11:59 AM)
-          const startTime = Number(slot.start_time.split(":")[0]);
-          return startTime >= 6 && startTime <= 11;
-        });
-      }
-    },
-    afternoonSlots() {
-      return this.timeSlotsArray.filter((slot) => {
-        // Filter slots that fall within the afternoon time range (e.g., 12 PM - 5:59 PM)
-        const startTime = Number(slot.start_time.split(":")[0]);
-        return startTime >= 12 && startTime <= 17;
-      });
-    },
-    eveningSlots() {
-      return this.timeSlotsArray.filter((slot) => {
-        // Filter slots that fall within the evening time range (e.g., 6 PM - 11:59 PM)
-        const startTime = Number(slot.start_time.split(":")[0]);
-        return startTime >= 18 && startTime <= 23;
-      });
-    },
   },
   methods: {
     moment,
@@ -482,12 +458,12 @@ export default defineComponent({
       }
     },
 
-    upload: function(){
-      const storageRef = storageRefs(storage, 'products/myfile.gif');
-      uploadBytes(storageRef, this.$refs.myfile.files[0]).then((snapshot)=>{
-        console.log("uploaded")
-      })
-    }
+    upload: function() {
+      const storageRef = storageRefs(storage, "products/myfile.gif");
+      uploadBytes(storageRef, this.$refs.myfile.files[0]).then((snapshot) => {
+        console.log("uploaded");
+      });
+    },
   },
   watch: {},
   setup() {
@@ -519,26 +495,72 @@ export default defineComponent({
     const weight = ref("");
     const originalprice = ref("");
     const myfileRef = ref(null);
-    const uploadImages = async () => {
-      
-  const imageFiles = myfileRef.value.files;
 
-  const uploadPromises = Array.from(imageFiles).map((file) => {
-    const imageName = `products/${file.name}`;
-    const storageRef = storageRefs(storage, imageName);
+    const selectedFiles = ref([]);
 
-    return uploadBytes(storageRef, file).then((snapshot) => {
-      // Get download URL after successful upload
-      return getDownloadURL(storageRef);
-    });
-  });
+    const handleFileChange = () => {
+      // Access the files array using the ref
+      selectedFiles.value = Array.from(myfileRef.value.files);
+      console.log("Selected Files:", selectedFiles.value);
+    };
 
-  return Promise.all(uploadPromises);
-};
-    const handleSubmit = async() => {
-      const imageUrls = await uploadImages();
+    const uploadImages = async (files) => {
+      const uploadPromises = files.map((file) => {
+        const imageName = `products/${file.name}`;
+        const storageRef = storageRefs(storage, imageName);
 
-   
+        return uploadBytes(storageRef, file).then((snapshot) => {
+          // Get download URL after successful upload
+          return getDownloadURL(storageRef);
+        });
+      });
+
+      return Promise.all(uploadPromises);
+    };
+
+    const handleSubmit1 = async () => {
+      // Check if files are selected
+      if (selectedFiles.value.length === 0) {
+        console.error("No files selected.");
+        return;
+      }
+
+      try {
+        const imageUrls = await uploadImages(selectedFiles.value);
+        console.log("Download URLs:", imageUrls);
+        // Handle the download URLs as needed
+      } catch (error) {
+        console.error("Upload failed:", error);
+        // Handle the error
+      }
+    };
+
+    // const uploadImages1 = async () => {
+    //   const imageFiles = myfileRef.value.files;
+
+    //   const uploadPromises = Array.from(imageFiles).map((file) => {
+    //     const imageName = `products/${file.name}`;
+    //     const storageRef = storageRefs(storage, imageName);
+
+    //     return uploadBytes(storageRef, file).then((snapshot) => {
+
+    //       return getDownloadURL(storageRef);
+    //     });
+    //   });
+
+    //   return Promise.all(uploadPromises);
+    // };
+    const handleSubmit = async () => {
+      if (selectedFiles.value.length === 0) {
+        console.error("No files selected.");
+        return;
+      }
+
+      const imageUrls = await uploadImages(selectedFiles.value);
+      console.log("Download URLs:", imageUrls);
+
+      // const imageUrls = await uploadImages();
+
       const user = localStorage.getItem("user");
       const Id = JSON.parse(user)?.id;
       const data = {
@@ -552,15 +574,7 @@ export default defineComponent({
         SKU: SKU.value,
         Weight: weight.value,
         VenderId: Id,
-        Images:imageUrls
-        // Images: [
-        //   "https://gumtreeau-res.cloudinary.com/image/private/t_$_s-l800/move/e19ec80a-a139-411e-a244-8dda1f04f1ab",
-        //   "https://m.media-amazon.com/images/I/71cZWwc6ZOL._AC_SX466_.jpg",
-        //   "https://m.media-amazon.com/images/I/61hg9npTqvL._AC_SX466_.jpg",
-        // ],
-      
-
-        // Add other form fields as needed
+        Images: imageUrls,
       };
 
       try {
@@ -605,7 +619,9 @@ export default defineComponent({
       SKU,
       weight,
       handleSubmit,
-      myfileRef
+      myfileRef,
+      handleFileChange,
+      selectedFiles,
     };
   },
 });
