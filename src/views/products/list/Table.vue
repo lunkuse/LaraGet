@@ -2,25 +2,22 @@
   <div>
     <div>
       <div class="intro-y box p-5 mt-5 overflow-auto">
-
         <div class="flex justify-between items-center p-1">
+          <div
+            @click="toggleGrid = !toggleGrid"
+            class="w-16 h-6 flex items-center bg-gray-300 rounded-full p-1 duration-300 ease-in-out"
+            :class="{ 'bg-theme-1': !toggleGrid }"
+          >
             <div
-              @click="toggleGrid = !toggleGrid"
-              class="w-16 h-6 flex items-center bg-gray-300 rounded-full p-1 duration-300 ease-in-out"
-              :class="{ 'bg-theme-1': !toggleGrid }"
-            >
-              <div
-                class="bg-white w-8 h-4 rounded-full shadow-md transform duration-300 ease-in-out"
-                :class="{ 'translate-x-6': toggleGrid }"
-              ></div>
-            </div>
-            <h2 v-if="toggleGrid" class="ml-auto p-1">
-             Grid
-            </h2>
-            <h2 v-else class="ml-auto p-1">Table</h2>
+              class="bg-white w-8 h-4 rounded-full shadow-md transform duration-300 ease-in-out"
+              :class="{ 'translate-x-6': toggleGrid }"
+            ></div>
           </div>
-
-
+          <h2 v-if="toggleGrid" class="ml-auto p-1">
+            Grid
+          </h2>
+          <h2 v-else class="ml-auto p-1">Table</h2>
+        </div>
 
         <!-- loader text -->
         <span
@@ -118,21 +115,30 @@
                         @change="checkedproductMethod($event, email)"
                         @click.stop
                       />
-                      <div class="w-10 h-10 image-fit zoom-in ml-2" v-if="product?.Images[0]">
+                      <div
+                        class="w-10 h-10 image-fit zoom-in ml-2"
+                        v-if="product?.Images[0]"
+                      >
                         <img
                           class="cursor-pointer rounded-full shadow-[0px_0px_0px_2px_#fff,_1px_1px_5px_rgba(0,0,0,0.32)] dark:shadow-[0px_0px_0px_2px_#3f4865,_1px_1px_5px_rgba(0,0,0,0.32)]"
                           alt="Midone Tailwind HTML Admin Template"
                           :src="product?.Images[0]"
                         />
                       </div>
-                      <div class="w-10 h-10 -ml-5 image-fit zoom-in" v-if="product?.Images[1]">
+                      <div
+                        class="w-10 h-10 -ml-5 image-fit zoom-in"
+                        v-if="product?.Images[1]"
+                      >
                         <img
                           class="cursor-pointer rounded-full shadow-[0px_0px_0px_2px_#fff,_1px_1px_5px_rgba(0,0,0,0.32)] dark:shadow-[0px_0px_0px_2px_#3f4865,_1px_1px_5px_rgba(0,0,0,0.32)]"
                           alt="Midone Tailwind HTML Admin Template"
                           :src="product?.Images[1]"
                         />
                       </div>
-                      <div class="w-10 h-10 -ml-5 image-fit zoom-in" v-if="product?.Images[2]">
+                      <div
+                        class="w-10 h-10 -ml-5 image-fit zoom-in"
+                        v-if="product?.Images[2]"
+                      >
                         <img
                           class="cursor-pointer rounded-full shadow-[0px_0px_0px_2px_#fff,_1px_1px_5px_rgba(0,0,0,0.32)] dark:shadow-[0px_0px_0px_2px_#3f4865,_1px_1px_5px_rgba(0,0,0,0.32)]"
                           alt="Midone Tailwind HTML Admin Template"
@@ -241,7 +247,7 @@
                           ></path>
                         </svg>
                         Edit </a
-                      ><a class="flex items-center text-danger" href="#"
+                      ><a class="flex items-center text-danger"  @click="deleteProduct(product)"
                         ><svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="24"
@@ -320,14 +326,12 @@
               </tbody>
             </table>
           </div>
-<!-- grid display -->
+          <!-- grid display -->
           <div class="grid grid-cols-12 gap-6 mt-5" v-if="!toggleGrid">
-           
             <div
               class="col-span-12 intro-y md:col-span-6 lg:col-span-4 xl:col-span-3"
               v-for="product in products"
-                  :key="product?.id"
-                 
+              :key="product?.id"
             >
               <div class="box">
                 <div class="p-5">
@@ -340,10 +344,11 @@
                       :src="product?.Images[0]"
                     /><!---->
                     <div class="absolute bottom-0 z-10 px-5 pb-6 text-white">
-                      <a href="" class="block text-base font-medium"
-                        >{{ product?.Category }}</a
-                      ><span class="mt-3 text-xs text-white/90"
-                        >  {{ product?.Name }}</span
+                      <a href="" class="block text-base font-medium">{{
+                        product?.Category
+                      }}</a
+                      ><span class="mt-3 text-xs text-white/90">
+                        {{ product?.Name }}</span
                       >
                     </div>
                   </div>
@@ -368,7 +373,7 @@
                           d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"
                         ></path>
                       </svg>
-                      Price:  {{ product?.Price }}
+                      Price: {{ product?.Price }}
                     </div>
                     <div class="flex items-center">
                       <svg
@@ -390,7 +395,7 @@
                           d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"
                         ></path>
                       </svg>
-                      Discounted Price:    {{ product?.Discounted_Price }}
+                      Discounted Price: {{ product?.Discounted_Price }}
                     </div>
                     <div class="flex items-center mt-2">
                       <svg
@@ -409,9 +414,12 @@
                         <polyline points="2 17 12 22 22 17"></polyline>
                         <polyline points="2 12 12 17 22 12"></polyline>
                       </svg>
-                      Remaining Stock:    {{ product?.Quantity }}
+                      Remaining Stock: {{ product?.Quantity }}
                     </div>
-                    <div class="flex items-center mt-2"   v-if="product?.Availability === 'true'">
+                    <div
+                      class="flex items-center mt-2"
+                      v-if="product?.Availability === 'true'"
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -431,7 +439,7 @@
                       </svg>
                       Status: Available
                     </div>
-                    <div class="flex items-center mt-2"   v-else>
+                    <div class="flex items-center mt-2" v-else>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -453,10 +461,14 @@
                     </div>
                   </div>
                 </div>
+
+                <!-- deleteProduct -->
                 <div
                   class="flex items-center justify-center p-5 border-t lg:justify-end border-slate-200/60 dark:border-darkmode-400"
                 >
-                  <a class="flex items-center mr-auto text-primary"  @click="openProduct(product)"
+                  <a
+                    class="flex items-center mr-auto text-primary"
+                    @click="openProduct(product)"
                     ><svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -474,8 +486,9 @@
                       ></path>
                       <circle cx="12" cy="12" r="3"></circle>
                     </svg>
-                    Preview </a
-                  ><a class="flex items-center mr-3" href="#"
+                    Preview
+                  </a>
+                  <a class="flex items-center mr-3" href="#"
                     ><svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -493,8 +506,11 @@
                         d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
                       ></path>
                     </svg>
-                    Edit </a
-                  ><a class="flex items-center text-danger" href="#"
+                    Edit
+                  </a>
+                  <a
+                    class="flex items-center text-danger"
+                    @click="deleteProduct(product)"
                     ><svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -518,12 +534,6 @@
                 </div>
               </div>
             </div>
-            
-           
-            
-          
-           
-         
           </div>
         </div>
 
@@ -639,6 +649,17 @@ export default defineComponent({
         },
       });
     };
+    const deleteProduct = (product) => {
+      console.log("delete product", product);
+      // const productID = product?.id;
+
+      // router.push({
+      //   name: "side-menu-open-product",
+      //   params: {
+      //     productID: productID,
+      //   },
+      // });
+    };
     const checkedProductAll = (event) => {
       checkedProducts.value = [];
       if (event.target.checked) {
@@ -705,7 +726,7 @@ export default defineComponent({
       });
       document.dispatchEvent(fullscreenEvent);
     };
-const toggleGrid = ref(true)
+    const toggleGrid = ref(true);
     return {
       checkedproductMethod,
       StatusClassunread,
@@ -720,7 +741,8 @@ const toggleGrid = ref(true)
       isFullscreen,
       setFullScreen,
       exitFullScreen,
-      toggleGrid
+      toggleGrid,
+      deleteProduct,
     };
   },
 });

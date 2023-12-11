@@ -155,16 +155,6 @@
                     />
                   </div>
 
-                  <!-- Image Uploader -->
-                  <!-- <div class="col-span-12 mt-2">
-                    <label class="block font-bold">Images:</label>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      @change="handleImageUpload"
-                      multiple
-                    />
-                  </div> -->
 
                   <!-- Image Uploader -->
                   <div class="col-span-12 mt-2">
@@ -346,7 +336,7 @@ export default defineComponent({
       successMessage: this.t(
         "translation.appointment_created_successfully_text"
       ),
-      // successMessage:"Appointment Created Successfully",
+      
       selected_appointment_type: "",
       appointment_type: "",
       appointmentData: "",
