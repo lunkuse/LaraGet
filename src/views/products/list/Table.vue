@@ -1,4 +1,5 @@
 <template>
+  <DeleteModal class="!z-50" :productID="productID"/>
   <div>
     <div>
       <div class="intro-y box p-5 mt-5 overflow-auto">
@@ -247,7 +248,9 @@
                           ></path>
                         </svg>
                         Edit </a
-                      ><a class="flex items-center text-danger"  @click="deleteProduct(product)"
+                      ><a class="flex items-center text-danger"  href="javascript:;"
+                  data-toggle="modal"
+                  data-target="#static-backdrop-modal-delete"  @click="deleteProduct(product)"
                         ><svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="24"
@@ -270,7 +273,7 @@
                         </svg>
                         Delete
                       </a>
-
+                    s
                       <div class="flex items-center">
                         <Menu as="div" class="relative inline-block text-left">
                           <div>
@@ -566,10 +569,11 @@
       <!-- END: HTML Table Data -->
     </div>
   </div>
+  
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, defineAsyncComponent, watch } from "vue";
 import moment from "moment";
 import router from "../../../router";
 import { ArrowsExpandIcon } from "@heroicons/vue/outline";
@@ -580,6 +584,9 @@ import {
   QuestionMarkCircleIcon,
 } from "@heroicons/vue/outline";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
+const DeleteModal = defineAsyncComponent(() =>
+  import("@/components/modals/DeleteAppointment.vue")
+);
 export default defineComponent({
   props: {
     products: Array,
@@ -601,6 +608,7 @@ export default defineComponent({
     MenuButton,
     MenuItems,
     MenuItem,
+    DeleteModal
   },
 
   data() {
@@ -610,6 +618,7 @@ export default defineComponent({
   methods: {},
   setup(props, { emit }) {
     const checkedProducts = ref([]);
+    const productID = ref(null);
     const checkedproductMethod = (event, email) => {
       // emit("onSelected", email, event.target.checked);
       onSelected(email, event.target.checked);
@@ -637,7 +646,7 @@ export default defineComponent({
       }
       emit("checkedEmailList", checkedProducts.value);
     };
-
+   
     const openProduct = (product) => {
       console.log("open product", product);
       const productID = product?.id;
@@ -651,15 +660,17 @@ export default defineComponent({
     };
     const deleteProduct = (product) => {
       console.log("delete product", product);
-      // const productID = product?.id;
-
-      // router.push({
-      //   name: "side-menu-open-product",
-      //   params: {
-      //     productID: productID,
-      //   },
-      // });
+      productID.value = product?.id
+     
     };
+    watch(
+      productID,
+      (newproductID, oldproductID) => {
+        productID.value = newproductID;
+        console.log("productID changed:", productID.value);
+      }
+    );
+
     const checkedProductAll = (event) => {
       checkedProducts.value = [];
       if (event.target.checked) {
@@ -743,6 +754,7 @@ export default defineComponent({
       exitFullScreen,
       toggleGrid,
       deleteProduct,
+      productID
     };
   },
 });

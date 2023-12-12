@@ -1,114 +1,554 @@
 <template>
-  <TransitionRoot
-    as="template"
-    :show="props.showInvoiceModal"
-  
+  <div>
+    <div
+      id="static-backdrop-modal-delete"
+      class="modal"
+      data-backdrop="static"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <a data-dismiss="modal">
+            <i data-feather="X" class="w-8 h-8 text-gray-500"></i>
+          </a>
 
-    class="bg-white dark:bg-dark-1 text-gray-800 dark:text-white z-10"
-  >
-    <Dialog as="div" class="relative z-10" @close="toggleModal">
-      <TransitionChild
-        as="template"
-        enter="ease-out duration-300"
-        enter-from="opacity-0"
-        enter-to="opacity-100"
-        leave="ease-in duration-200"
-        leave-from="opacity-100"
-        leave-to="opacity-0"
-        zIndex="100"
-      >
-        <div
-          class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-        />
-      </TransitionChild>
+          <div class="modal-body px-10">
+           
+            <div class="grid grid-cols-12 gap-6 mt-1 px-5 box">
+              <div
+                class="w-[90%] mx-auto bg-white relative rounded-md shadow-md transition-transform dark:bg-darkmode-600 sm:w-[460px]"
+                id="headlessui-dialog-panel-12"
+              >
+                <div class="p-5 text-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="stroke-1.5 w-16 h-16 mx-auto mt-3 text-danger"
+                  >
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="15" y1="9" x2="9" y2="15"></line>
+                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                  </svg>
+                  <div class="mt-5 text-3xl">Are you sure?</div>
+                  <div class="mt-2 text-slate-500">
+                    Do you really want to delete the records that belong to product id {{productID}}? <br />
+                    This process cannot be undone.
+                  </div>
+                </div>
+                <div class="px-5 pb-8 text-center">
+                  <button
+                  data-dismiss="modal"
+                    class="transition duration-200 border shadow-sm inline-flex items-center justify-center py-2 px-3 rounded-md font-medium cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&amp;:hover:not(:disabled)]:bg-opacity-90 [&amp;:hover:not(:disabled)]:border-opacity-90 [&amp;:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed border-secondary text-slate-500 dark:border-darkmode-100/40 dark:text-slate-300 [&amp;:hover:not(:disabled)]:bg-secondary/20 [&amp;:hover:not(:disabled)]:dark:bg-darkmode-100/10 w-24 mr-1"
+                    type="button"
+                  >
+                    Cancel</button
+                  ><button
+                    class="text-white transition duration-200 border shadow-sm inline-flex items-center justify-center py-2 px-3 rounded-md font-medium 
+                    cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 
+                    [&amp;:hover:not(:disabled)]:border-opacity-90 [&amp;:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed bg-theme-34 border-theme-34  w-24"
+                    type="button"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
 
-      <div class="fixed z-10 inset-0 overflow-y-auto">
-        <div
-          class="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0"
-        >
-          <TransitionChild
-            as="template"
-            enter="ease-out duration-300 z-10"
-            enter-from="opacity-0 transla te-y-4 z-10 sm:translate-y-0 sm:scale-95"
-            enter-to="opacity-100 transl ate-y-0 z-10 sm:scale-100"
-            leave="ease-in duration-200"
-            leave-from="opacity-100 translate-y-0 z-10 sm:scale-100"
-            leave-to="opacity-0 translate-y-4  z-10sm:translate-y-0 sm:scale-95"
-          >
-            <DialogPanel
-            style="z-index: 9999!important;"
-              class="z-50 modal-body  overflow-auto bg-gray-100 dark:bg-dark-1    rounded-lg text-left  shadow-xl transform transition-all   lg:w-2/3 sm:w-full"
-            >
-        
-            <div class="flex justify-end m-2">
+              <div class="intro-y col-span-12 lg:col-span-12">
+                <!-- BEGIN: Form Layout -->
 
-<button @click="toggleModal" class="h-7 w-7 p-1 duration-600 
-rounded-full border hover:bg-gray-900   hover:transform hover:skew-y-4 shadow-lg btn bg-theme-4   text-theme-2">
-<XIcon class="h-5" />
-</button>
-</div>
-     
-            <!-- <slot></slot> -->
-            
-            </DialogPanel>
-          </TransitionChild>
+                <form
+                  class="validate-form"
+                  @submit.prevent="handleSubmit"
+                  autocomplete="off"
+                >
+                  <!-- <button @click="upload">upload</button> -->
+
+                  <!-- Notification Alert Start -->
+                  <div
+                    id="basic-non-sticky-notification-content"
+                    class="toastify-content hidden flex"
+                  >
+                    <CheckCircleIcon class="text-theme-9" />
+                    <div class="ml-4 mr-4">
+                      <div class="font-medium notification-message"></div>
+                    </div>
+                  </div>
+                  <!-- Notification Alert End -->
+
+                  <!-- END: Validation Form -->
+
+                  <!-- BEGIN: Success Notification Content -->
+                  <div
+                    id="success-notification-content"
+                    class="toastify-content hidden flex"
+                  >
+                    <CheckCircleIcon class="text-theme-9" />
+                    <div class="ml-4 mr-4">
+                      <!-- <div class="font-medium">Appointment has been Successfully created</div> -->
+                      <div class="font-medium">
+                        It has been successfully deleted
+                      </div>
+                    </div>
+                  </div>
+                  <!-- END: Success Notification Content -->
+
+                  <!-- BEGIN: Failed Notification Content -->
+                  <div
+                    id="failed-notification-content"
+                    class="toastify-content hidden flex"
+                  >
+                    <XCircleIcon class="text-theme-6" />
+                    <div class="ml-4 mr-4">
+                      <div class="font-medium">Product Deletion Failed</div>
+                      <div class="text-gray-600 mt-1">
+                        try again
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="container mx-auto justify-center mt-4"
+                    style="
+                      display: flex;
+                      align-items: center;
+                      text-align: center;
+                    "
+                  >
+                    <div
+                      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6"
+                    >
+                      <button
+                        style="background-color: #ff2400"
+                        type="reset"
+                        data-dismiss="modal"
+                        class="btn closeBTN btn-danger w-40 mr-auto text-gray-900 bg-theme-43"
+                      >
+                        <p class="text-white">
+                          {{ $t("translation.cancel_text") }}
+                        </p>
+                      </button>
+
+                      <button
+                        type="reset"
+                        class="btn clearBTN btn-warning w-40 mr-auto text-gray-900"
+                        style="display: none"
+                      >
+                        {{ $t("translation.clear_text") }}
+                      </button>
+                      <button
+                        type="submit"
+                        class="btn bg-theme-32 w-40 mr-auto text-white"
+                      >
+                        <LoadingIcon
+                          v-if="loading"
+                          icon="spinning-circles"
+                          color="white"
+                          class="w-4 h-4 ml-2"
+                        />
+                        <p data-dismiss="modal" class="text-white" v-else>
+                          <span>{{ $t("translation.submit_text") }}</span>
+                        </p>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+                <!-- END: Form Layout -->
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </Dialog>
-  </TransitionRoot>
+    </div>
+  </div>
+
+  <!-- END: Super Large Modal Content -->
 </template>
 
-<script setup>
+<script>
+import { defineComponent, toRaw, reactive, toRefs, inject, ref } from "vue";
+import Toastify from "toastify-js";
+import moment from "moment";
+import ClassicEditor from "../../global-components/ckeditor/ClassicEditor.vue";
+
+// Validations
+import { required, maxValue, minValue } from "@vuelidate/validators";
+import { useVuelidate } from "@vuelidate/core";
+import AppointmentsService from "../../service/appointments-service";
+import { useI18n } from "vue-i18n";
+import $ from "cash-dom";
+import { Form, ErrorMessage, Field, useFormValues } from "vee-validate";
+
+import { storage } from "../../firebase";
 import {
-Dialog,
-DialogPanel,
-TransitionChild,
-TransitionRoot
-} from "@headlessui/vue";
-import { XIcon } from '@heroicons/vue/outline';
+  ref as storageRefs,
+  uploadBytes,
+  getDownloadURL,
+} from "firebase/storage";
+export default defineComponent({
+  components: { ClassicEditor },
 
-const props = defineProps({
-  showInvoiceModal:Boolean,
-  
- 
-})
-const emit = defineEmits({
-closeModaDrawer:false
-})
+  data() {
+    // Basic non sticky notification
+    const basicNonStickyNotificationToggle = () => {
+      Toastify({
+        node: $("#basic-non-sticky-notification-content")
+          .clone()
+          .removeClass("hidden")[0],
+        duration: 3000,
+        newWindow: true,
+        close: true,
+        gravity: "top",
+        position: "right",
+        stopOnFocus: true,
+      }).showToast();
+    };
 
-const toggleModal = () => {
-emit('closeModaDrawer',false);
-}; 
+    const formData = reactive({
+      // loan_product_id: '',
+      selected_appointment_type: "",
+      // monthly_income: '',
+      appointment_date: "",
+      comment: "",
+      startTime: "",
+    });
+    const rules = {
+      selected_appointment_type: {
+        required,
+      },
+      appointment_date: {
+        required,
+      },
+      comment: {},
+      startTime: { required },
+    };
+    const validate = useVuelidate(rules, toRefs(formData));
 
+    return {
+      loadingSlotsdash: false,
+      successMessage: this.t(
+        "translation.appointment_created_successfully_text"
+      ),
 
+      selected_appointment_type: "",
+      appointment_type: "",
+      appointmentData: "",
+      startDate: moment(),
+      endDate: moment().add(10, "days"),
+      startTime: "",
+      endTime: "",
+      dateRange: "",
+      comment: "",
+      appointment_date: "",
+      timeSlotsArray: "",
+      appointmentTypeIdSlots: "",
+      dateSlots: "",
+      facilityIdSlots: "",
+      morningTimeSlotsArray: "",
+
+      middayTimeSlotsArray: "",
+      eveningTimeSlotsArray: "",
+      timeInterval: "",
+      selectedSlot: "",
+      newStartTime: "",
+      newEndTime: "",
+      highlightedRange: "",
+
+      // handleSubmit,
+      formData,
+      validate,
+      loading: false,
+      basicNonStickyNotificationToggle,
+      search_term: "",
+      sortBy: 1,
+
+      pageSize: 20,
+      currentPage: 1,
+      printLoading: true,
+      selectedButton: [],
+      period: "",
+      allTimeSlotsArray: "",
+    };
+  },
+  mounted() {},
+  created() {},
+  props: ["endDate"],
+  props: {
+    productID: String
+  },
+
+  computed: {
+    currentUser() {
+      return toRaw(this.$store.state.auth.user);
+    },
+  },
+  methods: {
+    moment,
+    periodchange() {
+      console.log("new period", this.period);
+      if (this.period == "morning") {
+        console.log("it is morning");
+        if (this.allTimeSlotsArray?.length > 0) {
+          this.timeSlotsArray = this.allTimeSlotsArray?.filter((slot) => {
+            // Filter slots that fall within the morning time range (e.g., 6 AM - 11:59 AM)
+            const startTime = Number(slot.start_time.split(":")[0]);
+            return startTime >= 6 && startTime <= 11;
+          });
+          console.log("morning this.timeSlotsArray", this.timeSlotsArray);
+        }
+      } else if (this.period == "noon") {
+        console.log("it is noon");
+        if (this.allTimeSlotsArray?.length > 0) {
+          this.timeSlotsArray = this.allTimeSlotsArray?.filter((slot) => {
+            // Filter slots that fall within the afternoon time range (e.g., 12 PM - 5:59 PM)
+            const startTime = Number(slot.start_time.split(":")[0]);
+            return startTime >= 12 && startTime <= 17;
+          });
+        }
+      } else if (this.period == "evening") {
+        console.log("it is noon");
+        if (this.allTimeSlotsArray?.length > 0) {
+          this.timeSlotsArray = this.allTimeSlotsArray?.filter((slot) => {
+            // Filter slots that fall within the evening time range (e.g., 6 PM - 11:59 PM)
+            const startTime = Number(slot.start_time.split(":")[0]);
+            return startTime >= 18 && startTime <= 23;
+          });
+        }
+      } else {
+        this.timeSlotsArray = this.allTimeSlotsArray;
+      }
+    },
+    clearVariables() {
+      console.log("cleared variables");
+      this.timeSlotsArray = [];
+      this.allTimeSlotsArray = [];
+      this.appointmentTypeId = "";
+      this.date = "";
+    },
+
+    onchange(id) {},
+
+    handleImageUpload(event) {
+      const selectedImages = event.target.files;
+      console.log("Selected Images:", selectedImages);
+      const imagePreviews = [];
+      for (let i = 0; i < selectedImages.length; i++) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          imagePreviews.push(e.target.result);
+          if (imagePreviews.length === selectedImages.length) {
+            this.selectedImages = imagePreviews;
+          }
+        };
+        reader.readAsDataURL(selectedImages[i]);
+      }
+    },
+
+    upload: function() {
+      const storageRef = storageRefs(storage, "products/myfile.gif");
+      uploadBytes(storageRef, this.$refs.myfile.files[0]).then((snapshot) => {
+        console.log("uploaded");
+      });
+    },
+  },
+  watch: {},
+  setup(props, {emit}) {
+    const { t } = useI18n({});
+    const productCategories = [
+      { id: 1, title: "Product" },
+      { id: 2, title: "Service" },
+    ];
+
+    const productBrands = [
+      { id: 1, title: "Apple" },
+      { id: 2, title: "Samsung" },
+      { id: 2, title: "Sony" },
+      { id: 1, title: "Nike" },
+      { id: 2, title: "Adidas" },
+      { id: 2, title: "Zara" },
+    ];
+
+    const storedLang = localStorage.getItem("lang");
+    const defaultLang = storedLang ?? "nl";
+    const lang = ref(defaultLang);
+    const product_name = ref("");
+    const selected_category = ref(null);
+    const description = ref("");
+    const price = ref("");
+    const quantity = ref("");
+    const selected_brand = ref(null);
+    const SKU = ref("");
+    const weight = ref("");
+    const originalprice = ref("");
+    const myfileRef = ref(null);
+
+    const selectedFiles = ref([]);
+
+    const handleFileChange = () => {
+      // Access the files array using the ref
+      selectedFiles.value = Array.from(myfileRef.value.files);
+      console.log("Selected Files:", selectedFiles.value);
+    };
+
+    const uploadImages = async (files) => {
+      const uploadPromises = files.map((file) => {
+        const imageName = `products/${file.name}`;
+        const storageRef = storageRefs(storage, imageName);
+
+        return uploadBytes(storageRef, file).then((snapshot) => {
+          // Get download URL after successful upload
+          return getDownloadURL(storageRef);
+        });
+      });
+
+      return Promise.all(uploadPromises);
+    };
+
+    const handleSubmit1 = async () => {
+      // Check if files are selected
+      if (selectedFiles.value.length === 0) {
+        console.error("No files selected.");
+        return;
+      }
+
+      try {
+        const imageUrls = await uploadImages(selectedFiles.value);
+        console.log("Download URLs:", imageUrls);
+        // Handle the download URLs as needed
+      } catch (error) {
+        console.error("Upload failed:", error);
+        // Handle the error
+      }
+    };
+
+    // const uploadImages1 = async () => {
+    //   const imageFiles = myfileRef.value.files;
+
+    //   const uploadPromises = Array.from(imageFiles).map((file) => {
+    //     const imageName = `products/${file.name}`;
+    //     const storageRef = storageRefs(storage, imageName);
+
+    //     return uploadBytes(storageRef, file).then((snapshot) => {
+
+    //       return getDownloadURL(storageRef);
+    //     });
+    //   });
+
+    //   return Promise.all(uploadPromises);
+    // };
+    const handleSubmit = async () => {
+      if (selectedFiles.value.length === 0) {
+        console.error("No files selected.");
+        return;
+      }
+
+      const imageUrls = await uploadImages(selectedFiles.value);
+      console.log("Download URLs:", imageUrls);
+
+      // const imageUrls = await uploadImages();
+
+      const user = localStorage.getItem("user");
+      const Id = JSON.parse(user)?.id;
+      const data = {
+        Name: product_name.value,
+        Description: description.value,
+        Category: selected_category.value,
+        Brand: selected_brand.value,
+        Price: originalprice.value,
+        Discounted_Price: price.value,
+        Quantity: quantity.value,
+        SKU: SKU.value,
+        Weight: weight.value,
+        VenderId: Id,
+        Images: imageUrls,
+      };
+
+      try {
+        AppointmentsService.createAppointments(data)
+          .then((response) => {
+            Toastify({
+              node: $("#success-notification-content")
+                .clone()
+                .removeClass("hidden")[0],
+              duration: 3000,
+              newWindow: true,
+              close: true,
+              gravity: "top",
+              position: "right",
+              stopOnFocus: true,
+            }).showToast();
+            // this.clearVariables()
+            // router.push('/dashboard/viewappointments')
+            // document.querySelector(".closeBTN").click();
+
+            document.querySelector(".closeBTN").click();
+          })
+          .catch((error) => {
+            // Handle errors
+          });
+      } catch (err) {
+        // Handle unexpected errors
+      }
+    };
+    return {
+      t,
+      lang,
+      productCategories,
+      productBrands,
+      product_name,
+      selected_category,
+      description,
+      originalprice,
+      price,
+      quantity,
+      selected_brand,
+      SKU,
+      weight,
+      handleSubmit,
+      myfileRef,
+      handleFileChange,
+      selectedFiles,
+    };
+  },
+});
 </script>
+<style lang="scss">
+//
+label:after {
+  content: "+";
 
-<style scope>
-/* we will explain what these classes do next! */
-.v-enter-active,
-.v-leave-active {
-transition: opacity 0.5s ease;
+  position: absolute;
+  right: 1em;
+  color: #fff;
 }
 
-.v-enter-from,
-.v-leave-to {
-opacity: 0;
-}
-/*
-Enter and leave animations can use different
-durations and timing functions.
-*/
-.slide-fade-enter-active {
-transition: all 0.3s ease-out;
+input:checked + label:after {
+  content: "-";
+  line-height: 0.8em;
 }
 
-.slide-fade-leave-active {
-transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+.accordion__content {
+  max-height: 0em;
+  transition: all 0.4s cubic-bezier(0.865, 0.14, 0.095, 0.87);
+}
+input[name="panel"]:checked ~ .accordion__content {
+  /* Get this as close to what height you expect */
+
+  max-height: 20em;
+  overflow: auto;
 }
 
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-transform: translateX(20px);
-opacity: 0;
+.slottable {
+  /* Get this as close to what height you expect */
+
+  max-height: 20em;
+  overflow: auto;
 }
 </style>
