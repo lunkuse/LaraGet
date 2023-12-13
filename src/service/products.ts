@@ -62,6 +62,27 @@ const url = "products/vendorItems"
     }
   }
 
+  async deleteProduct(data) {
+   
+    try {
+  
+      const response = await axios
+        .post(
+          'products/deleteItem',
+          data
+        )
+      // let data = response.data;
+    
+    
+        return { status: response?.data?.status, data: response.data.payload, message: response?.data?.message
+        };
+     
+    } catch (err) {
+      console.log('data response when deleting', err);
+      return { status: false, data: {}, message: `${err}` };
+    }
+  }
+
 }
 
 

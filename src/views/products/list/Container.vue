@@ -472,7 +472,7 @@
           <!-- exports filter -->
         </div>
       
-<Table 
+<ProductTable
 :products="filteredProducts"
           :isLoading="isLoading"
           @clearFilter="clearFilters"
@@ -494,7 +494,7 @@ import moment from "moment";
 // import axios from 'axios'
 import axios from "../../../axios";
 import AppointmentsService from "../../../service/appointments-service";
-import { ref, inject, toRaw, watch } from "vue";
+import { ref, inject, toRaw, watch, defineAsyncComponent } from "vue";
 import debounce from "lodash.debounce";
 import Button from "@/components/shared/buttons/Button.vue";
 import { useI18n } from "vue-i18n";
@@ -511,7 +511,10 @@ import {
 
 import Datepicker from "@vuepic/vue-datepicker";
 
-import Table from './Table.vue'
+// import Table from './Table.vue'
+const ProductTable  = defineAsyncComponent(
+  () => import("@/components/tables/ProductTable.vue")
+);
 
 export default {
   name: "Container",
@@ -523,7 +526,7 @@ export default {
     // Button,
     Datepicker,
     XIcon,
-    Table
+    ProductTable
   },
   inject: ["showrecalls"],
 

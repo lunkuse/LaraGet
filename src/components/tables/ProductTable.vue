@@ -1,5 +1,5 @@
 <template>
-  <DeleteModal class="!z-50" :productID="productID"/>
+  <DeleteModal class="!z-50" :productID="productID" />
   <div>
     <div>
       <div class="intro-y box p-5 mt-5 overflow-auto">
@@ -31,8 +31,18 @@
 
         <div v-if="products?.length > 0">
           <div id="contentdiv" class="bg-white" v-if="toggleGrid">
-            <table
+            <!-- <table
               class="w-full text-left border-spacing-y-[10px] border-separate -mt-2"
+            > -->
+            <table
+              class="display table table-report sm:mt-2 mb-20"
+              style="
+                  width: 100%;
+                  overflow-x: auto;
+                  white-space: nowrap;
+                  left: 0;
+                  right: 0;
+                "
             >
               <thead class="">
                 <tr class="">
@@ -229,51 +239,6 @@
                     class="px-5 dark:border-darkmode-300 first:rounded-l-md last:rounded-r-md w-56 bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b] py-0 relative before:block before:w-px before:h-8 before:bg-slate-200 before:absolute before:left-0 before:inset-y-0 before:my-auto before:dark:bg-darkmode-400"
                   >
                     <div class="flex items-center justify-center">
-                      <a class="flex items-center mr-3" href="#"
-                        ><svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          class="stroke-1.5 w-4 h-4 mr-1"
-                        >
-                          <polyline points="9 11 12 14 22 4"></polyline>
-                          <path
-                            d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
-                          ></path>
-                        </svg>
-                        Edit </a
-                      ><a class="flex items-center text-danger"  href="javascript:;"
-                  data-toggle="modal"
-                  data-target="#static-backdrop-modal-delete"  @click="deleteProduct(product)"
-                        ><svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          class="stroke-1.5 w-4 h-4 mr-1"
-                        >
-                          <path d="M3 6h18"></path>
-                          <path
-                            d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"
-                          ></path>
-                          <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
-                          <line x1="10" y1="11" x2="10" y2="17"></line>
-                          <line x1="14" y1="11" x2="14" y2="17"></line>
-                        </svg>
-                        Delete
-                      </a>
-                    s
                       <div class="flex items-center">
                         <Menu as="div" class="relative inline-block text-left">
                           <div>
@@ -297,6 +262,7 @@
                             <MenuItems
                               class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
                             >
+                              <!-- open -->
                               <div
                                 class="px-1 py-1"
                                 @click="openProduct(product)"
@@ -319,6 +285,63 @@
                                   </button>
                                 </MenuItem>
                               </div>
+                              <!-- edit -->
+                              <div
+                                class="px-1 py-1"
+                                @click="openProduct(product)"
+                              >
+                                <MenuItem v-slot="{ active }">
+                                  <button
+                                    :class="[
+                                      active
+                                        ? 'bg-gray-200 text-yellow-650'
+                                        : 'text-gray-900',
+                                      'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                                    ]"
+                                  >
+                                    <PencilAltIcon
+                                      :active="active"
+                                      class="mr-2 h-5 w-5 text-yellow-650"
+                                      aria-hidden="true"
+                                    />
+                                    Edit
+                                  </button>
+                                </MenuItem>
+                              </div>
+
+                              <!-- delete -->
+                              <!-- <div
+                                class="px-1 py-1"
+                                @click="deleteProduct(product)"
+                              > -->
+                              <a
+                              @click="deleteProduct(product)"
+                              class="px-1 py-1"
+                                      href="javascript:;"
+                                      data-toggle="modal"
+                                      data-target="#static-backdrop-modal-delete"
+                                    >
+                                <MenuItem v-slot="{ active }">
+                                  <button
+                                    :class="[
+                                      active
+                                        ? 'bg-gray-200 text-yellow-650'
+                                        : 'text-gray-900',
+                                      'group flex w-full items-center rounded-md px-2 py-2 text-sm',
+                                    ]"
+                                  >
+                                    <TrashIcon
+                                      :active="active"
+                                      class="mr-2 h-5 w-5 text-yellow-650"
+                                      aria-hidden="true"
+                                    />
+                                  
+                                      Delete
+                                   
+                                  </button>
+                                </MenuItem>
+                                </a>
+                              <!-- </div> -->
                             </MenuItems>
                           </transition>
                         </Menu>
@@ -569,23 +592,24 @@
       <!-- END: HTML Table Data -->
     </div>
   </div>
-  
 </template>
 
 <script>
 import { defineComponent, ref, defineAsyncComponent, watch } from "vue";
 import moment from "moment";
-import router from "../../../router";
+
+import router from "../../router";
 import { ArrowsExpandIcon } from "@heroicons/vue/outline";
 import {
   DotsHorizontalIcon,
   MailOpenIcon,
-  ClockIcon,
+  TrashIcon,
+  PencilAltIcon,
   QuestionMarkCircleIcon,
 } from "@heroicons/vue/outline";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 const DeleteModal = defineAsyncComponent(() =>
-  import("@/components/modals/DeleteAppointment.vue")
+  import("@/components/modals/DeleteProduct.vue")
 );
 export default defineComponent({
   props: {
@@ -608,7 +632,10 @@ export default defineComponent({
     MenuButton,
     MenuItems,
     MenuItem,
-    DeleteModal
+    DeleteModal,
+    MailOpenIcon,
+    TrashIcon,
+    PencilAltIcon,
   },
 
   data() {
@@ -646,7 +673,7 @@ export default defineComponent({
       }
       emit("checkedEmailList", checkedProducts.value);
     };
-   
+
     const openProduct = (product) => {
       console.log("open product", product);
       const productID = product?.id;
@@ -660,16 +687,12 @@ export default defineComponent({
     };
     const deleteProduct = (product) => {
       console.log("delete product", product);
-      productID.value = product?.id
-     
+      productID.value = product?.id;
     };
-    watch(
-      productID,
-      (newproductID, oldproductID) => {
-        productID.value = newproductID;
-        console.log("productID changed:", productID.value);
-      }
-    );
+    watch(productID, (newproductID, oldproductID) => {
+      productID.value = newproductID;
+      console.log("productID changed:", productID.value);
+    });
 
     const checkedProductAll = (event) => {
       checkedProducts.value = [];
@@ -754,7 +777,7 @@ export default defineComponent({
       exitFullScreen,
       toggleGrid,
       deleteProduct,
-      productID
+      productID,
     };
   },
 });
