@@ -45,8 +45,7 @@
             </div>
                   <div class="mt-5 text-3xl">Are you sure?</div>
                   <div class="mt-2 text-slate-500">
-                    Do you really want to delete the records that belong to
-                    product id {{ productID }}? <br />
+                    Do you really want to delete the records for this product ? <br />
                     This process cannot be undone.
                   </div>
                 </div>

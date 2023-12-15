@@ -21,6 +21,9 @@ import './assets/sass/app.scss'
 
 import './assets/sass/components/_datatable.scss'
 import './translate.css'
+import VueFileAgentNext from '@boindil/vue-file-agent-next'
+
+import '@boindil/vue-file-agent-next/dist/vue-file-agent-next.css'
 import { i18n } from './translations.js'
 import { createPinia } from 'pinia';
 const pinia =  createPinia();
@@ -32,6 +35,7 @@ const app = createApp(App)
   .use(print)
   .use(i18n)
   .use(pinia)
+  .use(VueFileAgentNext)
 // .use(Chat)
 
 globalComponents(app)

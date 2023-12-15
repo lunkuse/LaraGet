@@ -7,6 +7,25 @@ import { useFetch } from "../utils";
 
 
 class ProductService {
+  async createProduct(data) {
+   
+    try {
+
+      const response = await axios
+        .post(
+          'products/create',
+          data
+        )
+      // let data = response.data;
+      console.log('data response in service create appo', response?.data?.message, response?.data?.status);
+    
+        return { status: response?.data?.status, data: response.data.payload, message: response?.data?.message
+        };
+     
+    } catch (err) {
+      return { status: false, data: {}, message: `${err}` };
+    }
+  }
 
   async fetchAll()  {
     

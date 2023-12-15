@@ -167,8 +167,31 @@
                       @change="handleFileChange"
                     />
                   </div>
-
+                  <div class="col-span-12 mt-2">
                   
+                  <VueFileAgent
+    ref="vueFileAgent"
+    :theme="'grid'"
+    :multiple="true"
+    :deletable="true"
+    :meta="true"
+    :accept="'image/*,.zip'"
+    :maxSize="'10MB'"
+    :maxFiles="14"
+    :helpText="'Choose images or zip files'"
+    :errorText="{
+      type: 'Invalid file type. Only images or zip Allowed',
+      size: 'Files should not exceed 10MB in size',
+    }"
+    @select="filesSelected($event)"
+    @beforedelete="onBeforeDelete($event)"
+    @delete="fileDeleted($event)"
+    v-model="fileRecords"
+  ></VueFileAgent>
+  <button :disabled="!fileRecordsForUpload?.length" @click="uploadFiles()">
+    Upload {{ fileRecordsForUpload?.length }} files
+  </button>
+  </div>
                   <!-- <button @click="upload">upload</button> -->
 
                   <!-- Notification Alert Start -->
@@ -281,12 +304,13 @@ import ClassicEditor from "../../global-components/ckeditor/ClassicEditor.vue";
 // Validations
 import { required, maxValue, minValue } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
-import AppointmentsService from "../../service/appointments-service";
+import ProductService from "../../service/products";
 import { useI18n } from "vue-i18n";
 import $ from "cash-dom";
 import { Form, ErrorMessage, Field, useFormValues } from "vee-validate";
 
 import { storage } from "../../firebase";
+
 import {
   ref as storageRefs,
   uploadBytes,
@@ -332,6 +356,8 @@ export default defineComponent({
     const validate = useVuelidate(rules, toRefs(formData));
 
     return {
+      fileRecords: [],
+        rawFileRecords: [],
       loadingSlotsdash: false,
       successMessage: this.t(
         "translation.appointment_created_successfully_text"
@@ -388,47 +414,8 @@ export default defineComponent({
   },
   methods: {
     moment,
-    periodchange() {
-      console.log("new period", this.period);
-      if (this.period == "morning") {
-        console.log("it is morning");
-        if (this.allTimeSlotsArray?.length > 0) {
-          this.timeSlotsArray = this.allTimeSlotsArray?.filter((slot) => {
-            // Filter slots that fall within the morning time range (e.g., 6 AM - 11:59 AM)
-            const startTime = Number(slot.start_time.split(":")[0]);
-            return startTime >= 6 && startTime <= 11;
-          });
-          console.log("morning this.timeSlotsArray", this.timeSlotsArray);
-        }
-      } else if (this.period == "noon") {
-        console.log("it is noon");
-        if (this.allTimeSlotsArray?.length > 0) {
-          this.timeSlotsArray = this.allTimeSlotsArray?.filter((slot) => {
-            // Filter slots that fall within the afternoon time range (e.g., 12 PM - 5:59 PM)
-            const startTime = Number(slot.start_time.split(":")[0]);
-            return startTime >= 12 && startTime <= 17;
-          });
-        }
-      } else if (this.period == "evening") {
-        console.log("it is noon");
-        if (this.allTimeSlotsArray?.length > 0) {
-          this.timeSlotsArray = this.allTimeSlotsArray?.filter((slot) => {
-            // Filter slots that fall within the evening time range (e.g., 6 PM - 11:59 PM)
-            const startTime = Number(slot.start_time.split(":")[0]);
-            return startTime >= 18 && startTime <= 23;
-          });
-        }
-      } else {
-        this.timeSlotsArray = this.allTimeSlotsArray;
-      }
-    },
-    clearVariables() {
-      console.log("cleared variables");
-      this.timeSlotsArray = [];
-      this.allTimeSlotsArray = [];
-      this.appointmentTypeId = "";
-      this.date = "";
-    },
+    
+    
 
     onchange(id) {},
 
@@ -457,6 +444,7 @@ export default defineComponent({
   },
   watch: {},
   setup() {
+   
     const { t } = useI18n({});
     const productCategories = [
       { id: 1, title: "Product" },
@@ -490,10 +478,19 @@ export default defineComponent({
 
     const handleFileChange = () => {
       // Access the files array using the ref
+      
       selectedFiles.value = Array.from(myfileRef.value.files);
       console.log("Selected Files:", selectedFiles.value);
     };
-
+    const fileRecords = ref([])
+    const filesSelected=() =>{
+      selectedFiles.value = fileRecords.value
+      
+      const see = Array.from(fileRecords.value);
+      // Handle the change event (e.g., log a message)
+      // ,fileRecords.value,fileRecords.value
+      console.log('Files changed:', see  );
+    }
     const uploadImages = async (files) => {
       const uploadPromises = files.map((file) => {
         const imageName = `products/${file.name}`;
@@ -508,22 +505,7 @@ export default defineComponent({
       return Promise.all(uploadPromises);
     };
 
-    const handleSubmit1 = async () => {
-      // Check if files are selected
-      if (selectedFiles.value.length === 0) {
-        console.error("No files selected.");
-        return;
-      }
-
-      try {
-        const imageUrls = await uploadImages(selectedFiles.value);
-        console.log("Download URLs:", imageUrls);
-        // Handle the download URLs as needed
-      } catch (error) {
-        console.error("Upload failed:", error);
-        // Handle the error
-      }
-    };
+  
 
     // const uploadImages1 = async () => {
     //   const imageFiles = myfileRef.value.files;
@@ -568,7 +550,7 @@ export default defineComponent({
       };
 
       try {
-        AppointmentsService.createAppointments(data)
+        ProductService.createProduct(data)
           .then((response) => {
             Toastify({
               node: $("#success-notification-content")
@@ -612,6 +594,8 @@ export default defineComponent({
       myfileRef,
       handleFileChange,
       selectedFiles,
+      fileRecords,
+      filesSelected
     };
   },
 });
