@@ -132,7 +132,7 @@
                       >
                         <img
                           class="cursor-pointer rounded-full shadow-[0px_0px_0px_2px_#fff,_1px_1px_5px_rgba(0,0,0,0.32)] dark:shadow-[0px_0px_0px_2px_#3f4865,_1px_1px_5px_rgba(0,0,0,0.32)]"
-                          alt="Midone Tailwind HTML Admin Template"
+                          alt="product image"
                           :src="product?.Images[0]"
                         />
                       </div>
@@ -142,7 +142,7 @@
                       >
                         <img
                           class="cursor-pointer rounded-full shadow-[0px_0px_0px_2px_#fff,_1px_1px_5px_rgba(0,0,0,0.32)] dark:shadow-[0px_0px_0px_2px_#3f4865,_1px_1px_5px_rgba(0,0,0,0.32)]"
-                          alt="Midone Tailwind HTML Admin Template"
+                          alt="product image"
                           :src="product?.Images[1]"
                         />
                       </div>
@@ -152,7 +152,7 @@
                       >
                         <img
                           class="cursor-pointer rounded-full shadow-[0px_0px_0px_2px_#fff,_1px_1px_5px_rgba(0,0,0,0.32)] dark:shadow-[0px_0px_0px_2px_#3f4865,_1px_1px_5px_rgba(0,0,0,0.32)]"
-                          alt="Midone Tailwind HTML Admin Template"
+                          alt="product image"
                           :src="product?.Images[2]"
                         />
                       </div>
@@ -365,7 +365,7 @@
                     class="h-40 overflow-hidden rounded-md 2xl:h-56 image-fit before:block before:absolute before:w-full before:h-full before:top-0 before:left-0 before:z-10 before:bg-gradient-to-t before:from-black before:to-black/10"
                   >
                     <img
-                      alt="Midone - HTML Admin Template"
+                      alt="product image"
                       class="rounded-md"
                       :src="product?.Images[0]"
                     /><!---->

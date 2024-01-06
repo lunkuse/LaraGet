@@ -169,6 +169,37 @@
                   </div>
 
                   
+
+
+
+
+
+
+
+                  <div id="drop-area">
+ 
+ <p>Upload multiple files with the file dialog or by dragging and dropping  images onto the dashed region</p>
+ <input
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      ref="myfileRef"
+                      @change="handleFileChange"
+                    />
+ <label class="button" for="fileElem">Select some files</label>
+
+<progress id="progress-bar" max=100 value=0></progress>
+<div id="gallery" /></div>
+ 
+
+
+
+
+
+
+
+
+                  
                   <!-- <button @click="upload">upload</button> -->
 
                   <!-- Notification Alert Start -->
@@ -207,7 +238,7 @@
                   >
                     <XCircleIcon class="text-theme-6" />
                     <div class="ml-4 mr-4">
-                      <div class="font-medium">Appointment Creation Failed</div>
+                      <div class="font-medium">Product Creation Failed</div>
                       <div class="text-gray-600 mt-1">
                         Review your form and fill all fields
                       </div>
@@ -647,5 +678,58 @@ input[name="panel"]:checked ~ .accordion__content {
 
   max-height: 20em;
   overflow: auto;
+}
+
+body {
+  font-family: sans-serif;
+}
+a {
+  color: #369;
+}
+.note {
+  width: 500px;
+  margin: 50px auto;
+  font-size: 1.1em;
+  color: #333;
+  text-align: justify;
+}
+#drop-area {
+  border: 2px dashed #ccc;
+  border-radius: 20px;
+  width: 480px;
+  margin: 50px auto;
+  padding: 20px;
+}
+#drop-area.highlight {
+  border-color: purple;
+}
+p {
+  margin-top: 0;
+}
+.my-form {
+  margin-bottom: 10px;
+}
+#gallery {
+  margin-top: 10px;
+}
+#gallery img {
+  width: 150px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+.button {
+  display: inline-block;
+  padding: 10px;
+  background: #ccc;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.button:hover {
+  background: #ddd;
+}
+#fileElem {
+  display: none;
 }
 </style>
