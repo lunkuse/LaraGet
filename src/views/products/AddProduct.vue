@@ -176,21 +176,24 @@
 
 
 
-                  <div id="drop-area">
- 
- <p>Upload multiple files with the file dialog or by dragging and dropping  images onto the dashed region</p>
- <input
-                      type="file"
-                      accept="image/*"
-                      multiple
-                      ref="myfileRef"
-                      @change="handleFileChange"
-                    />
- <label class="button" for="fileElem">Select some files</label>
-
-<progress id="progress-bar" max=100 value=0></progress>
-<div id="gallery" /></div>
- 
+                  <div style="height: 300px; width: 100%; border: 1px solid  position: relative;">
+                    <DropZone 
+      :maxFiles="Number(10000000000)"
+      :uploadOnDrop="true"
+      :multipleUpload="true"
+      :parallelUpload="3"
+      @addedfile="handleAddedFile"
+      style="width: 100%; height: 100%;"
+    />
+    <!-- <DropZone 
+        :maxFiles="Number(10000000000)"
+        url="http://localhost:5000/item"
+        :uploadOnDrop="true"
+        :multipleUpload="true"
+        :parallelUpload="3"
+        style="width: 100%; height: 100%;"
+        /> -->
+  </div>
 
 
 
@@ -308,7 +311,7 @@ import { defineComponent, toRaw, reactive, toRefs, inject, ref } from "vue";
 import Toastify from "toastify-js";
 import moment from "moment";
 import ClassicEditor from "../../global-components/ckeditor/ClassicEditor.vue";
-
+import { DropZone } from 'dropzone-vue';
 // Validations
 import { required, maxValue, minValue } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
@@ -324,7 +327,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 export default defineComponent({
-  components: { ClassicEditor },
+  components: { ClassicEditor, DropZone },
 
   data() {
     // Basic non sticky notification
@@ -518,7 +521,7 @@ export default defineComponent({
     const myfileRef = ref(null);
 
     const selectedFiles = ref([]);
-
+    const myDropZone = ref(null);
     const handleFileChange = () => {
       // Access the files array using the ref
       selectedFiles.value = Array.from(myfileRef.value.files);
@@ -680,56 +683,4 @@ input[name="panel"]:checked ~ .accordion__content {
   overflow: auto;
 }
 
-body {
-  font-family: sans-serif;
-}
-a {
-  color: #369;
-}
-.note {
-  width: 500px;
-  margin: 50px auto;
-  font-size: 1.1em;
-  color: #333;
-  text-align: justify;
-}
-#drop-area {
-  border: 2px dashed #ccc;
-  border-radius: 20px;
-  width: 480px;
-  margin: 50px auto;
-  padding: 20px;
-}
-#drop-area.highlight {
-  border-color: purple;
-}
-p {
-  margin-top: 0;
-}
-.my-form {
-  margin-bottom: 10px;
-}
-#gallery {
-  margin-top: 10px;
-}
-#gallery img {
-  width: 150px;
-  margin-bottom: 10px;
-  margin-right: 10px;
-  vertical-align: middle;
-}
-.button {
-  display: inline-block;
-  padding: 10px;
-  background: #ccc;
-  cursor: pointer;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-.button:hover {
-  background: #ddd;
-}
-#fileElem {
-  display: none;
-}
 </style>

@@ -9,6 +9,8 @@ import "moment/dist/locale/en-gb";
 
 const pageTitle = import.meta.env.VITE_CLIENT_NAME || "Default Title";
 const { locale } = useI18n();
+
+
 watchEffect(() => {
   moment.locale(locale.value);
 });
