@@ -155,7 +155,6 @@
                     />
                   </div>
 
-
                   <!-- Image Uploader -->
                   <div class="col-span-12 mt-2">
                     <label class="block font-bold">Images:</label>
@@ -168,41 +167,21 @@
                     />
                   </div>
 
-                  
+                  <div
+                    style="height: 300px; width: 100%; border: 1px solid  position: relative;"
+                  >
+                    <DropZone
+                   
+                      :maxFiles="Number(10000000000)"
+                      :uploadOnDrop="false"
+                      :multipleUpload="true"
+                      :parallelUpload="4"
+                      @addedFile="handleAddedFile"
+                      style="width: 100%; height: 100%;"
+                    />
+               
+                  </div>
 
-
-
-
-
-
-
-                  <div style="height: 300px; width: 100%; border: 1px solid  position: relative;">
-                    <DropZone 
-      :maxFiles="Number(10000000000)"
-      :uploadOnDrop="true"
-      :multipleUpload="true"
-      :parallelUpload="3"
-      @addedfile="handleAddedFile"
-      style="width: 100%; height: 100%;"
-    />
-    <!-- <DropZone 
-        :maxFiles="Number(10000000000)"
-        url="http://localhost:5000/item"
-        :uploadOnDrop="true"
-        :multipleUpload="true"
-        :parallelUpload="3"
-        style="width: 100%; height: 100%;"
-        /> -->
-  </div>
-
-
-
-
-
-
-
-
-                  
                   <!-- <button @click="upload">upload</button> -->
 
                   <!-- Notification Alert Start -->
@@ -307,11 +286,11 @@
 </template>
 
 <script>
-import { defineComponent, toRaw, reactive, toRefs, inject, ref } from "vue";
+import { defineComponent, toRaw, reactive, toRefs, inject, ref, watch } from "vue";
 import Toastify from "toastify-js";
 import moment from "moment";
 import ClassicEditor from "../../global-components/ckeditor/ClassicEditor.vue";
-import { DropZone } from 'dropzone-vue';
+import { DropZone } from "dropzone-vue";
 // Validations
 import { required, maxValue, minValue } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
@@ -370,7 +349,7 @@ export default defineComponent({
       successMessage: this.t(
         "translation.appointment_created_successfully_text"
       ),
-      
+
       selected_appointment_type: "",
       appointment_type: "",
       appointmentData: "",
@@ -496,6 +475,19 @@ export default defineComponent({
       { id: 1, title: "Product" },
       { id: 2, title: "Service" },
     ];
+    const droppedImages = ref([]);
+    const handleAddedFile = (file) => {
+     
+      droppedImages.value.push(file);
+      console.log("file added", droppedImages.value);
+      
+    };
+
+    watch(droppedImages, (newImages) => {
+      if (newImages.length === Number(10000000000)) {
+        uploadAllImages();
+      }
+    });
 
     const productBrands = [
       { id: 1, title: "Apple" },
@@ -523,6 +515,7 @@ export default defineComponent({
     const selectedFiles = ref([]);
     const myDropZone = ref(null);
     const handleFileChange = () => {
+      console.log("file added to drop box");
       // Access the files array using the ref
       selectedFiles.value = Array.from(myfileRef.value.files);
       console.log("Selected Files:", selectedFiles.value);
@@ -530,7 +523,9 @@ export default defineComponent({
 
     const uploadImages = async (files) => {
       const uploadPromises = files.map((file) => {
-        const imageName = `products/${file.name}`;
+        console.log("file to upload", file?.file?.name)
+        const imageName = `products/${file?.file?.name}`;
+       
         const storageRef = storageRefs(storage, imageName);
 
         return uploadBytes(storageRef, file).then((snapshot) => {
@@ -548,8 +543,11 @@ export default defineComponent({
         console.error("No files selected.");
         return;
       }
-
+     
+// droppedImages.value
       try {
+        // const imageUrls = await uploadImages(selectedFiles.value);
+        // droppedImages.value
         const imageUrls = await uploadImages(selectedFiles.value);
         console.log("Download URLs:", imageUrls);
         // Handle the download URLs as needed
@@ -575,12 +573,17 @@ export default defineComponent({
     //   return Promise.all(uploadPromises);
     // };
     const handleSubmit = async () => {
-      if (selectedFiles.value.length === 0) {
+      // if (selectedFiles.value.length === 0) {
+      //   console.error("No files selected.");
+      //   return;
+      // }
+      if (droppedImages.value.length === 0) {
         console.error("No files selected.");
         return;
       }
-
-      const imageUrls = await uploadImages(selectedFiles.value);
+      // droppedImages.value
+      // const imageUrls = await uploadImages(selectedFiles.value);
+      const imageUrls = await uploadImages(droppedImages.value);
       console.log("Download URLs:", imageUrls);
 
       // const imageUrls = await uploadImages();
@@ -646,6 +649,8 @@ export default defineComponent({
       myfileRef,
       handleFileChange,
       selectedFiles,
+      handleAddedFile,
+      droppedImages,
     };
   },
 });
@@ -682,5 +687,4 @@ input[name="panel"]:checked ~ .accordion__content {
   max-height: 20em;
   overflow: auto;
 }
-
 </style>
