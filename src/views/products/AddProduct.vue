@@ -478,7 +478,7 @@ export default defineComponent({
     const droppedImages = ref([]);
     const handleAddedFile = (file) => {
      
-      droppedImages.value.push(file);
+      droppedImages.value.push(file.file);
       console.log("file added", droppedImages.value);
       
     };
@@ -523,8 +523,8 @@ export default defineComponent({
 
     const uploadImages = async (files) => {
       const uploadPromises = files.map((file) => {
-        console.log("file to upload", file?.file?.name)
-        const imageName = `products/${file?.file?.name}`;
+        console.log("file to upload", file?.name)
+        const imageName = `products/${file?.name}`;
        
         const storageRef = storageRefs(storage, imageName);
 
