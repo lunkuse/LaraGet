@@ -25,7 +25,7 @@
                       <div
                         class="text-theme-43 py-1 px-2 flex items-center rounded-full text-xs bg-slate-100 dark:bg-darkmode-400 text-slate-500 cursor-pointer ml-auto truncate"
                       >
-                        {{ no_of_products }}
+                        {{ counters.itemCount ?? 0 }}
                       </div>
                     </div>
                     <div class="mt-1">
@@ -905,7 +905,7 @@
 </template>
 
 <script>
-import { defineComponent, inject, ref } from "vue";
+import { defineComponent, inject, ref, watch } from "vue";
 // import axios from 'axios'
 import axios from "../../axios";
 import moment from "moment";
@@ -918,6 +918,7 @@ import { allDashboardCounter } from "../../store/dashboard";
 
 import { useStore } from "vuex";
 import { EyeIcon } from "@heroicons/vue/outline";
+import { storeToRefs } from "pinia";
 export default defineComponent({
   components: {
     Avatar,
@@ -949,7 +950,12 @@ export default defineComponent({
     const { t } = useI18n({});
     const { fetchCounters } = allDashboardCounter;
     const { counters } = storeToRefs(allDashboardCounter());
-    fetchCounters();
+    allDashboardCounter().fetchCounters();
+    watch(counters, (newcounters, oldcounters) => {
+      counters.value = newcounters;
+      console.log("received change in counter", counters.value)
+    });
+    
     return {
       t,
       fetchCounters,

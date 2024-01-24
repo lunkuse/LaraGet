@@ -15,12 +15,12 @@ export const allDashboardCounter = defineStore("allDashboardCounter", {
 
 
 
-		const { data, success } = await DashboardService.fetchCounters(
+		const { data, success } = await DashboardService.fetchAllCounters(
 			
 		  );
 		  console.log('all storecounter', data)
 		// if(success) {
-			this.counters = data.data
+			this.counters = data
 		// }
 	
 	  },
