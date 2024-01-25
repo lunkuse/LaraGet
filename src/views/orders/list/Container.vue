@@ -342,11 +342,7 @@
                     <Button
                       :label="`${$t('translation.excel_text')}`"
                       @click="
-                        printObject(
-                          'xlsx',
-                          'Orders',
-                          '/orders/download-excel'
-                        )
+                        printObject('xlsx', 'Orders', '/orders/download-excel')
                       "
                       class="border-t bold border-0 cursor-pointer text-black bg-white w-full hover:bg-gray-100 text-sm h-7 !text-gray-800 !bg-white !text-sm !capitalize"
                     ></Button>
@@ -355,11 +351,7 @@
                     <Button
                       :label="`${$t('translation.csv_text')}`"
                       @click="
-                        printObject(
-                          'csv',
-                          'Orders',
-                          '/orders/download-csv'
-                        )
+                        printObject('csv', 'Orders', '/orders/download-csv')
                       "
                       class="border-t bold border-0 cursor-pointer w-full hover:bg-gray-100 h-7 !text-gray-800 !bg-white !text-sm !capitalize"
                     ></Button>
@@ -480,7 +472,6 @@
           @refreshOrders="fetchMoreData"
           @checkedOrderList="checkedOrderList"
         />
-      
       </div>
     </div>
   </div>
@@ -503,7 +494,7 @@ import {
   ChevronDownIcon,
   XIcon,
 } from "@heroicons/vue/outline";
-// import Button from "../../../global/Button.vue";
+
 
 import Datepicker from "@vuepic/vue-datepicker";
 
@@ -521,7 +512,6 @@ export default {
     XIcon,
     Table,
   },
-
 
   data() {
     return {
@@ -660,9 +650,7 @@ export default {
       source: null,
     };
   },
-  created() {
-   
-  },
+  created() {},
 
   methods: {
     showStatusFilter() {
@@ -717,7 +705,6 @@ export default {
         this.isFilterOptionsForExports = false;
         this.isFilterList = false;
       } else {
-      
       }
     },
 
@@ -732,33 +719,28 @@ export default {
         this.checkedOrderListMain.length = [];
         this.isUnchenkallstatus = true;
       }
-
-   
     },
     checkedOrderList(checkedAppointments) {
       this.checkedOrderListMain = checkedAppointments;
     },
 
     async fetchMoreData() {
-     
-
       this.paginatedOrder;
     },
 
     async fetchAll(data) {},
 
     async exportDataTable() {
-    
       if (this.checkedOrderListMain.length > 0) {
-        let appointments = [];
-        appointments = this.checkedOrderListMain;
-        return appointments;
+        let products = [];
+        products = this.checkedOrderListMain;
+        return products;
       } else {
-        let appointments = [];
+        let products = [];
         this.filteredResponse.forEach((e) => {
-          appointments.push(e.id);
+          products.push(e.id);
         });
-        return appointments;
+        return products;
       }
       // return appointments;
     },
@@ -766,8 +748,8 @@ export default {
     // pdf excel, csv export
     async printObject(
       type,
-      filename = "Appointments",
-      url = "/products/appointments/download-pdf"
+      filename = "Products",
+      url = "/products/download-pdf"
     ) {
       try {
         const appointment2 = await this.exportDataTable();
@@ -802,14 +784,10 @@ export default {
             link.click();
             URL.revokeObjectURL(link.href);
           })
-          .catch((err) => {
-    
-          });
+          .catch((err) => {});
 
         this.hideExportLoader();
-      } catch (err) {
-       
-      }
+      } catch (err) {}
     },
     async printData() {
       const appointment2 = await this.exportDataTable();
@@ -868,8 +846,6 @@ export default {
       this.isFilterOptionsForExports = false;
       this.isFilterList = false;
       document.activeElement.blur();
-   
-
     },
 
     showFilterDates() {
@@ -946,7 +922,7 @@ export default {
     dialogClear() {
       this.clear = 1;
       this.search_term = null;
-      
+
       this.firstDate = "";
       this.secondDate = "";
       this.status = null;
@@ -963,9 +939,8 @@ export default {
 
       this.date_range = null;
       this.filterStatus = null;
-           
+
       this.month_range = null;
-    
     },
     clearall() {
       this.ourRequest.cancel();
@@ -996,9 +971,9 @@ export default {
       this.doctorName = null;
 
       this.date_range = null;
-           
+
       this.month_range = null;
-     
+
       this.paginatedOrder;
     },
 
@@ -1072,7 +1047,7 @@ export default {
     selectOption(option) {
       if (option === "Pending") {
         this.filter_option = this.t("translation.pending_text");
-      }else {
+      } else {
         this.filter_option = option;
       }
 
@@ -1116,11 +1091,6 @@ export default {
       const startDate = date.value[0];
       const endDate = date.value[1];
     },
-
-  
-   
-
-    
   },
   computed: {
     currentUser() {
@@ -1164,7 +1134,6 @@ export default {
     },
 
     filteredOrders() {
-   
       let allOrders = [...this.orders];
 
       this.filteredResponse = allOrders;
@@ -1178,12 +1147,8 @@ export default {
         //  this.source?.cancel();
         this.ourRequest.cancel();
 
-    
-
         this.search_term = this.search_term;
 
-
-      
         this.checkedOrderListMain = [];
 
         this.status = null;
@@ -1191,7 +1156,6 @@ export default {
         this.month_range = null;
         this.year = null;
         this.filter_option = null;
-             
 
         this.isTarget = false;
         this.UncheckAllSelected();
@@ -1220,8 +1184,6 @@ export default {
         this.paginatedOrder;
       } else {
         this.filterStatus = null;
-
-      
       }
 
       this.UncheckAllSelected();
@@ -1238,10 +1200,9 @@ export default {
         this.filterStatus = null;
         this.month_range = null;
         this.date_range = null;
-             
 
         this.year_range = moment(new Date(this.year, 1)).format("YYYY");
-        
+
         this.UncheckAllSelected();
         this.paginatedOrder;
       }
@@ -1254,7 +1215,6 @@ export default {
         this.paginatedData = [];
         this.search_term = null;
         this.filterStatus = null;
-             
 
         this.year = null;
 
@@ -1280,7 +1240,6 @@ export default {
         this.year = null;
 
         this.date = null;
-             
 
         this.month_range = moment(
           new Date(this.month.year, this.month.month + 1, 0)
@@ -1294,16 +1253,13 @@ export default {
 
   setup() {
     const { fetchOrders } = allOrdersStore();
-    const { orders } = storeToRefs(allOrdersStore());
+    const { orders, isLoading } = storeToRefs(allOrdersStore());
     // const { products } = storeToRefs(allOrdersStore());
     allOrdersStore().fetchOrders({});
-    // allOrdersStore().fetchAllProducts();
-    // const translation = inject("translation");
-    const translations = inject("translation_v3");
-   
+
     const date = ref();
     const month = ref();
-    const onLoadApps = ref(true);
+
     const { t } = useI18n({});
     const format = (dateArr) => {
       const formattedStartDate = moment(dateArr[0]).format("DD/MM/YYYY");
@@ -1317,18 +1273,18 @@ export default {
 
     watch(orders, (neworders, oldorders) => {
       orders.value = neworders;
-    
     });
     return {
       t,
       orders,
-      // products,
+
       date,
       format,
       month,
-      onLoadApps,
+
       lang,
-      translations,
+
+      isLoading,
     };
   },
 };

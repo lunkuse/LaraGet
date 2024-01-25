@@ -7,6 +7,7 @@
     >
       {{ message }}
     </div>
+    {{ formValues }}
     <Form
       @submit="handleRegister"
       :validation-schema="schema"

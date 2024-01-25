@@ -6,6 +6,7 @@ export const allProductsStore = defineStore("allProductsStore", {
   state: () => ({
     products: [],
 	vendorProducts: [],
+	isLoading: false,
   }),
   getters: {
     getProducts: (state) => state.products
@@ -24,7 +25,7 @@ export const allProductsStore = defineStore("allProductsStore", {
 	
 	  },
 	  async fetchVendorProducts(parameters) {
-
+		this.isLoading = true;
 
 
 		const { data, success } = await ProductService.fetchVendorProducts(
@@ -33,6 +34,7 @@ export const allProductsStore = defineStore("allProductsStore", {
 		  console.log('all vendor products', data)
 		// if(success) {
 			this.vendorProducts = data.data
+			this.isLoading = false;
 		// }
 	
 	  },

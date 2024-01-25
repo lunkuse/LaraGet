@@ -1687,7 +1687,7 @@ import { required, minLength } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
 import router from '../../router'
 import $ from 'cash-dom'
-import DataForm from '../register/components/PatientBiographyUpdate.vue'
+import DataForm from '../register/components/BiographyUpdate.vue'
 export default defineComponent({
   components: {
     Field,

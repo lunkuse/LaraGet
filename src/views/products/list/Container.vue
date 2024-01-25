@@ -15,7 +15,7 @@
           <!-- length checked -->
           <div
             class="mx-auto text-slate-500"
-            v-if=" filteredProducts.length > 0"
+            v-if="filteredProducts.length > 0"
           >
             {{ $t("translation.showing_text") }}
             {{ lengthFrom }}
@@ -471,25 +471,23 @@
 
           <!-- exports filter -->
         </div>
-      
-<ProductTable
-:products="filteredProducts"
+
+        <ProductTable
+          :products="filteredProducts"
           :isLoading="isLoading"
           @clearFilter="clearFilters"
           :isPending="isPending"
           :isTarget="isTarget"
           :filterOption="filter_option"
-         
           :isUnchenkallstatus="isUnchenkallstatus"
           @refreshProducts="fetchMoreData"
-          @checkedAppointmentList="checkedAppointmentList"
-/>
-    
+          @checkedProductList="checkedProductList"
+        />
       </div>
     </div>
   </div>
 </template>
-<script lang="ts" >
+<script lang="ts">
 import moment from "moment";
 // import axios from 'axios'
 import axios from "../../../axios";
@@ -512,8 +510,8 @@ import {
 import Datepicker from "@vuepic/vue-datepicker";
 
 // import Table from './Table.vue'
-const ProductTable  = defineAsyncComponent(
-  () => import("@/components/tables/ProductTable.vue")
+const ProductTable = defineAsyncComponent(() =>
+  import("@/components/tables/ProductTable.vue")
 );
 
 export default {
@@ -526,7 +524,7 @@ export default {
     // Button,
     Datepicker,
     XIcon,
-    ProductTable
+    ProductTable,
   },
   inject: ["showrecalls"],
 
@@ -534,25 +532,20 @@ export default {
     return {
       filteredResponse: null,
 
-      isLoadingdoctors: true,
       isFilterDates: false,
       isShowDates: false,
       appointments: [],
       allProductssearch: [],
       patient: {},
-      isLoading: false,
+ 
       isSearching: false,
       doctorName: "",
       search_term: null,
       isPending: false,
-      isAppointmentModal: false,
+      isProductModal: false,
       isFilterOptions: false,
       isFilterOptionsDate: false,
-      // filterDates: ["1 Week", "1 Month", "1 Year", "Custom"],
-      //     oneWeek:'Week',
-      // oneMonth:'Maand',
-      // oneYear:'Jaar',
-      // customtext:'Aangepast',
+    
       filterDates: [
         {
           name: this.t("translation.oneWeek"),
@@ -597,24 +590,12 @@ export default {
           value: "service",
         },
       ],
-      filterOptionsfff: [
-        "Pending",
-        "Waiting",
-        "Confirmed",
-        "Missed",
-        "Completed",
-        "Serving",
-        "Canceled",
-        "Upcoming appointments",
-        "Past appointments",
-        // "All appointments"
-      ],
+
       filterOptionsDate: ["1 Week", "1 Month", "1 Year", "Custom"],
       filter_option: null,
       filter_option_date: "",
       isFilterTypes: false,
 
-      treatment_id: null,
       filterOptionsForExports: ["PDF", "CSV", "Excel", "Print"],
       filter_option_exports: "",
       doctors: [],
@@ -647,9 +628,7 @@ export default {
       CheckedOrderlistMain: [],
       counter: 1,
       paginatedData: [],
-    
-      upcoming_appointments: null,
-      past_appointments: null,
+
       date_range: null,
       month_range: null,
       lengthFrom: 1,
@@ -664,11 +643,7 @@ export default {
       source: null,
     };
   },
-  created() {
-    // this.appointments = [];
-    // this.paginatedData = [];
-    // this.fetchAppointmentTypes();
-  },
+
 
   methods: {
     showStatusFilter() {
@@ -693,18 +668,17 @@ export default {
     showFilterList() {
       this.isFilterList = !this.isFilterList;
       this.isFilterOptionsForExports = false;
-       
+
       this.isFilterOptions = false;
       this.isFilterOptionsDate = false;
 
       this.isFilterDates = false;
 
-       
       this.isFilterOptions = false;
       this.isFilterOptionsDate = false;
     },
 
-    outsideDialogBox: function (e) {
+    outsideDialogBox: function(e) {
       // close statusselector
       if (!document.getElementById("statusselector")?.contains(e.target)) {
         this.isFilterOptions = false;
@@ -715,7 +689,6 @@ export default {
       }
       // close doctorselector
       if (!document.getElementById("doctorselector")?.contains(e.target)) {
-         
       }
 
       //  close exportselector
@@ -723,7 +696,6 @@ export default {
         this.isFilterOptionsForExports = false;
         this.isFilterList = false;
       } else {
-   
       }
     },
 
@@ -738,23 +710,16 @@ export default {
         this.CheckedOrderlistMain.length = [];
         this.isUnchenkallstatus = true;
       }
-
-     
     },
-    checkedAppointmentList(checkedAppointments) {
+    checkedProductList(checkedAppointments) {
       this.CheckedOrderlistMain = checkedAppointments;
     },
 
-    async fetchMoreData() {
-    
-
-      this.paginatedOrders;
-    },
+    async fetchMoreData() {},
 
     async fetchAll(data) {},
 
     async exportDataTable() {
-     
       if (this.CheckedOrderlistMain.length > 0) {
         let appointments = [];
         appointments = this.CheckedOrderlistMain;
@@ -808,14 +773,10 @@ export default {
             link.click();
             URL.revokeObjectURL(link.href);
           })
-          .catch((err) => {
-            
-          });
+          .catch((err) => {});
 
         this.hideExportLoader();
-      } catch (err) {
-    
-      }
+      } catch (err) {}
     },
     async printData() {
       const appointment2 = await this.exportDataTable();
@@ -846,8 +807,8 @@ export default {
 
         iframe.style.display = "none";
         iframe.src = URL.createObjectURL(blob);
-        iframe.onload = function () {
-          setTimeout(function () {
+        iframe.onload = function() {
+          setTimeout(function() {
             iframe.focus();
             iframe.contentWindow.print();
           }, 1);
@@ -859,19 +820,18 @@ export default {
     searchFocus() {
       this.isFilterDates = false;
       this.isFilterOptionsForExports = false;
-       
+
       this.isFilterOptions = false;
       this.isFilterOptionsDate = false;
       this.isFilterOptionsForExports = false;
       this.isFilterList = false;
     },
-   
 
     showFilterDates() {
       setTimeout(() => {
         this.isFilterDates = !this.isFilterDates;
         this.isFilterOptionsForExports = false;
-         
+
         this.isFilterList = false;
         this.isFilterOptions = false;
         this.isFilterOptionsDate = false;
@@ -898,7 +858,7 @@ export default {
         // this.isPending = false;
 
         this.isFilterOptionsForExports = false;
-         
+
         this.isFilterList = false;
         this.isFilterOptions = false;
         this.isFilterOptionsDate = false;
@@ -908,7 +868,7 @@ export default {
         // this.isPending = false;
 
         this.isFilterOptionsForExports = false;
-         
+
         this.isFilterList = false;
         this.isFilterOptions = false;
         this.isFilterOptionsDate = false;
@@ -917,7 +877,7 @@ export default {
       } else if (option === "1 Week") {
         // this.isPending = false;
         this.isFilterOptionsForExports = false;
-         
+
         this.isFilterOptions = false;
         this.isFilterOptionsDate = false;
 
@@ -928,7 +888,7 @@ export default {
     },
     showFilterOptionsForExports() {
       this.isFilterOptionsForExports = !this.isFilterOptionsForExports;
-       
+
       this.isFilterOptions = false;
       this.isFilterOptionsDate = false;
 
@@ -941,31 +901,25 @@ export default {
     dialogClear() {
       this.clear = 1;
       this.search_term = null;
-      this.doctorName = "";
+
       this.firstDate = "";
       this.secondDate = "";
       this.status = null;
       this.year = null;
       this.year_range = null;
-      // this.isPending = false;
+
       this.filter_option = null;
       this.isFilterOptionsForExports = false;
-       
+
       this.isFilterOptions = false;
       this.isFilterOptionsDate = false;
-      this.selected_doctorsIDs = [];
-      this.doctorName = null;
-      this.past_appointments = null;
+
       this.date_range = null;
       this.filterStatus = null;
-      this.upcoming_appointments = null;
+
       this.month_range = null;
-    
     },
     clearall() {
-      this.ourRequest.cancel();
-      this.appointments = [];
-      this.paginatedData = [];
       this.clear = 1;
       this.search_term = null;
       this.doctorName = "";
@@ -978,30 +932,25 @@ export default {
       this.filterStatus = null;
       this.filter_option = null;
       this.isFilterOptionsForExports = false;
-       
+
       this.isFilterList = false;
       this.isFilterOptions = false;
       this.isFilterOptionsDate = false;
       this.isFilterDates = false;
-      this.selected_doctorsIDs = [];
-      this.selected_doctorsNames = [];
 
       this.filterStatus = null;
       this.CheckedOrderlistMain.length = 0;
-      this.doctorName = null;
-      this.past_appointments = null;
+
       this.date_range = null;
-      this.upcoming_appointments = null;
+
       this.month_range = null;
-     
-      this.paginatedOrders;
     },
 
     expandStatusPanel() {
       this.isFilterOptions = !this.isFilterOptions;
       this.isFilterDates = false;
       this.isFilterOptionsForExports = false;
-       
+
       this.isFilterList = false;
       this.isFilterOptionsDate = false;
       this.isFilterOptionsForExports = false;
@@ -1011,7 +960,7 @@ export default {
       this.isFilterOptions = true;
       this.isFilterDates = false;
       this.isFilterOptionsForExports = false;
-       
+
       this.isFilterList = false;
       this.isFilterOptionsDate = false;
       this.isFilterOptionsForExports = false;
@@ -1050,24 +999,11 @@ export default {
         this.isFilterOptions = false;
       }, 200);
     },
-    selectedTreatment(treatment) {
-      this.isTreatments = false;
-
-      this.treatment_id = treatment.id;
-      this.typeID = treatment.id;
-      this.selected_treatment = treatment.treatment;
-    },
-    hideTreatments() {
-      this.selected_treatment = "";
-      setTimeout(() => {
-        this.isTreatments = false;
-      }, 200);
-    },
 
     selectOption(option) {
       if (option === "Pending") {
         this.filter_option = this.t("translation.pending_text");
-      }  else {
+      } else {
         this.filter_option = option;
       }
 
@@ -1090,11 +1026,11 @@ export default {
       this.filter_option = "";
     },
     showModal() {
-      this.isAppointmentModal = true;
+      this.isProductModal = true;
       document.querySelector("html").classList.add("preventScroll");
     },
     hideModal() {
-      this.isAppointmentModal = false;
+      this.isProductModal = false;
       document.querySelector("html").classList.remove("preventScroll");
     },
     performAction(query) {
@@ -1111,72 +1047,28 @@ export default {
       const startDate = date.value[0];
       const endDate = date.value[1];
     },
-
- 
   },
   computed: {
     currentUser() {
       return toRaw(this.$store.state.auth.user);
     },
-    async paginatedOrders() {
-      // keyword
-      console.log("past_appointments"), this.past_appointments;
-      if (!!this.search_term) {
-        this.fetchAll({ search_word: this.search_term });
-      }
 
-      // status
-      else if (!!this.filterStatus) {
-        this.fetchAll({ status: this.filterStatus });
-      }
-     
-
-   
-      // year filter
-      else if (!!this.year) {
-        this.fetchAll({ year: this.year_range });
-      }
-
-      // date range
-      else if (this.date_range) {
-        this.fetchAll({ date_range: this.date_range });
-      }
-
-      // month range
-      else if (this.month_range) {
-        const month = moment(
-          new Date(this.month.year, this.month.month + 1, 0)
-        ).format("MM");
-        const year = moment(
-          new Date(this.month.year, this.month.month + 1, 0)
-        ).format("YYYY");
-        this.month_range = [month, year];
-        this.fetchAll({ month_range: this.month_range });
-      } else {
-        this.fetchAll({});
-      }
-    },
-
-     filteredProducts() {
-     
+    filteredProducts() {
       let allProducts = [...this.vendorProducts];
 
       this.filteredResponse = allProducts;
       return allProducts;
     },
-  
   },
   watch: {
     // keyword
-    search_term: debounce(function (e) {
+    search_term: debounce(function(e) {
       if (!!this.search_term) {
         //  this.source?.cancel();
         this.ourRequest.cancel();
 
         this.search_term = this.search_term;
 
-        this.selected_doctorsIDs = [];
-        this.selected_doctorsNames = [];
         this.CheckedOrderlistMain = [];
         this.doctorName = null;
         this.status = null;
@@ -1184,12 +1076,9 @@ export default {
         this.month_range = null;
         this.year = null;
         this.filter_option = null;
-        this.upcoming_appointments = null;
-        this.past_appointments = null;
-       
+
         this.isTarget = false;
         this.UncheckAllSelected();
-        this.paginatedOrders;
       }
     }, 500),
 
@@ -1206,14 +1095,8 @@ export default {
         this.paginatedData = [];
         this.filterStatus = 6;
         this.date_range = null;
-        this.selected_doctorsIDs = [];
-        this.selected_doctorsNames = [];
-        this.doctorName = null;
-        this.past_appointments = null;
-        this.past_appointments = null;
 
         this.UncheckAllSelected();
-        this.paginatedOrders;
       } else if (newsearch_term === this.t("translation.pending_text")) {
         this.year = null;
         this.month_range = null;
@@ -1226,11 +1109,9 @@ export default {
         this.doctorName = null;
         this.past_appointments = null;
         this.past_appointments = null;
-        
 
         this.filterStatus = 2;
         this.UncheckAllSelected();
-        this.paginatedOrders;
       } else if (newsearch_term === this.t("translation.confirmed_text")) {
         this.selected_doctorsIDs = [];
         this.selected_doctorsNames = [];
@@ -1243,82 +1124,13 @@ export default {
         this.paginatedData = [];
         this.past_appointments = null;
         this.past_appointments = null;
-       
+
         this.filterStatus = 1;
-        this.paginatedOrders;
-      } else if (
-        newsearch_term === "Waiting" ||
-        newsearch_term === this.translations?.waiting_text
-      ) {
-        this.selected_doctorsIDs = [];
-        this.selected_doctorsNames = [];
-        this.doctorName = null;
-        this.year = null;
-        this.month_range = null;
-        this.date_range = null;
-        this.selected_doctorsIDs = [];
-        this.search_term = null;
-        this.appointments = [];
-        this.paginatedData = [];
-        this.past_appointments = null;
-        this.past_appointments = null;
-       
-        this.filterStatus = 3;
-        this.UncheckAllSelected();
-        this.paginatedOrders;
-      } else if (newsearch_term === this.t("translation.completed_text")) {
-        this.selected_doctorsIDs = [];
-        this.selected_doctorsNames = [];
-        this.doctorName = null;
-        this.year = null;
-        this.month_range = null;
-        this.date_range = null;
-        this.search_term = null;
-        this.appointments = [];
-        this.paginatedData = [];
-        this.past_appointments = null;
-        this.past_appointments = null;
-       
-        this.filterStatus = 4;
-        this.paginatedOrders;
-      } else if (newsearch_term === this.t("translation.serving_text")) {
-        this.year = null;
-        this.date_range = null;
-        this.search_term = null;
-        this.month_range = null;
-        this.appointments = [];
-        this.selected_doctorsIDs = [];
-        this.paginatedData = [];
-        this.past_appointments = null;
-        this.past_appointments = null;
-        this.selected_doctorsIDs = [];
-        this.selected_doctorsNames = [];
-        this.doctorName = null;
-        
-        this.filterStatus = 7;
-        this.UncheckAllSelected();
-        this.paginatedOrders;
-      } else if (newsearch_term === this.t("translation.canceled_text")) {
-        this.selected_doctorsIDs = [];
-        this.selected_doctorsNames = [];
-        this.doctorName = null;
-        this.year = null;
-        this.date_range = null;
-        this.month_range = null;
-        this.search_term = null;
-        this.appointments = [];
-        this.paginatedData = [];
-        this.past_appointments = null;
-        this.past_appointments = null;
-       
-        this.filterStatus = 5;
-        this.UncheckAllSelected();
         this.paginatedOrders;
       } else if (newsearch_term === this.t("translation.service_text")) {
         this.ourRequest.cancel();
         this.past_appointments = moment(new Date()).format("DD-MM-YYYY");
-       
-        this.upcoming_appointments = null;
+
         this.appointments = [];
         this.month_range = null;
         this.paginatedData = [];
@@ -1329,116 +1141,85 @@ export default {
         this.year = null;
         this.date_range = null;
 
-       
         this.status = null;
         this.year = null;
         this.filterStatus = null;
         this.UncheckAllSelected();
-        this.paginatedOrders;
       } else if (newsearch_term === this.t("translation.product_text")) {
-        this.upcoming_appointments = moment(new Date()).format("DD-MM-YYYY");
-        
-        this.appointments = [];
         this.month_range = null;
-        this.paginatedData = [];
-        this.selected_doctorsIDs = [];
-        this.selected_doctorsNames = [];
-        this.doctorName = null;
+
         this.search_term = null;
         this.year = null;
         this.date_range = null;
-        this.past_appointments = null;
-       
+
         this.status = null;
         this.year = null;
         this.filterStatus = null;
         this.UncheckAllSelected();
-        this.paginatedOrders;
       } else {
         this.filterStatus = null;
         this.appointments = [];
         this.paginatedData = [];
-      
       }
 
       this.UncheckAllSelected();
-      this.paginatedOrders;
     },
 
     // year
-    year: debounce(function (e) {
+    year: debounce(function(e) {
       if (!!this.year) {
-        this.ourRequest.cancel();
-        this.appointments = [];
-        this.paginatedData = [];
         this.search_term = null;
         this.filterStatus = null;
         this.month_range = null;
         this.date_range = null;
-        this.upcoming_appointments = null;
-        this.past_appointments = null;
-        this.selected_doctorsIDs = [];
+
         this.year_range = moment(new Date(this.year, 1)).format("YYYY");
-        
+
         this.UncheckAllSelected();
-        this.paginatedOrders;
       }
     }, 500),
     // daterange
-    date: debounce(function (e) {
+    date: debounce(function(e) {
       if (!!this.date) {
-        this.ourRequest.cancel();
-        this.appointments = [];
-        this.paginatedData = [];
         this.search_term = null;
         this.filterStatus = null;
-        this.upcoming_appointments = null;
-        this.past_appointments = null;
+
         this.year = null;
-        this.selected_doctorsIDs = [];
+
         this.date = this.date;
         this.month_range = null;
         const startDate = moment(this.date[0]).format("YYYY-MM-DD HH:mm");
         const endDate = moment(this.date[1]).format("YYYY-MM-DD HH:mm");
         this.date_range = [startDate, endDate];
-      
+
         this.UncheckAllSelected();
-        this.paginatedOrders;
       }
     }, 500),
 
     // daterange
-    month: debounce(function (e) {
+    month: debounce(function(e) {
       if (!!this.month) {
-        this.ourRequest.cancel();
-        this.appointments = [];
-        this.paginatedData = [];
         this.search_term = null;
         this.filterStatus = null;
         this.year = null;
-        this.selected_doctorsIDs = [];
+
         this.date = null;
-        this.upcoming_appointments = null;
-        this.past_appointments = null;
+
         this.month_range = moment(
           new Date(this.month.year, this.month.month + 1, 0)
         ).format("MM-YYYY");
-      
+
         this.UncheckAllSelected();
-        this.paginatedOrders;
       }
     }, 500),
   },
 
   setup() {
     const { fetchVendorProducts } = allProductsStore();
-    const { vendorProducts } = storeToRefs(allProductsStore());
+    const { vendorProducts, isLoading } = storeToRefs(allProductsStore());
     // const { products } = storeToRefs(allProductsStore());
     allProductsStore().fetchVendorProducts({});
-    // allProductsStore().fetchAllProducts();
-    // const translation = inject("translation");
-    const translations = inject("translation_v3");
-  
+
     const date = ref();
     const month = ref();
     const onLoadApps = ref(true);
@@ -1447,7 +1228,6 @@ export default {
       const formattedStartDate = moment(dateArr[0]).format("DD/MM/YYYY");
       const formattedEndDate = moment(dateArr[1]).format("DD/MM/YYYY");
 
-   
       return `${formattedStartDate} - ${formattedEndDate}`;
     };
     const storedLang = localStorage.getItem("lang");
@@ -1456,7 +1236,6 @@ export default {
 
     watch(vendorProducts, (newVendorProducts, oldVendorProducts) => {
       vendorProducts.value = newVendorProducts;
-     
     });
     return {
       t,
@@ -1467,7 +1246,7 @@ export default {
       month,
       onLoadApps,
       lang,
-      translations,
+      isLoading
     };
   },
 };

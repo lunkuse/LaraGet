@@ -5,6 +5,7 @@ import moment from "moment";
 export const allOrdersStore = defineStore("allOrdersStore", {
   state: () => ({
     orders: [],
+    isLoading: false,
   }),
   getters: {
     getOrders: (state) => state.orders
@@ -12,7 +13,7 @@ export const allOrdersStore = defineStore("allOrdersStore", {
   actions: {
 
 	  async fetchOrders(parameters) {
-
+      this.isLoading = true;
 
 
 		const { data, success } = await OrderService.fetchAll(
@@ -22,7 +23,7 @@ export const allOrdersStore = defineStore("allOrdersStore", {
 		// if(success) {
 			this.orders = data.data
 		// }
-	
+		this.isLoading = false;
 	  },
 
     resetStore() {

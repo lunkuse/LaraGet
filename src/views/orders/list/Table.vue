@@ -284,7 +284,7 @@ export default defineComponent({
           1
         );
       }
-      emit("checkedEmailList", checkedorders.value);
+      emit("checkedOrderList", checkedorders.value);
     };
 
     const openOrder = (order) => {
@@ -307,7 +307,7 @@ export default defineComponent({
       if (props.isUnchenkallstatus) {
         console.log("isUnchenkallstatusnnnn", props.isUnchenkallstatus);
       }
-      emit("checkedEmailList", checkedorders.value);
+      emit("checkedOrderList", checkedorders.value);
     };
     const emailSelected = (emailId) => {
       console.log(
