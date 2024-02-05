@@ -486,6 +486,13 @@
       </div>
     </div>
   </div>
+  <div class="w-full flex items-center justify-center">
+    <PaginationComponent
+      v-if="recallpagination && Object.keys(recallpagination).length > 0"
+      :pagination="recallpagination"
+      @paginate="fetchRecallAppointmentsList"
+    />
+  </div>
 </template>
 <script lang="ts">
 import moment from "moment";
@@ -513,7 +520,9 @@ import Datepicker from "@vuepic/vue-datepicker";
 const ProductTable = defineAsyncComponent(() =>
   import("@/components/tables/ProductTable.vue")
 );
-
+const PaginationComponent = defineAsyncComponent(() =>
+  import("@/components/paginate/PaginationComponent.vue")
+);
 export default {
   name: "Container",
   components: {

@@ -37,7 +37,7 @@ const url = "products/vendorOrders"
       const response = await axios
         .post(
           url,
-          { VendorId:Id}
+          { VendorId:Id, page: 1, pageSize: 5 }
         )
       // let data = response.data;
       console.log('vendor type data ', response.data);
