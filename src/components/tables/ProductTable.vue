@@ -14,9 +14,7 @@
               :class="{ 'translate-x-6': toggleGrid }"
             ></div>
           </div>
-          <h2 v-if="toggleGrid" class="ml-auto p-1">
-            Grid
-          </h2>
+          <h2 v-if="toggleGrid" class="ml-auto p-1">Grid</h2>
           <h2 v-else class="ml-auto p-1">Table</h2>
         </div>
 
@@ -35,14 +33,14 @@
               class="w-full text-left border-spacing-y-[10px] border-separate -mt-2"
             > -->
             <table
-              class="display table table-report sm:mt-2 mb-20"
+              class="display table table-report sm:mt-2 mb-60"
               style="
-                  width: 100%;
-                  overflow-x: auto;
-                  white-space: nowrap;
-                  left: 0;
-                  right: 0;
-                "
+                width: 100%;
+                overflow-x: auto;
+                white-space: nowrap;
+                left: 0;
+                right: 0;
+              "
             >
               <thead class="">
                 <tr class="">
@@ -83,6 +81,21 @@
                   <th
                     class="font-medium px-5 py-3 dark:border-darkmode-300 text-center border-b-0 whitespace-nowrap"
                   >
+                    BRAND
+                  </th>
+                  <th
+                    class="font-medium px-5 py-3 dark:border-darkmode-300 text-center border-b-0 whitespace-nowrap"
+                  >
+                    SKU
+                  </th>
+                  <th
+                    class="font-medium px-5 py-3 dark:border-darkmode-300 text-center border-b-0 whitespace-nowrap"
+                  >
+                    WEIGHT
+                  </th>
+                  <th
+                    class="font-medium px-5 py-3 dark:border-darkmode-300 text-center border-b-0 whitespace-nowrap"
+                  >
                     STATUS
                   </th>
                   <th
@@ -119,7 +132,7 @@
                   >
                     <div class="flex">
                       <input
-                        class=" form-check-input transition-all duration-100 ease-in-out shadow-sm cursor-pointer rounded focus:ring-4 focus:ring-offset-0 focus:ring-primary focus:ring-opacity-20 dark:bg-darkmode-800 dark:border-transparent dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&amp;[type='radio']]:checked:bg-primary [&amp;[type='radio']]:checked:border-primary [&amp;[type='radio']]:checked:border-opacity-10 [&amp;[type='checkbox']]:checked:bg-primary [&amp;[type='checkbox']]:checked:border-primary [&amp;[type='checkbox']]:checked:border-opacity-10 [&amp;:disabled:not(:checked)]:bg-slate-100 [&amp;:disabled:not(:checked)]:cursor-not-allowed [&amp;:disabled:not(:checked)]:dark:bg-darkmode-800/50 [&amp;:disabled:checked]:opacity-70 [&amp;:disabled:checked]:cursor-not-allowed [&amp;:disabled:checked]:dark:bg-darkmode-800/50 flex-none border-slate-400 checked:border-primary"
+                        class="form-check-input transition-all duration-100 ease-in-out shadow-sm cursor-pointer rounded focus:ring-4 focus:ring-offset-0 focus:ring-primary focus:ring-opacity-20 dark:bg-darkmode-800 dark:border-transparent dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&amp;[type='radio']]:checked:bg-primary [&amp;[type='radio']]:checked:border-primary [&amp;[type='radio']]:checked:border-opacity-10 [&amp;[type='checkbox']]:checked:bg-primary [&amp;[type='checkbox']]:checked:border-primary [&amp;[type='checkbox']]:checked:border-opacity-10 [&amp;:disabled:not(:checked)]:bg-slate-100 [&amp;:disabled:not(:checked)]:cursor-not-allowed [&amp;:disabled:not(:checked)]:dark:bg-darkmode-800/50 [&amp;:disabled:checked]:opacity-70 [&amp;:disabled:checked]:cursor-not-allowed [&amp;:disabled:checked]:dark:bg-darkmode-800/50 flex-none border-slate-400 checked:border-primary"
                         type="checkbox"
                         :value="email?.id"
                         :checked="emailSelected(email?.id)"
@@ -132,7 +145,7 @@
                       >
                         <img
                           class="cursor-pointer rounded-full shadow-[0px_0px_0px_2px_#fff,_1px_1px_5px_rgba(0,0,0,0.32)] dark:shadow-[0px_0px_0px_2px_#3f4865,_1px_1px_5px_rgba(0,0,0,0.32)]"
-                          alt="Midone Tailwind HTML Admin Template"
+                          alt="product image"
                           :src="product?.Images[0]"
                         />
                       </div>
@@ -142,7 +155,7 @@
                       >
                         <img
                           class="cursor-pointer rounded-full shadow-[0px_0px_0px_2px_#fff,_1px_1px_5px_rgba(0,0,0,0.32)] dark:shadow-[0px_0px_0px_2px_#3f4865,_1px_1px_5px_rgba(0,0,0,0.32)]"
-                          alt="Midone Tailwind HTML Admin Template"
+                          alt="product image"
                           :src="product?.Images[1]"
                         />
                       </div>
@@ -152,7 +165,7 @@
                       >
                         <img
                           class="cursor-pointer rounded-full shadow-[0px_0px_0px_2px_#fff,_1px_1px_5px_rgba(0,0,0,0.32)] dark:shadow-[0px_0px_0px_2px_#3f4865,_1px_1px_5px_rgba(0,0,0,0.32)]"
-                          alt="Midone Tailwind HTML Admin Template"
+                          alt="product image"
                           :src="product?.Images[2]"
                         />
                       </div>
@@ -161,11 +174,11 @@
                   <td
                     class="px-5 py-3 dark:border-darkmode-300 first:rounded-l-md last:rounded-r-md bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]"
                   >
-                    <a href="" class="font-medium whitespace-nowrap">
+                    <a href="" class="font-medium whitespace-normal">
                       {{ product?.Category }}</a
                     >
                     <div
-                      class="text-slate-500 text-xs whitespace-nowrap mt-0.5"
+                      class="text-slate-500 text-xs whitespace-normal mt-0.5"
                     >
                       {{ product?.Name }}
                     </div>
@@ -184,6 +197,22 @@
                     class="px-5 py-3 dark:border-darkmode-300 first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]"
                   >
                     {{ product?.Discounted_Price }}
+                  </td>
+                  <td
+                    class="px-5 py-3 dark:border-darkmode-300 first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]"
+                  >
+                    {{ product?.Brand }}
+                  </td>
+                  <td
+                    class="px-5 py-3 dark:border-darkmode-300 first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]"
+                  >
+                    {{ product?.SKU }}
+                  </td>
+
+                  <td
+                    class="px-5 py-3 dark:border-darkmode-300 first:rounded-l-md last:rounded-r-md text-center bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]"
+                  >
+                    {{ product?.Weight }}
                   </td>
                   <td
                     class="px-5 py-3 dark:border-darkmode-300 first:rounded-l-md last:rounded-r-md w-40 bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]"
@@ -315,12 +344,12 @@
                                 @click="deleteProduct(product)"
                               > -->
                               <a
-                              @click="deleteProduct(product)"
-                              class="px-1 py-1"
-                                      href="javascript:;"
-                                      data-toggle="modal"
-                                      data-target="#static-backdrop-modal-delete"
-                                    >
+                                @click="deleteProduct(product)"
+                                class="px-1 py-1"
+                                href="javascript:;"
+                                data-toggle="modal"
+                                data-target="#static-backdrop-modal-delete"
+                              >
                                 <MenuItem v-slot="{ active }">
                                   <button
                                     :class="[
@@ -335,12 +364,11 @@
                                       class="mr-2 h-5 w-5 text-yellow-650"
                                       aria-hidden="true"
                                     />
-                                  
-                                      Delete
-                                   
+
+                                    Delete
                                   </button>
                                 </MenuItem>
-                                </a>
+                              </a>
                               <!-- </div> -->
                             </MenuItems>
                           </transition>

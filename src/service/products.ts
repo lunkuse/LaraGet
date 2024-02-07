@@ -32,7 +32,7 @@ class ProductService {
   //   });
   // }
 
-  async fetchVendorProducts(VendorId) {
+  async fetchVendorProducts() {
     const user = localStorage.getItem("user");
     const Id = JSON.parse(user)?.id;
     console.log("logged user", Id);
@@ -40,12 +40,8 @@ class ProductService {
       const url = "products/vendorItems";
       const response = await axios.post(
         url,
-        JSON.stringify({ VenderId: Id, page: 1, pageSize: 5 }),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+       { VendorId: Id, page: 1, pageSize:5 }
+       
       );
       // let data = response.data;
       console.log("vendor type data ", response.data);

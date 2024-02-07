@@ -16,15 +16,15 @@
             <table
               class="display table table-report sm:mt-2"
               style="
-				  width: 100%;
-				  overflow-x: auto;
-				  white-space: nowrap;
-				  left: 0;
-				  right: 0;
-				"
+                width: 100%;
+                overflow-x: auto;
+                white-space: nowrap;
+                left: 0;
+                right: 0;
+              "
             >
               <thead>
-                <tr>
+                <tr class="">
                   <!-- <th class="whitespace-nowrap">No.#</th> -->
 
                   <th class="whitespace-nowrap flex">
@@ -33,40 +33,26 @@
                         type="checkbox"
                         class="form-check-input"
                         id="checkbox1"
-                        :checked="
-                          checkedorders.length === orders.length
-                        "
+                        :checked="checkedorders.length === orders.length"
                         @change="checkedOrderAll"
                       />
                     </div>
-                    <span class="ml-2">Item</span>
+                    <span class="ml-2">PRODUCT</span>
                   </th>
 
-                  <th class="whitespace-nowrap">
-                    Price
-                  </th>
+                  <th class="whitespace-nowrap">PRICE</th>
+                  <th class="whitespace-nowrap">DISCOUNTED PRICE</th>
 
-                  <th class="whitespace-nowrap">
-                    Quantity
-                  </th>
+                  <th class="whitespace-nowrap">QUANTITY</th>
 
-                  <th class="whitespace-nowrap">
-                    Total Amount
-                  </th>
-
-                  <th class="whitespace-nowrap">
-                    Status
-                  </th>
-                  <th class="whitespace-nowrap">
-                    Shipping Address
-                  </th>
-                  <th class="whitespace-nowrap">
-                    Order Date
-                  </th>
-                  <th class="whitespace-nowrap">
-                    Date Created
-                  </th>
-                  <th class="flex justify-between">
+                  <th class="whitespace-nowrap">TOTAL AMOUNT</th>
+                  <th class="whitespace-nowrap">BALANCE</th>
+                  <th class="whitespace-nowrap">STATUS</th>
+                  <th class="whitespace-nowrap">ORDER TYPE</th>
+                  <th class="whitespace-nowrap">SHIPPING ADDRESS</th>
+                  <th class="whitespace-nowrap">ORDER DATE</th>
+                  <th class="whitespace-nowrap">DATE CREATED</th>
+                  <th class="flex justify-between uppercase">
                     {{ $t("translation.action_text") }}
                     <div>
                       <span
@@ -106,11 +92,16 @@
                         @click.stop
                       />
 
-                      {{ order?.itemId }}
+                      <span class="whitespace-normal">
+                        {{ order?.itemName }}</span
+                      >
                     </div>
                   </td>
 
-                  <td class="whitespace-nowrap"></td>
+                  <td class="whitespace-nowrap">{{ order?.itemPrice }}</td>
+                  <td class="whitespace-nowrap">
+                    {{ order?.itemDiscounted_Price }}
+                  </td>
                   <td class="whitespace-nowrap">
                     {{ order?.quantity }}
                   </td>
@@ -118,9 +109,15 @@
                     {{ order?.total_amount }}
                   </td>
                   <td class="whitespace-nowrap">
+                    {{ order?.balance }}
+                  </td>
+                  <td class="whitespace-nowrap">
                     {{ order?.status }}
                   </td>
                   <td class="whitespace-nowrap">
+                    {{ order?.order_Type }}
+                  </td>
+                  <td class="whitespace-normal">
                     {{ order?.shipping_address }}
                   </td>
                   <td class="whitespace-nowrap">
@@ -279,10 +276,7 @@ export default defineComponent({
       if (isChecked) {
         checkedorders.value.push(email?.id);
       } else {
-        checkedorders.value.splice(
-          checkedorders.value.indexOf(email?.id),
-          1
-        );
+        checkedorders.value.splice(checkedorders.value.indexOf(email?.id), 1);
       }
       emit("checkedOrderList", checkedorders.value);
     };
@@ -314,9 +308,7 @@ export default defineComponent({
         "ggggggggg",
         emailId === checkedorders.value.find((ele) => ele === emailId)
       );
-      return (
-        emailId === checkedorders.value.find((ele) => ele === emailId)
-      );
+      return emailId === checkedorders.value.find((ele) => ele === emailId);
     };
 
     const processText = (string) => {

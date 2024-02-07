@@ -29,7 +29,7 @@ export const allProductsStore = defineStore("allProductsStore", {
 
 
 		const { data, success } = await ProductService.fetchVendorProducts(
-			parameters
+			
 		  );
 		  console.log('all vendor products', data)
 		// if(success) {
