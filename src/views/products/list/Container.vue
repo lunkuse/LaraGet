@@ -7,7 +7,7 @@
       class="grid grid-cols-12 h-full sm:grid-cols-5 gap-2 w-full product-container"
     >
       <div
-        class="appointments-list h-full overflow-hidden col-span-12 border-r border-b border-gray-200"
+        class="appointments-list h-full overflow-y-auto col-span-12 border-r border-b border-gray-200"
       >
         <div
           class="hidden w-auto gap-2 text-sm mt-2 content-center flex items-center"
@@ -486,13 +486,23 @@
       </div>
     </div>
   </div>
-  <div class="w-full flex items-center justify-center">
+
+  <div class="pagination">
+    <button @click="previousPage" :disabled="currentPage === 1">
+      Previous
+    </button>
+    <span>{{ currentPage }} / {{ totalPages }}</span>
+    <button @click="nextPage" :disabled="currentPage === totalPages">
+      Next
+    </button>
+  </div>
+  <!-- <div class="w-full flex items-center justify-center">
     <PaginationComponent
       v-if="recallpagination && Object.keys(recallpagination).length > 0"
       :pagination="recallpagination"
       @paginate="fetchRecallAppointmentsList"
     />
-  </div>
+  </div> -->
 </template>
 <script lang="ts">
 import moment from "moment";
@@ -517,11 +527,11 @@ import {
 import Datepicker from "@vuepic/vue-datepicker";
 
 // import Table from './Table.vue'
-const ProductTable = defineAsyncComponent(() =>
-  import("@/components/tables/ProductTable.vue")
+const ProductTable = defineAsyncComponent(
+  () => import("@/components/tables/ProductTable.vue")
 );
-const PaginationComponent = defineAsyncComponent(() =>
-  import("@/components/paginate/PaginationComponent.vue")
+const PaginationComponent = defineAsyncComponent(
+  () => import("@/components/paginate/PaginationComponent.vue")
 );
 export default {
   name: "Container",
@@ -546,7 +556,7 @@ export default {
       appointments: [],
       allProductssearch: [],
       patient: {},
- 
+
       isSearching: false,
       doctorName: "",
       search_term: null,
@@ -554,7 +564,7 @@ export default {
       isProductModal: false,
       isFilterOptions: false,
       isFilterOptionsDate: false,
-    
+
       filterDates: [
         {
           name: this.t("translation.oneWeek"),
@@ -650,11 +660,25 @@ export default {
       displayStatusFilter: false,
       ourRequest: null,
       source: null,
+
+      currentPage: 1,
+      itemsPerPage: 5, // default page size
     };
   },
 
-
   methods: {
+    nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+        this.fetchMoreData();
+      }
+    },
+    previousPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+        this.fetchMoreData();
+      }
+    },
     showStatusFilter() {
       this.displayStatusFilter = true;
 
@@ -687,7 +711,7 @@ export default {
       this.isFilterOptionsDate = false;
     },
 
-    outsideDialogBox: function(e) {
+    outsideDialogBox: function (e) {
       // close statusselector
       if (!document.getElementById("statusselector")?.contains(e.target)) {
         this.isFilterOptions = false;
@@ -816,8 +840,8 @@ export default {
 
         iframe.style.display = "none";
         iframe.src = URL.createObjectURL(blob);
-        iframe.onload = function() {
-          setTimeout(function() {
+        iframe.onload = function () {
+          setTimeout(function () {
             iframe.focus();
             iframe.contentWindow.print();
           }, 1);
@@ -1068,10 +1092,20 @@ export default {
       this.filteredResponse = allProducts;
       return allProducts;
     },
+
+    // Modify the computed property to return only the products for the current page
+    paginatedProducts() {
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
+      return this.filteredProducts.slice(startIndex, endIndex);
+    },
+    totalPages() {
+      return Math.ceil(this.filteredProducts.length / this.itemsPerPage);
+    },
   },
   watch: {
     // keyword
-    search_term: debounce(function(e) {
+    search_term: debounce(function (e) {
       if (!!this.search_term) {
         //  this.source?.cancel();
         this.ourRequest.cancel();
@@ -1175,7 +1209,7 @@ export default {
     },
 
     // year
-    year: debounce(function(e) {
+    year: debounce(function (e) {
       if (!!this.year) {
         this.search_term = null;
         this.filterStatus = null;
@@ -1188,7 +1222,7 @@ export default {
       }
     }, 500),
     // daterange
-    date: debounce(function(e) {
+    date: debounce(function (e) {
       if (!!this.date) {
         this.search_term = null;
         this.filterStatus = null;
@@ -1206,7 +1240,7 @@ export default {
     }, 500),
 
     // daterange
-    month: debounce(function(e) {
+    month: debounce(function (e) {
       if (!!this.month) {
         this.search_term = null;
         this.filterStatus = null;
@@ -1255,7 +1289,7 @@ export default {
       month,
       onLoadApps,
       lang,
-      isLoading
+      isLoading,
     };
   },
 };
