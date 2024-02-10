@@ -487,6 +487,7 @@
     </div>
   </div>
 
+  <div class="w-full flex items-center justify-center">here</div>
   <div class="pagination">
     <button @click="previousPage" :disabled="currentPage === 1">
       Previous
@@ -495,14 +496,17 @@
     <button @click="nextPage" :disabled="currentPage === totalPages">
       Next
     </button>
+    <li>
+      <a
+        @click="nextPage"
+        class="block hover:text-white hover:bg-theme-1 text-theme-1 px-3 py-2"
+        href="#"
+        @click.prevent="nextPage"
+      >
+        Next
+      </a>
+    </li>
   </div>
-  <!-- <div class="w-full flex items-center justify-center">
-    <PaginationComponent
-      v-if="recallpagination && Object.keys(recallpagination).length > 0"
-      :pagination="recallpagination"
-      @paginate="fetchRecallAppointmentsList"
-    />
-  </div> -->
 </template>
 <script lang="ts">
 import moment from "moment";
@@ -668,6 +672,7 @@ export default {
 
   methods: {
     nextPage() {
+      console.log("next page clicked", this.currentPage);
       if (this.currentPage < this.totalPages) {
         this.currentPage++;
         this.fetchMoreData();
