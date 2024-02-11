@@ -487,25 +487,33 @@
     </div>
   </div>
 
-  <div class="w-full flex items-center justify-center">here</div>
+  <div class="w-full flex items-center justify-center"></div>
+
   <div class="pagination">
-    <button @click="previousPage" :disabled="currentPage === 1">
+    <!-- <button @click="previousPage" :disabled="currentPage === 1">
       Previous
     </button>
     <span>{{ currentPage }} / {{ totalPages }}</span>
     <button @click="nextPage" :disabled="currentPage === totalPages">
       Next
-    </button>
-    <li>
-      <a
-        @click="nextPage"
-        class="block hover:text-white hover:bg-theme-1 text-theme-1 px-3 py-2"
-        href="#"
-        @click.prevent="nextPage"
-      >
-        Next
-      </a>
-    </li>
+    </button> -->
+
+    <a
+      class="block hover:underline text-theme-1 px-3 py-2"
+      href="#"
+      @click.prevent="previousPage"
+    >
+      Previous
+    </a>
+    <span class="bg-theme-1 px-3 py-2 text-white">{{ currentPage }} </span>
+
+    <a
+      class="block hover:underline text-theme-1 px-3 py-2"
+      href="#"
+      @click.prevent="nextPage"
+    >
+      Next
+    </a>
   </div>
 </template>
 <script lang="ts">
@@ -672,16 +680,16 @@ export default {
 
   methods: {
     nextPage() {
+      // if (this.currentPage < this.totalPages) {
+      this.currentPage++;
       console.log("next page clicked", this.currentPage);
-      if (this.currentPage < this.totalPages) {
-        this.currentPage++;
-        this.fetchMoreData();
-      }
+      // this.fetchMoreData();
+      // }
     },
     previousPage() {
       if (this.currentPage > 1) {
         this.currentPage--;
-        this.fetchMoreData();
+        // this.fetchMoreData();
       }
     },
     showStatusFilter() {
@@ -1098,7 +1106,6 @@ export default {
       return allProducts;
     },
 
-    // Modify the computed property to return only the products for the current page
     paginatedProducts() {
       const startIndex = (this.currentPage - 1) * this.itemsPerPage;
       const endIndex = startIndex + this.itemsPerPage;
@@ -1109,6 +1116,28 @@ export default {
     },
   },
   watch: {
+    // next page
+    currentPage: debounce(function (e) {
+      if (!!this.currentPage) {
+        console.log("changed curent page", this.currentPage);
+        //  this.source?.cancel();
+        // this.ourRequest.cancel();
+
+        // this.search_term = "";
+
+        // this.CheckedOrderlistMain = [];
+        // this.doctorName = null;
+        // this.status = null;
+        // this.filterStatus = null;
+        // this.month_range = null;
+        // this.year = null;
+        // this.filter_option = null;
+
+        // this.isTarget = false;
+        this.UncheckAllSelected();
+        this.fetchProducts(this.currentPage, this.itemsPerPage);
+      }
+    }, 500),
     // keyword
     search_term: debounce(function (e) {
       if (!!this.search_term) {
@@ -1265,8 +1294,18 @@ export default {
   setup() {
     const { fetchVendorProducts } = allProductsStore();
     const { vendorProducts, isLoading } = storeToRefs(allProductsStore());
+    const currentPage = ref(1);
+    const itemsPerPage = ref(5);
     // const { products } = storeToRefs(allProductsStore());
-    allProductsStore().fetchVendorProducts({});
+    const fetchProducts = (currentPage, itemsPerPage) => {
+      const dataObj = {
+        currentPage: currentPage,
+        itemsPerPage: itemsPerPage,
+      };
+      console.log("page products store parameters", dataObj);
+      allProductsStore().fetchVendorProducts(dataObj);
+    };
+    fetchProducts(currentPage.value, itemsPerPage.value);
 
     const date = ref();
     const month = ref();
@@ -1295,6 +1334,9 @@ export default {
       onLoadApps,
       lang,
       isLoading,
+      fetchProducts,
+      itemsPerPage,
+      currentPage,
     };
   },
 };

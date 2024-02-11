@@ -2,7 +2,7 @@
   <DeleteModal class="!z-50" :productID="productID" />
   <div>
     <div>
-      <div class="intro-y box p-5 mt-5 overflow-auto">
+      <div class="intro-y box p-5 mt-5">
         <div class="flex justify-between items-center p-1">
           <div
             @click="toggleGrid = !toggleGrid"
@@ -595,9 +595,10 @@
           v-else
           class="flex flex-col items-center justify-center h-min-screen"
         >
+          <!-- src="../../../assets/images/emptybox.png" -->
           <img
             v-if="!isLoading"
-            src="../../../assets/images/emptybox.png"
+            src="@/assets/images/emptybox.png"
             alt="Image"
             class="w-1/2"
           />
