@@ -25,18 +25,20 @@ export const allProductsStore = defineStore("allProductsStore", {
 	
 	  },
 	  async fetchVendorProducts(parameters) {
+		// console.log("products store parameters", parameters);
 		this.isLoading = true;
 
 
-		const { data, success } = await ProductService.fetchVendorProducts(
-			
+		const { data, status } = await ProductService.fetchVendorProducts(
+			parameters
 		  );
-		  console.log('all vendor products', data)
-		// if(success) {
+		  console.log('all vendor products',  status, data)
+		if(status) {
 			this.vendorProducts = data.data
 			this.isLoading = false;
-		// }
-	
+		}
+	else{  this.vendorProducts = []
+		this.isLoading = false; }
 	  },
 
     resetStore() {

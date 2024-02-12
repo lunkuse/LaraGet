@@ -32,7 +32,7 @@ class ProductService {
   //   });
   // }
 
-  async fetchVendorProducts() {
+  async fetchVendorProducts(parameters) {
     const user = localStorage.getItem("user");
     const Id = JSON.parse(user)?.id;
     console.log("logged user", Id);
@@ -40,14 +40,14 @@ class ProductService {
       const url = "products/vendorItems";
       const response = await axios.post(
         url,
-       { VendorId: Id, page: 1, pageSize:5 }
+       { VendorId: Id, page: parameters.currentPage ,pageSize: parameters.itemsPerPage }
        
       );
       // let data = response.data;
       console.log("vendor type data ", response.data);
 
       return {
-        status: response?.data?.status,
+        status: response?.status,
         data: response.data.data,
         message: "Products retrieved successfully",
       };
