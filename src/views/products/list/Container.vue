@@ -476,8 +476,6 @@
           :products="filteredProducts"
           :isLoading="isLoading"
           @clearFilter="clearFilters"
-          :isPending="isPending"
-          :isTarget="isTarget"
           :filterOption="filter_option"
           :isUnchenkallstatus="isUnchenkallstatus"
           @refreshProducts="fetchMoreData"
@@ -487,22 +485,146 @@
     </div>
   </div>
 
-  <div class="pagination">
-    <button @click="previousPage" :disabled="currentPage === 1">
+  <div class="w-full flex items-center justify-center"></div>
+
+  <div class="pagination hidden">
+    <a
+      class="block hover:underline text-theme-1 px-3 py-2"
+      href="#"
+      @click.prevent="previousPage"
+    >
       Previous
-    </button>
-    <span>{{ currentPage }} / {{ totalPages }}</span>
-    <button @click="nextPage" :disabled="currentPage === totalPages">
+    </a>
+    <span class="bg-theme-1 px-3 py-2 text-white">{{ currentPage }} </span>
+    <!-- itemsPerPage -->
+    <a
+      v-if="itemsPerPage == filteredProducts"
+      class="block hover:underline text-theme-1 px-3 py-2"
+      href="#"
+      @click.prevent="nextPage"
+    >
       Next
-    </button>
+    </a>
   </div>
-  <!-- <div class="w-full flex items-center justify-center">
-    <PaginationComponent
-      v-if="recallpagination && Object.keys(recallpagination).length > 0"
-      :pagination="recallpagination"
-      @paginate="fetchRecallAppointmentsList"
-    />
-  </div> -->
+  <div
+    class="intro-y mt-3 flex flex-wrap items-center sm:flex-row sm:flex-nowrap mb-20"
+  >
+    <nav class="w-full sm:mr-auto sm:w-auto">
+      <ul class="flex w-full mr-0 sm:mr-auto sm:w-auto">
+        <li class="flex-1 sm:flex-initial">
+          <a
+            class="transition duration-200 border items-center justify-center py-2 rounded-md cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&amp;:hover:not(:disabled)]:bg-opacity-90 [&amp;:hover:not(:disabled)]:border-opacity-90 [&amp;:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed min-w-0 sm:min-w-[40px] shadow-none font-normal flex border-transparent text-slate-800 sm:mr-2 dark:text-slate-300 px-1 sm:px-3"
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              data-lucide="chevrons-left"
+              class="lucide lucide-chevrons-left stroke-1.5 h-4 w-4"
+            >
+              <path d="m11 17-5-5 5-5"></path>
+              <path d="m18 17-5-5 5-5"></path></svg
+          ></a>
+        </li>
+        <li class="flex-1 sm:flex-initial">
+          <a
+            @click.prevent="previousPage"
+            class="hover:text-theme-1 transition duration-200 border items-center justify-center py-2 rounded-md cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&amp;:hover:not(:disabled)]:bg-opacity-90 [&amp;:hover:not(:disabled)]:border-opacity-90 [&amp;:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed min-w-0 sm:min-w-[40px] shadow-none font-normal flex border-transparent text-slate-800 sm:mr-2 dark:text-slate-300 px-1 sm:px-3"
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              data-lucide="chevron-left"
+              class="lucide lucide-chevron-left stroke-1.5 h-4 w-4"
+            >
+              <path d="m15 18-6-6 6-6"></path></svg
+          ></a>
+        </li>
+        <li class="flex-1 sm:flex-initial">
+          <a
+            class="transition duration-200 border items-center justify-center py-2 rounded-md cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&amp;:hover:not(:disabled)]:bg-opacity-90 [&amp;:hover:not(:disabled)]:border-opacity-90 [&amp;:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed min-w-0 sm:min-w-[40px] shadow-none font-normal flex border-transparent text-slate-800 sm:mr-2 dark:text-slate-300 px-1 sm:px-3"
+            >...</a
+          >
+        </li>
+        <li class="flex-1 sm:flex-initial">
+          <a
+            class="bg-theme-1 px-3 py-2 text-white transition duration-200 border items-center justify-center py-2 rounded-md cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&amp;:hover:not(:disabled)]:bg-opacity-90 [&amp;:hover:not(:disabled)]:border-opacity-90 disabled:opacity-70 disabled:cursor-not-allowed min-w-0 sm:min-w-[40px] shadow-none font-normal flex border-transparent text-slate-800 sm:mr-2 dark:text-slate-300 px-1 sm:px-3"
+            >{{ currentPage }}</a
+          >
+        </li>
+
+        <li class="flex-1 sm:flex-initial">
+          <a
+            class="transition duration-200 border items-center justify-center py-2 rounded-md cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&amp;:hover:not(:disabled)]:bg-opacity-90 [&amp;:hover:not(:disabled)]:border-opacity-90 [&amp;:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed min-w-0 sm:min-w-[40px] shadow-none font-normal flex border-transparent text-slate-800 sm:mr-2 dark:text-slate-300 px-1 sm:px-3"
+            >...</a
+          >
+        </li>
+        <li class="flex-1 sm:flex-initial">
+          <!-- v-if="filteredProducts  itemsPerPage " -->
+          <a
+            href="#"
+            @click.prevent="nextPage"
+            class="transition duration-200 hover:text-theme-1 border items-center justify-center py-2 rounded-md cursor-pointer focus:ring-4 focus:ring-theme-1 focus:ring-opacity-20 focus-visible:outline-none min-w-0 sm:min-w-[40px] shadow-none font-normal flex border-transparent text-slate-800 sm:mr-2 dark:text-slate-300 px-1 sm:px-3"
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              data-lucide="chevron-right"
+              class="lucide lucide-chevron-right stroke-1.5 h-4 w-4"
+            >
+              <path d="m9 18 6-6-6-6"></path></svg
+          ></a>
+        </li>
+        <li class="flex-1 sm:flex-initial">
+          <a
+            class="transition duration-200 border items-center justify-center py-2 rounded-md cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&amp;:hover:not(:disabled)]:bg-opacity-90 [&amp;:hover:not(:disabled)]:border-opacity-90 [&amp;:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed min-w-0 sm:min-w-[40px] shadow-none font-normal flex border-transparent text-slate-800 sm:mr-2 dark:text-slate-300 px-1 sm:px-3"
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              data-lucide="chevrons-right"
+              class="lucide lucide-chevrons-right stroke-1.5 h-4 w-4"
+            >
+              <path d="m6 17 5-5-5-5"></path>
+              <path d="m13 17 5-5-5-5"></path></svg
+          ></a>
+        </li>
+      </ul>
+    </nav>
+    <!--  v-model="change_length" -->
+    <select
+      class="w-full disabled:bg-slate-100 disabled:cursor-not-allowed transition duration-200 ease-in-out text-sm border-slate-200 shadow-sm rounded-md py-2 px-3 pr-8 focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus:border-primary focus:border-opacity-40 dark:bg-darkmode-800 dark:border-transparent dark:focus:ring-slate-700 dark:focus:ring-opacity-50 group-[.form-inline]:flex-1 !box mt-3 w-20 sm:mt-0"
+    >
+      <option>5</option>
+      <option>10</option>
+      <option>25</option>
+      <option>35</option>
+      <option>50</option>
+    </select>
+  </div>
 </template>
 <script lang="ts">
 import moment from "moment";
@@ -668,15 +790,16 @@ export default {
 
   methods: {
     nextPage() {
-      if (this.currentPage < this.totalPages) {
-        this.currentPage++;
-        this.fetchMoreData();
-      }
+      // if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      console.log("next page clicked", this.currentPage);
+      // this.fetchMoreData();
+      // }
     },
     previousPage() {
       if (this.currentPage > 1) {
         this.currentPage--;
-        this.fetchMoreData();
+        // this.fetchMoreData();
       }
     },
     showStatusFilter() {
@@ -1093,7 +1216,6 @@ export default {
       return allProducts;
     },
 
-    // Modify the computed property to return only the products for the current page
     paginatedProducts() {
       const startIndex = (this.currentPage - 1) * this.itemsPerPage;
       const endIndex = startIndex + this.itemsPerPage;
@@ -1104,6 +1226,28 @@ export default {
     },
   },
   watch: {
+    // next page
+    currentPage: debounce(function (e) {
+      if (!!this.currentPage) {
+        console.log("changed curent page", this.currentPage);
+        //  this.source?.cancel();
+        // this.ourRequest.cancel();
+
+        // this.search_term = "";
+
+        // this.CheckedOrderlistMain = [];
+        // this.doctorName = null;
+        // this.status = null;
+        // this.filterStatus = null;
+        // this.month_range = null;
+        // this.year = null;
+        // this.filter_option = null;
+
+        // this.isTarget = false;
+        this.UncheckAllSelected();
+        this.fetchProducts(this.currentPage, this.itemsPerPage);
+      }
+    }, 500),
     // keyword
     search_term: debounce(function (e) {
       if (!!this.search_term) {
@@ -1260,8 +1404,18 @@ export default {
   setup() {
     const { fetchVendorProducts } = allProductsStore();
     const { vendorProducts, isLoading } = storeToRefs(allProductsStore());
+    const currentPage = ref(1);
+    const itemsPerPage = ref(5);
     // const { products } = storeToRefs(allProductsStore());
-    allProductsStore().fetchVendorProducts({});
+    const fetchProducts = (currentPage, itemsPerPage) => {
+      const dataObj = {
+        currentPage: currentPage,
+        itemsPerPage: itemsPerPage,
+      };
+      console.log("page products store parameters", dataObj);
+      allProductsStore().fetchVendorProducts(dataObj);
+    };
+    fetchProducts(currentPage.value, itemsPerPage.value);
 
     const date = ref();
     const month = ref();
@@ -1290,6 +1444,9 @@ export default {
       onLoadApps,
       lang,
       isLoading,
+      fetchProducts,
+      itemsPerPage,
+      currentPage,
     };
   },
 };
