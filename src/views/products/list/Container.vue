@@ -227,9 +227,9 @@
                             multiCalendars
                             :multiStatic="false"
                             calendarClassName=" dp-custom-calendar"
-                            :placeholder="`${$t(
-                              'translation.date_range_text'
-                            )}`"
+                            :placeholder="
+                              `${$t('translation.date_range_text')}`
+                            "
                             class="w-full"
                             :locale="lang"
                             :select-text="`${$t('translation.select_text')}`"
@@ -492,25 +492,6 @@
 
     <div class="w-full flex items-center justify-center"></div>
 
-    <div class="pagination hidden">
-      <a
-        class="block hover:underline text-theme-1 px-3 py-2"
-        href="#"
-        @click.prevent="previousPage"
-      >
-        Previous
-      </a>
-      <span class="bg-theme-1 px-3 py-2 text-white">{{ currentPage }} </span>
-      <!-- itemsPerPage -->
-      <a
-        v-if="itemsPerPage == filteredProducts"
-        class="block hover:underline text-theme-1 px-3 py-2"
-        href="#"
-        @click.prevent="nextPage"
-      >
-        Next
-      </a>
-    </div>
     <div
       class="intro-y mt-3 flex flex-wrap items-center sm:flex-row sm:flex-nowrap mb-20"
     >
@@ -660,11 +641,11 @@ import {
 import Datepicker from "@vuepic/vue-datepicker";
 
 // import Table from './Table.vue'
-const ProductTable = defineAsyncComponent(
-  () => import("@/components/tables/ProductTable.vue")
+const ProductTable = defineAsyncComponent(() =>
+  import("@/components/tables/ProductTable.vue")
 );
-const PaginationComponent = defineAsyncComponent(
-  () => import("@/components/paginate/PaginationComponent.vue")
+const PaginationComponent = defineAsyncComponent(() =>
+  import("@/components/paginate/PaginationComponent.vue")
 );
 export default {
   name: "Container",
@@ -682,6 +663,8 @@ export default {
 
   data() {
     return {
+      currentPage: 1,
+      itemsPerPage: 5, 
       filteredResponse: null,
 
       isFilterDates: false,
@@ -794,8 +777,7 @@ export default {
       ourRequest: null,
       source: null,
 
-      currentPage: 1,
-      itemsPerPage: 5, // default page size
+     
     };
   },
 
@@ -855,7 +837,7 @@ export default {
       this.isFilterOptionsDate = false;
     },
 
-    outsideDialogBox: function (e) {
+    outsideDialogBox: function(e) {
       // close statusselector
       if (!document.getElementById("statusselector")?.contains(e.target)) {
         this.isFilterOptions = false;
@@ -984,8 +966,8 @@ export default {
 
         iframe.style.display = "none";
         iframe.src = URL.createObjectURL(blob);
-        iframe.onload = function () {
-          setTimeout(function () {
+        iframe.onload = function() {
+          setTimeout(function() {
             iframe.focus();
             iframe.contentWindow.print();
           }, 1);
@@ -1248,20 +1230,20 @@ export default {
   },
   watch: {
     // next page
-    currentPage: debounce(function (e) {
+    currentPage: debounce(function(e) {
       if (!!this.currentPage) {
         this.fetchProducts(this.currentPage, this.itemsPerPage);
       }
     }, 500),
 
-    itemsPerPage: debounce(function (e) {
+    itemsPerPage: debounce(function(e) {
       if (!!this.currentPage) {
         this.currentPage = 1;
         this.fetchProducts(this.currentPage, this.itemsPerPage);
       }
     }, 500),
     // keyword
-    search_term: debounce(function (e) {
+    search_term: debounce(function(e) {
       if (!!this.search_term) {
         //  this.source?.cancel();
         this.ourRequest.cancel();
@@ -1365,7 +1347,7 @@ export default {
     },
 
     // year
-    year: debounce(function (e) {
+    year: debounce(function(e) {
       if (!!this.year) {
         this.search_term = null;
         this.filterStatus = null;
@@ -1378,7 +1360,7 @@ export default {
       }
     }, 500),
     // daterange
-    date: debounce(function (e) {
+    date: debounce(function(e) {
       if (!!this.date) {
         this.search_term = null;
         this.filterStatus = null;
@@ -1396,7 +1378,7 @@ export default {
     }, 500),
 
     // daterange
-    month: debounce(function (e) {
+    month: debounce(function(e) {
       if (!!this.month) {
         this.search_term = null;
         this.filterStatus = null;
@@ -1414,10 +1396,11 @@ export default {
   },
 
   setup() {
-    const { fetchVendorProducts } = allProductsStore();
-    const { vendorProducts, isLoading } = storeToRefs(allProductsStore());
     const currentPage = ref(1);
     const itemsPerPage = ref(5);
+    const { fetchVendorProducts } = allProductsStore();
+    const { vendorProducts, isLoading } = storeToRefs(allProductsStore());
+
     // const { products } = storeToRefs(allProductsStore());
     const fetchProducts = (currentPage, itemsPerPage) => {
       const dataObj = {

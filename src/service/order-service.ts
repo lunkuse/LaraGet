@@ -28,7 +28,7 @@ const url = "products/vendorOrders"
     }
   }
 
-  async fetchAll()  {
+  async fetchAll(parameters)  {
     const user = localStorage.getItem('user')
     const Id = JSON.parse(user)?.id;
     console.log('logged user',Id)
@@ -37,7 +37,7 @@ const url = "products/vendorOrders"
       const response = await axios
         .post(
           url,
-          { VendorId:Id, page: 1, pageSize: 5 }
+          { VendorId:Id, page: parameters.currentPage ,pageSize: parameters.itemsPerPage }
         )
       // let data = response.data;
       console.log('vendor type data ', response.data);

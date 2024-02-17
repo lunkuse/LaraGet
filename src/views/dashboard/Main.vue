@@ -69,7 +69,7 @@
               <!-- invoices -->
               <router-link
                 to="/dashboard/invoice"
-                class="col-span-12 sm:col-span-6 2xl:col-span-3 intro-y zoom-in rounded-2xl border-theme-44 border-r-4"
+                class="hidden col-span-12 sm:col-span-6 2xl:col-span-3 intro-y zoom-in rounded-2xl border-theme-44 border-r-4"
               >
                 <div
                   class="col-span-12 sm:col-span-6 2xl:col-span-3 intro-y rounded-2xl"
@@ -101,7 +101,7 @@
                 class="col-span-12 sm:col-span-6 2xl:col-span-3 intro-y zoom-in rounded-2xl border-theme-43 border-r-4"
               > -->
               <div
-                class="col-span-12 sm:col-span-6 2xl:col-span-3 intro-y rounded-2xl"
+                class="hidden col-span-12 sm:col-span-6 2xl:col-span-3 intro-y rounded-2xl"
               >
                 <div class="box p-5 zoom-in rounded-2xl">
                   <div class="flex">

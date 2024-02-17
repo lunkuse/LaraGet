@@ -7,7 +7,7 @@ const state = () => {
         title: 'Dashboard'
       },
       {
-        icon: 'CalendarIcon',
+        icon: 'ListIcon',
         pageName: 'side-menu-view-products',
         title: 'Products'
       },
@@ -23,11 +23,11 @@ const state = () => {
       //   pageName: 'side-menu-communication',
       //   title: 'Communication'
       // },
-      {
-        icon: 'CreditCardIcon',
-        pageName: 'side-menu-invoice',
-        title: 'Invoice'
-      },
+      // {
+      //   icon: 'CreditCardIcon',
+      //   pageName: 'side-menu-invoice',
+      //   title: 'Invoice'
+      // },
       // {
       //     icon: 'BellIcon',
       //     pageName: 'side-menu-notification',
