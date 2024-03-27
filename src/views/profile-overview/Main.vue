@@ -197,28 +197,7 @@
               <div
                 class="grid grid-cols-1 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 gap-4 overflow-x-auto"
               >
-                <!--bsn-->
-                <!-- <div>
-                  <label for="update-profile-form-7" class="form-label">
-                    <span class="flex">
-                      <p class="w-40 font-medium text-bold mx-1">
-                        {{ $t("translation.bsn_text") }}
-                      </p>
-
-                      <span
-                        class="form-label capitalize"
-                        :class="
-                          currentUser?.BSN == null
-                            ? currentUser?.BSN == null && 'text-gray-500'
-                            : ''
-                        "
-                        >{{
-                          currentUser.BSN ?? $t("translation.notSetText")
-                        }}</span
-                      >
-                    </span>
-                  </label>
-                </div> -->
+               
 
                 <!-- firstname -->
                 <div>
@@ -243,29 +222,7 @@
                   </label>
                 </div>
 
-                <!-- middlename -->
-                <!-- <div>
-                  <label for="update-profile-form-7" class="form-label">
-                    <span class="flex">
-                      <p class="w-40 font-medium text-bold mx-1">
-                        {{ $t("translation.middle_name_text") }}
-                      </p>
-
-                      <span
-                        class="form-label capitalize"
-                        :class="
-                          currentUser?.middle_name == null
-                            ? currentUser?.middle_name == null &&
-                              'text-gray-500'
-                            : ''
-                        "
-                        >{{
-                          currentUser.middle_name ?? t("translation.notSetText")
-                        }}</span
-                      >
-                    </span>
-                  </label>
-                </div> -->
+               
 
                 <!-- lastname -->
 

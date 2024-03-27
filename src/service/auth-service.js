@@ -4,7 +4,7 @@ import store from "../store/index.js";
 class AuthService {
   login(user) {
     return axios
-      .post("auth/signin", {
+      .post("auth/login", {
         email: user.identifier,
         password: user.password,
       })

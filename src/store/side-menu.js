@@ -18,21 +18,7 @@ const state = () => {
         title: 'Orders'
       },
 
-      // {
-      //   icon: 'MessageSquareIcon',
-      //   pageName: 'side-menu-communication',
-      //   title: 'Communication'
-      // },
-      // {
-      //   icon: 'CreditCardIcon',
-      //   pageName: 'side-menu-invoice',
-      //   title: 'Invoice'
-      // },
-      // {
-      //     icon: 'BellIcon',
-      //     pageName: 'side-menu-notification',
-      //     title: 'Notifications'
-      // },
+ 
       {
         icon: 'UserIcon',
         pageName: 'side-menu-profile-overview',
