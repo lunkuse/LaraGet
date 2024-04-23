@@ -44,15 +44,15 @@
                           for="update-profile-form-12"
                           class="form-label font-semibold text-black dark:!text-white"
                         >
-                          Category
+                          Category 
                           <span class="text-theme-6">*</span>
                         </label>
 
-                        <TomSelect
+                        <!-- <TomSelect
                           v-model="selected_category"
                           class="w-full"
                           @change="onchange"
-                          id="appointment_type_select"
+                          
                         >
                           <option value>
                             {{ $t("translation.select_appointment_type_text") }}
@@ -64,7 +64,23 @@
                           >
                             {{ category.title }}
                           </option>
-                        </TomSelect>
+                        </TomSelect> -->
+
+
+                        <TomSelect
+                    class="focus:border-theme-36 cursor-pointer"
+                    placeholder="Choose category"
+                    v-model="selected_category"
+                  >
+                    <option
+                      v-for="category in productCategories"
+                      :key="category.id"
+                      :value="category.category"
+                    >
+                      {{ category.category }}
+                    </option>
+                  </TomSelect>
+
                       </div>
                     </div>
 
@@ -159,14 +175,49 @@
                   <!-- Image Uploader -->
                   <div class="col-span-12 mt-2">
                     <label class="block font-bold">Images:</label>
-                    <input
+                    <!-- <input
                       type="file"
                       accept="image/*"
                       multiple
                       ref="myfileRef"
                       @change="handleFileChange"
-                    />
+                    /> -->
                   </div>
+
+                  
+
+
+
+
+
+
+
+                  <div style="height: 300px; width: 100%; border: 1px solid  position: relative;">
+                    <DropZone 
+      :maxFiles="Number(10000000000)"
+      :uploadOnDrop="true"
+      :multipleUpload="true"
+      :parallelUpload="3"
+      @addedfile="handleAddedFile"
+      style="width: 100%; height: 100%;"
+    />
+    <!--   @addedfile="handleAddedFile" -->
+    <!-- <DropZone 
+        :maxFiles="Number(10000000000)"
+        url="http://localhost:5000/item"
+        :uploadOnDrop="true"
+        :multipleUpload="true"
+        :parallelUpload="3"
+        style="width: 100%; height: 100%;"
+        /> -->
+  </div>
+
+
+
+
+
+
+
 
                   
                   <!-- <button @click="upload">upload</button> -->
@@ -207,7 +258,7 @@
                   >
                     <XCircleIcon class="text-theme-6" />
                     <div class="ml-4 mr-4">
-                      <div class="font-medium">Appointment Creation Failed</div>
+                      <div class="font-medium">Product Creation Failed</div>
                       <div class="text-gray-600 mt-1">
                         Review your form and fill all fields
                       </div>
@@ -273,11 +324,11 @@
 </template>
 
 <script>
-import { defineComponent, toRaw, reactive, toRefs, inject, ref } from "vue";
+import { defineComponent, toRaw, reactive, toRefs, watch, ref } from "vue";
 import Toastify from "toastify-js";
 import moment from "moment";
 import ClassicEditor from "../../global-components/ckeditor/ClassicEditor.vue";
-
+import { DropZone } from 'dropzone-vue';
 // Validations
 import { required, maxValue, minValue } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
@@ -285,15 +336,18 @@ import AppointmentsService from "../../service/appointments-service";
 import { useI18n } from "vue-i18n";
 import $ from "cash-dom";
 import { Form, ErrorMessage, Field, useFormValues } from "vee-validate";
-
+import { storeToRefs } from "pinia";
 import { storage } from "../../firebase";
 import {
   ref as storageRefs,
   uploadBytes,
   getDownloadURL,
 } from "firebase/storage";
+
+import { allCategoriesInfo } from "../../store/categories";
+
 export default defineComponent({
-  components: { ClassicEditor },
+  components: { ClassicEditor, DropZone },
 
   data() {
     // Basic non sticky notification
@@ -388,40 +442,7 @@ export default defineComponent({
   },
   methods: {
     moment,
-    periodchange() {
-      console.log("new period", this.period);
-      if (this.period == "morning") {
-        console.log("it is morning");
-        if (this.allTimeSlotsArray?.length > 0) {
-          this.timeSlotsArray = this.allTimeSlotsArray?.filter((slot) => {
-            // Filter slots that fall within the morning time range (e.g., 6 AM - 11:59 AM)
-            const startTime = Number(slot.start_time.split(":")[0]);
-            return startTime >= 6 && startTime <= 11;
-          });
-          console.log("morning this.timeSlotsArray", this.timeSlotsArray);
-        }
-      } else if (this.period == "noon") {
-        console.log("it is noon");
-        if (this.allTimeSlotsArray?.length > 0) {
-          this.timeSlotsArray = this.allTimeSlotsArray?.filter((slot) => {
-            // Filter slots that fall within the afternoon time range (e.g., 12 PM - 5:59 PM)
-            const startTime = Number(slot.start_time.split(":")[0]);
-            return startTime >= 12 && startTime <= 17;
-          });
-        }
-      } else if (this.period == "evening") {
-        console.log("it is noon");
-        if (this.allTimeSlotsArray?.length > 0) {
-          this.timeSlotsArray = this.allTimeSlotsArray?.filter((slot) => {
-            // Filter slots that fall within the evening time range (e.g., 6 PM - 11:59 PM)
-            const startTime = Number(slot.start_time.split(":")[0]);
-            return startTime >= 18 && startTime <= 23;
-          });
-        }
-      } else {
-        this.timeSlotsArray = this.allTimeSlotsArray;
-      }
-    },
+   
     clearVariables() {
       console.log("cleared variables");
       this.timeSlotsArray = [];
@@ -458,11 +479,16 @@ export default defineComponent({
   watch: {},
   setup() {
     const { t } = useI18n({});
-    const productCategories = [
-      { id: 1, title: "Product" },
-      { id: 2, title: "Service" },
-    ];
+    const { fetchProductCategories  } = allCategoriesInfo();
+    
+const { productCategories } = storeToRefs(allCategoriesInfo());
 
+
+    // const productCategories = [
+    //   { id: 1, title: "Product" },
+    //   { id: 2, title: "Service" },
+    // ];
+ 
     const productBrands = [
       { id: 1, title: "Apple" },
       { id: 2, title: "Samsung" },
@@ -487,9 +513,9 @@ export default defineComponent({
     const myfileRef = ref(null);
 
     const selectedFiles = ref([]);
-
+    const myDropZone = ref(null);
     const handleFileChange = () => {
-      // Access the files array using the ref
+    console.log("got some files");
       selectedFiles.value = Array.from(myfileRef.value.files);
       console.log("Selected Files:", selectedFiles.value);
     };
@@ -507,7 +533,9 @@ export default defineComponent({
 
       return Promise.all(uploadPromises);
     };
-
+    const handleAddedFile = (file) => {
+      console.log('Added file wwwww:', file);
+    };
     const handleSubmit1 = async () => {
       // Check if files are selected
       if (selectedFiles.value.length === 0) {
@@ -591,9 +619,18 @@ export default defineComponent({
             // Handle errors
           });
       } catch (err) {
-        // Handle unexpected errors
+      
       }
     };
+    allCategoriesInfo().fetchProductCategories();
+
+
+    watch(productCategories, (newproductCategories, oldproductCategories) => {
+     
+      productCategories.value = newproductCategories;
+      console.log("qsxcftyu7jmlp", productCategories.value)
+});
+
     return {
       t,
       lang,
@@ -612,7 +649,20 @@ export default defineComponent({
       myfileRef,
       handleFileChange,
       selectedFiles,
+      fetchProductCategories,
+      productCategories,
+      handleAddedFile
+      
     };
+
+
+   
+
+
+
+
+
+
   },
 });
 </script>
@@ -648,4 +698,5 @@ input[name="panel"]:checked ~ .accordion__content {
   max-height: 20em;
   overflow: auto;
 }
+
 </style>

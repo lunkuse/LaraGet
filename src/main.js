@@ -24,6 +24,12 @@ import './translate.css'
 import { i18n } from './translations.js'
 import { createPinia } from 'pinia';
 const pinia =  createPinia();
+
+import DropZone from 'dropzone-vue';
+
+// optionally import default styles
+import 'dropzone-vue/dist/dropzone-vue.common.css';
+
 const app = createApp(App)
   .use(store)
   .use(router)
@@ -32,6 +38,7 @@ const app = createApp(App)
   .use(print)
   .use(i18n)
   .use(pinia)
+  .use(DropZone)
 // .use(Chat)
 
 globalComponents(app)

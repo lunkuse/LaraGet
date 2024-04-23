@@ -81,7 +81,7 @@
                   @click="openOrder(order)"
                   :checked="selected"
                 >
-                  <td class="whitespace-nowrap">
+                  <td class="whitespace-normal">
                     <div class="flex items-center">
                       <input
                         class="form-check-input transition-all duration-100 ease-in-out shadow-sm cursor-pointer rounded focus:ring-4 focus:ring-offset-0 focus:ring-primary focus:ring-opacity-20 dark:bg-darkmode-800 dark:border-transparent dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&amp;[type='radio']]:checked:bg-primary [&amp;[type='radio']]:checked:border-primary [&amp;[type='radio']]:checked:border-opacity-10 [&amp;[type='checkbox']]:checked:bg-primary [&amp;[type='checkbox']]:checked:border-primary [&amp;[type='checkbox']]:checked:border-opacity-10 [&amp;:disabled:not(:checked)]:bg-slate-100 [&amp;:disabled:not(:checked)]:cursor-not-allowed [&amp;:disabled:not(:checked)]:dark:bg-darkmode-800/50 [&amp;:disabled:checked]:opacity-70 [&amp;:disabled:checked]:cursor-not-allowed [&amp;:disabled:checked]:dark:bg-darkmode-800/50 flex-none border-slate-400 checked:border-primary"
@@ -92,16 +92,12 @@
                         @click.stop
                       />
 
-                      <span class="whitespace-normal">
-                        {{ order?.itemName }}</span
-                      >
+                      {{ order?.itemName }}
                     </div>
                   </td>
 
-                  <td class="whitespace-nowrap">{{ order?.itemPrice }}</td>
-                  <td class="whitespace-nowrap">
-                    {{ order?.itemDiscounted_Price }}
-                  </td>
+                  <td class="whitespace-nowrap">{{ order?.itemPrice
+ }}</td>
                   <td class="whitespace-nowrap">
                     {{ order?.quantity }}
                   </td>
