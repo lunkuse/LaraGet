@@ -40,7 +40,7 @@ class ProductService {
       const url = "products/vendorItems";
       const response = await axios.post(
         url,
-       { VendorId: Id, page: parameters.currentPage ,pageSize: parameters.itemsPerPage }
+       { VenderId: Id, page: parameters.currentPage ,pageSize: parameters.itemsPerPage }
        
       );
       // let data = response.data;
