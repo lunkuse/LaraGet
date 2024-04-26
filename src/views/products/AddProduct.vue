@@ -75,7 +75,7 @@
                     <option
                       v-for="category in productCategories"
                       :key="category.id"
-                      :value="category.category"
+                      :value="category.id"
                     >
                       {{ category.category }}
                     </option>
@@ -498,7 +498,7 @@ const { productCategories } = storeToRefs(allCategoriesInfo());
     const defaultLang = storedLang ?? "nl";
     const lang = ref(defaultLang);
     const product_name = ref("");
-    const selected_category = ref(null);
+    const selected_category = ref("");
     const description = ref("");
     const price = ref("");
     const quantity = ref("");
@@ -579,6 +579,10 @@ const { productCategories } = storeToRefs(allCategoriesInfo());
         console.error("No files selected.");
         return;
       }
+
+      if (productCategories.value.length > 0 && selected_category.value === "") {
+        selected_category.value = productCategories.value[0]?.category_name;
+    }
       // droppedImages.value
       // const imageUrls = await uploadImages(selectedFiles.value);
       const imageUrls = await uploadImages(droppedImages.value);
@@ -601,7 +605,7 @@ const { productCategories } = storeToRefs(allCategoriesInfo());
         VenderId: Id,
         Images: imageUrls,
       };
-
+console.log("sdfghyujikjhgbvbhnjk", data)
       try {
         AppointmentsService.createAppointments(data)
           .then((response) => {
@@ -620,7 +624,19 @@ const { productCategories } = storeToRefs(allCategoriesInfo());
             // router.push('/dashboard/viewappointments')
             // document.querySelector(".closeBTN").click();
 
-            document.querySelector(".closeBTN").click();
+            // document.querySelector(".closeBTN").click();
+
+    
+if(response?.status == 'success'){
+  console.log("suceeding xcdfghjkjhgf:", response?.status);
+  // successtoast.value=true
+  //  emit("close");
+  document.querySelector(".closeBTN").click();
+}
+else{
+  // failtoast.value=true
+
+}
           })
           .catch((error) => {
             // Handle errors

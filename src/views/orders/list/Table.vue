@@ -98,6 +98,10 @@
 
                   <td class="whitespace-nowrap">{{ order?.itemPrice
  }}</td>
+ 
+ <td class="whitespace-nowrap">{{ order?.itemDiscounted_Price
+ }}</td>
+
                   <td class="whitespace-nowrap">
                     {{ order?.quantity }}
                   </td>

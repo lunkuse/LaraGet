@@ -218,7 +218,7 @@
                     class="px-5 py-3 dark:border-darkmode-300 first:rounded-l-md last:rounded-r-md w-40 bg-white border-b-0 dark:bg-darkmode-600 shadow-[20px_3px_20px_#0000000b]"
                   >
                     <div
-                      class="flex items-center justify-center text-theme-31"
+                      class=" text-theme-31"
                       v-if="product?.Availability === 'true'"
                     >
                       <svg
