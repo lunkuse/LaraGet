@@ -21,8 +21,8 @@
               alt="Profile Image"
               class="rounded-full"
               :src="
-                currentUser?.image
-                  ? currentUser?.image
+                currentUser?.profile_picture
+                  ? currentUser?.profile_picture
                   : 'https://via.placeholder.com/150'
               "
             />
@@ -197,8 +197,6 @@
               <div
                 class="grid grid-cols-1 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 gap-4 overflow-x-auto"
               >
-               
-
                 <!-- firstname -->
                 <div>
                   <label for="update-profile-form-7" class="form-label">
@@ -221,8 +219,6 @@
                     </span>
                   </label>
                 </div>
-
-               
 
                 <!-- lastname -->
 
@@ -273,6 +269,30 @@
                   </label>
                 </div>
 
+                <!-- user_Type -->
+
+                <div>
+                  <label for="update-profile-form-7" class="form-label">
+                    <span class="flex">
+                      <p class="w-40 font-medium text-bold mx-1">
+                        User Type
+                      </p>
+
+                      <span
+                        class="form-label capitalize"
+                        :class="
+                          currentUser?.user_Type == null
+                            ? currentUser?.user_Type == null && 'text-gray-500'
+                            : ''
+                        "
+                        >{{
+                          currentUser?.user_Type ?? "No user type is set"
+                        }}</span
+                      >
+                    </span>
+                  </label>
+                </div>
+
                 <!-- dob -->
 
                 <div>
@@ -316,8 +336,7 @@
                             : ''
                         "
                         >{{
-                          getMarital(currentUser?.email) ??
-                            $t("translation.notSetText")
+                          currentUser?.email ?? $t("translation.notSetText")
                         }}</span
                       >
                     </span>
@@ -367,8 +386,7 @@
                             : ''
                         "
                         >{{
-                          getMarital(currentUser?.country) ??
-                            $t("translation.notSetText")
+                          currentUser?.country ?? $t("translation.notSetText")
                         }}</span
                       >
                     </span>
@@ -392,8 +410,7 @@
                             : ''
                         "
                         >{{
-                          getMarital(currentUser?.city) ??
-                            $t("translation.notSetText")
+                          currentUser?.city ?? $t("translation.notSetText")
                         }}</span
                       >
                     </span>
@@ -417,8 +434,7 @@
                             : ''
                         "
                         >{{
-                          getMarital(currentUser?.location) ??
-                            $t("translation.notSetText")
+                          currentUser?.location ?? $t("translation.notSetText")
                         }}</span
                       >
                     </span>
@@ -441,217 +457,61 @@
                             : ''
                         "
                         >{{
-                          getMarital(currentUser?.Id_number) ??
-                            $t("translation.notSetText")
+                          currentUser?.Id_number ?? $t("translation.notSetText")
                         }}</span
                       >
                     </span>
                   </label>
                 </div>
-              </div>
-              <div
-                class="flex items-center pt-2 border-b border-gray-200 dark:border-dark-5"
-              >
-                <h2 class="hidden font-medium text-base mr-auto">
-                  {{ $t("translation.next_of_kin_information_text") }}
-                </h2>
-              </div>
-              <div
-                class="hidden p-5 grid grid-cols-1 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 gap-4 overflow-x-auto"
-              >
-                <!-- nok name -->
+
+                <!-- business name -->
                 <div>
                   <label for="update-profile-form-7" class="form-label">
                     <span class="flex">
                       <p class="w-40 font-medium text-bold mx-1">
-                        {{ $t("translation.full_name_text") }}
+                        Business Name
                       </p>
 
                       <span
-                        class="form-label capitalize"
+                        class="form-label"
                         :class="
-                          currentUser?.nok_name == null
-                            ? currentUser?.nok_name == null && 'text-gray-500'
-                            : ''
-                        "
-                        >{{
-                          getMarital(currentUser?.nok_name) ??
-                            $t("translation.notSetText")
-                        }}</span
-                      >
-                    </span>
-                  </label>
-                </div>
-                <!-- pnone-->
-                <div>
-                  <label for="update-profile-form-7" class="form-label">
-                    <span class="flex">
-                      <p class="w-40 font-medium text-bold mx-1">
-                        {{ $t("translation.phone_number_text") }}
-                      </p>
-
-                      <span
-                        class="form-label capitalize"
-                        :class="
-                          currentUser?.nok_phone_number == null
-                            ? currentUser?.nok_phone_number == null &&
+                          currentUser?.business_name == null
+                            ? currentUser?.business_name == null &&
                               'text-gray-500'
                             : ''
                         "
                         >{{
-                          getMarital(currentUser?.nok_phone_number) ??
-                            $t("translation.notSetText")
+                          currentUser?.business_name ??
+                            "no business name is set"
                         }}</span
                       >
                     </span>
                   </label>
                 </div>
-                <!-- email -->
+
+                <!-- account number -->
                 <div>
                   <label for="update-profile-form-7" class="form-label">
                     <span class="flex">
                       <p class="w-40 font-medium text-bold mx-1">
-                        {{ $t("translation.email_text") }}
+                        Account Number
                       </p>
 
                       <span
-                        class="form-label capitalize"
+                        class="form-label"
                         :class="
-                          currentUser?.nok_email == null
-                            ? currentUser?.nok_email == null && 'text-gray-500'
-                            : ''
-                        "
-                        >{{
-                          getMarital(currentUser?.nok_email) ??
-                            $t("translation.notSetText")
-                        }}</span
-                      >
-                    </span>
-                  </label>
-                </div>
-              </div>
-
-              <!-- family -->
-              <div
-                class="hidden flex items-center pt-2 border-b border-gray-200 dark:border-dark-5"
-              >
-                <h2 class="font-medium text-base mr-auto">
-                  {{ $t("translation.family_information_text") }}
-                </h2>
-              </div>
-              <div
-                class="hidden p-5 grid grid-cols-1 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 gap-4 overflow-x-auto"
-              >
-                <!-- nok name -->
-                <div>
-                  <label for="update-profile-form-7" class="form-label">
-                    <span class="flex">
-                      <p class="w-40 font-medium text-bold mx-1">
-                        {{ $t("translation.full_name_text") }}
-                      </p>
-
-                      <span
-                        class="form-label capitalize"
-                        :class="
-                          currentUser?.fm_name == null
-                            ? currentUser?.fm_name == null && 'text-gray-500'
-                            : ''
-                        "
-                        >{{
-                          getMarital(currentUser?.fm_name) ??
-                            $t("translation.notSetText")
-                        }}</span
-                      >
-                    </span>
-                  </label>
-                </div>
-                <!-- phone-->
-                <div>
-                  <label for="update-profile-form-7" class="form-label">
-                    <span class="flex">
-                      <p class="w-40 font-medium text-bold mx-1">
-                        {{ $t("translation.phone_number_text") }}
-                      </p>
-
-                      <span
-                        class="form-label capitalize"
-                        :class="
-                          currentUser?.fm_phone_number == null
-                            ? currentUser?.fm_phone_number == null &&
+                          currentUser?.account_number == null
+                            ? currentUser?.account_number == null &&
                               'text-gray-500'
                             : ''
                         "
                         >{{
-                          getMarital(currentUser?.fm_phone_number) ??
-                            $t("translation.notSetText")
+                          currentUser?.account_number ??
+                            "no account number is set"
                         }}</span
                       >
                     </span>
                   </label>
-                </div>
-                <!-- email -->
-                <div>
-                  <label for="update-profile-form-7" class="form-label">
-                    <span class="flex">
-                      <p class="w-40 font-medium text-bold mx-1">
-                        {{ $t("translation.email_text") }}
-                      </p>
-
-                      <span
-                        class="form-label capitalize"
-                        :class="
-                          currentUser?.fm_email == null
-                            ? currentUser?.fm_email == null && 'text-gray-500'
-                            : ''
-                        "
-                        >{{
-                          getMarital(currentUser?.fm_email) ??
-                            $t("translation.notSetText")
-                        }}</span
-                      >
-                    </span>
-                  </label>
-                </div>
-              </div>
-            </div>
-
-            <!-- family -->
-            <div class="p-5">
-              <div class="flex mt-3">
-                <!-- labels -->
-                <div class="flex flex-col gap-y-2">
-                  <label
-                    for="update-profile-form-7"
-                    class="form-label font-medium text-bold"
-                    v-if="currentUser.fm_name"
-                    >Family Member Name</label
-                  >
-                  <label
-                    for="update-profile-form-7"
-                    class="form-label font-medium text-bold"
-                    v-if="currentUser.fm_phone_number"
-                    >Family Member Phone</label
-                  >
-                  <label
-                    for="update-profile-form-7"
-                    class="form-label font-medium text-bold"
-                    v-if="currentUser.fm_relationship"
-                    >Family Member Email</label
-                  >
-                </div>
-
-                <!-- results -->
-                <div class="flex flex-col gap-y-2 ml-5">
-                  <span class="form-label" v-if="currentUser.fm_name">{{
-                    currentUser.fm_name
-                  }}</span>
-                  <span class="form-label" v-if="currentUser.fm_phone_number">{{
-                    currentUser.fm_phone_number
-                  }}</span>
-
-                  <span class="form-label" v-if="currentUser.fm_relationship">
-                    {{ currentUser.fm_relationship }}
-                  </span>
                 </div>
               </div>
             </div>
@@ -678,286 +538,8 @@
 
       <!-- language tab -->
       <!-- password change -->
-      <div
-        class="tab-pane intro-y box mt-5"
-        id="language"
-        role="tabpanel"
-        aria-labelledby="language-tab"
-      >
-        <div
-          class="flex items-center p-5 border-b border-gray-200 dark:border-dark-5"
-        >
-          <h2 class="font-medium text-base mr-auto">Change Language</h2>
-        </div>
-        <div class="p-5">
-          <languageReset />
-        </div>
-      </div>
 
       <!-- faq -->
-
-      <div
-        class="tab-pane intro-y box mt-5"
-        id="support"
-        role="tabpanel"
-        aria-labelledby="support-tab"
-      >
-        <div
-          class="flex items-center p-5 border-b border-gray-200 dark:border-dark-5"
-        >
-          <h2 class="font-medium text-base mr-auto">FAQ</h2>
-        </div>
-        <div class="p-5">
-          <FAQ />
-        </div>
-      </div>
-      <!-- Address -->
-      <div
-        class="tab-pane intro-y box mt-5"
-        id="address_tab"
-        role="tabpanel"
-        aria-labelledby="addresss-tab"
-      >
-        <div
-          class="flex items-center p-5 border-b border-gray-200 dark:border-dark-5"
-        >
-          <h2 class="font-medium text-base mr-auto">
-            {{ $t("translation.address_information_text") }}
-          </h2>
-        </div>
-        <div class="p-5 overflow-x-auto">
-          <div
-            class="grid grid-cols-1 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 gap-4 overflow-x-auto"
-          >
-            <div>
-              <label for="update-profile-form-7" class="form-label">
-                <span class="flex">
-                  <p class="w-40 font-medium text-bold mx-1">
-                    {{ $t("translation.postal_code_text") }}
-                  </p>
-
-                  <span
-                    class="form-label capitalize"
-                    :class="
-                      currentUser?.postalcode == null
-                        ? currentUser?.postalcode == null && 'text-gray-500'
-                        : ''
-                    "
-                    >{{
-                      currentUser.postalcode ?? $t("translation.notSetText")
-                    }}</span
-                  >
-                </span>
-              </label>
-            </div>
-            <div>
-              <label for="update-profile-form-7" class="form-label">
-                <span class="flex">
-                  <p class="w-40 font-medium text-bold mx-1">
-                    {{ $t("translation.house_number_text") }}
-                  </p>
-
-                  <span
-                    class="form-label capitalize"
-                    :class="
-                      currentUser?.house_number == null
-                        ? currentUser?.house_number == null && 'text-gray-500'
-                        : ''
-                    "
-                    >{{
-                      currentUser.house_number ?? $t("translation.notSetText")
-                    }}</span
-                  >
-                </span>
-              </label>
-            </div>
-            <div>
-              <label for="update-profile-form-7" class="form-label">
-                <span class="flex">
-                  <p class="w-40 font-medium text-bold mx-1">
-                    {{ $t("translation.street_name_text") }}
-                  </p>
-
-                  <span
-                    class="form-label capitalize"
-                    :class="
-                      currentUser?.street == null
-                        ? currentUser?.street == null && 'text-gray-500'
-                        : ''
-                    "
-                    >{{
-                      currentUser.street ?? $t("translation.notSetText")
-                    }}</span
-                  >
-                </span>
-              </label>
-            </div>
-            <div>
-              <label for="update-profile-form-7" class="form-label">
-                <span class="flex">
-                  <p class="w-40 font-medium text-bold mx-1">
-                    {{ $t("translation.city_text") }}
-                  </p>
-
-                  <span
-                    class="form-label capitalize"
-                    :class="
-                      currentUser?.city == null
-                        ? currentUser?.city == null && 'text-gray-500'
-                        : ''
-                    "
-                    >{{
-                      currentUser.city ?? $t("translation.notSetText")
-                    }}</span
-                  >
-                </span>
-              </label>
-            </div>
-            <!-- nationality -->
-            <div>
-              <label for="update-profile-form-7" class="form-label">
-                <span class="flex">
-                  <p class="w-40 font-medium text-bold mx-1">
-                    {{ $t("translation.nationality_text") }}
-                  </p>
-
-                  <span
-                    class="form-label capitalize"
-                    :class="
-                      currentUser?.nationality == null
-                        ? currentUser?.nationality == null && 'text-gray-500'
-                        : ''
-                    "
-                    >{{
-                      currentUser.nationality ?? $t("translation.notSetText")
-                    }}</span
-                  >
-                </span>
-              </label>
-            </div>
-            <!-- country -->
-            <div>
-              <label for="update-profile-form-7" class="form-label">
-                <span class="flex">
-                  <p class="w-40 font-medium text-bold mx-1">
-                    {{ $t("translation.country_text") }}
-                  </p>
-
-                  <span
-                    class="form-label capitalize"
-                    :class="
-                      currentUser?.country == null
-                        ? currentUser?.country == null && 'text-gray-500'
-                        : ''
-                    "
-                    >{{
-                      currentUser.country ?? $t("translation.notSetText")
-                    }}</span
-                  >
-                </span>
-              </label>
-            </div>
-            <!-- province -->
-            <div>
-              <label for="update-profile-form-7" class="form-label">
-                <span class="flex">
-                  <p class="w-40 font-medium text-bold mx-1">
-                    {{ $t("translation.province_text") }}
-                  </p>
-
-                  <span
-                    class="form-label capitalize"
-                    :class="
-                      currentUser?.province == null
-                        ? currentUser?.province == null && 'text-gray-500'
-                        : ''
-                    "
-                    >{{
-                      currentUser.province ?? $t("translation.notSetText")
-                    }}</span
-                  >
-                </span>
-              </label>
-            </div>
-
-            <!-- country of birth -->
-
-            <div>
-              <label for="update-profile-form-7" class="form-label">
-                <span class="flex">
-                  <p class="w-40 font-medium text-bold mx-1">
-                    {{ $t("translation.countryOfBirth") }}
-                  </p>
-
-                  <span
-                    class="form-label capitalize"
-                    :class="
-                      currentUser?.country_of_birth == null
-                        ? currentUser?.country_of_birth == null &&
-                          'text-gray-500'
-                        : ''
-                    "
-                    >{{
-                      currentUser.country_of_birth ??
-                        $t("translation.notSetText")
-                    }}</span
-                  >
-                </span>
-              </label>
-            </div>
-            <!-- place of birth -->
-            <div>
-              <label for="update-profile-form-7" class="form-label">
-                <span class="flex">
-                  <p class="w-40 font-medium text-bold mx-1">
-                    {{ $t("translation.placeOfBirth") }}
-                  </p>
-
-                  <span
-                    class="form-label capitalize"
-                    :class="
-                      currentUser?.place_of_birth == null
-                        ? currentUser?.place_of_birth == null && 'text-gray-500'
-                        : ''
-                    "
-                    >{{
-                      currentUser.place_of_birth ?? $t("translation.notSetText")
-                    }}</span
-                  >
-                </span>
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div
-        class="tab-pane intro-y box mt-5"
-        id="neighbour"
-        role="tabpanel"
-        aria-labelledby="neighbour-tab"
-      >
-        <div
-          class="flex items-center p-5 border-b border-gray-200 dark:border-dark-5"
-        >
-          <h2 class="font-medium text-base mr-auto"></h2>
-        </div>
-        <div class="p-5"></div>
-      </div>
-
-      <div
-        class="tab-pane intro-y box mt-5"
-        id="employment"
-        role="tabpanel"
-        aria-labelledby="employment-tab"
-      >
-        <div
-          class="flex items-center p-5 border-b border-gray-200 dark:border-dark-5"
-        >
-          <h2 class="font-medium text-base mr-auto"></h2>
-        </div>
-        <div class="p-5"></div>
-      </div>
     </div>
 
     <!-- update photo modal -->
@@ -1215,33 +797,8 @@ export default defineComponent({
         return translatedGender;
       }
     };
-    // marital status method
-    const getMarital = (status) => {
-      let translatedStatus = status;
-      if (status === "single" || status === "Single") {
-        translatedStatus = t("translation.single_text");
-        return translatedStatus;
-      } else if (status === "married" || status === "Married") {
-        translatedStatus = t("translation.married_text");
-        return translatedStatus;
-      } else if (status === "divorced" || status === "Divorced") {
-        translatedStatus = t("translation.divorced_text");
-        return translatedStatus;
-      } else if (status === "divorced" || status === "Divorced") {
-        translatedStatus = t("translation.divorced_text");
-        return translatedStatus;
-      } else if (status === "engaged" || status === "Engaged") {
-        translatedStatus = t("translation.engaged_text");
-        return translatedStatus;
-      } else if (status === "separated" || status === "Separated") {
-        translatedStatus = t("translation.separated_text");
-        return translatedStatus;
-      } else {
-        return translatedStatus;
-      }
-    };
 
-    return { t, getGender, getMarital };
+    return { t, getGender };
   },
   computed: {
     currentUser() {

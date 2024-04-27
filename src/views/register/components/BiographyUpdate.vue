@@ -1,4 +1,5 @@
 <template>
+ 
   <div class="p-3 box">
     <div
       v-if="message"
@@ -62,6 +63,171 @@
 
           <ErrorMessage
             name="email"
+            style="font-size: 13px"
+            class="text-theme-6"
+          />
+        </div>
+
+        <!-- phone_number -->
+        <div class="flex flex-col">
+          <label class="createFormLabel" for=""> Phone Number </label>
+          <Field
+            type="text"
+            name="phone_number"
+            class="intro-x login__input form-control py-3 px-4 border-gray-200 focus:border-theme-36 block"
+            v-model="phone_number"
+            placeholder="Phone number"
+          />
+
+          <ErrorMessage
+            name="phone_number"
+            style="font-size: 13px"
+            class="text-theme-6"
+          />
+        </div>
+
+        <!-- DOB -->
+        
+        <div class="flex flex-col">
+          <label class="createFormLabel" for=""> Date of Birth </label>
+          <Field
+            type="text"
+            name="DOB"
+            class="intro-x login__input form-control py-3 px-4 border-gray-200 focus:border-theme-36 block"
+            v-model="DOB"
+            placeholder="dob"
+            disabled
+          />
+
+          <ErrorMessage
+            name="DOB"
+            style="font-size: 13px"
+            class="text-theme-6"
+          />
+        </div>
+        
+        <div class="flex flex-col">
+          <label class="createFormLabel" for=""> Gender </label>
+          <Field
+            type="text"
+            name="gender"
+            class="intro-x login__input form-control py-3 px-4 border-gray-200 focus:border-theme-36 block"
+            v-model="gender"
+            placeholder="gender"
+            disabled
+          />
+
+          <ErrorMessage
+            name="gender"
+            style="font-size: 13px"
+            class="text-theme-6"
+          />
+        </div>
+
+        <!-- Id Number -->
+       
+        <div class="flex flex-col">
+          <label class="createFormLabel" for=""> Id Number </label>
+          <Field
+            type="text"
+            name="Id_number"
+            class="intro-x login__input form-control py-3 px-4 border-gray-200 focus:border-theme-36 block"
+            v-model="Id_number"
+            placeholder="Id number"
+            disabled
+          />
+
+          <ErrorMessage
+            name="DOB"
+            style="font-size: 13px"
+            class="text-theme-6"
+          />
+        </div>
+       
+        <!-- business name -->
+        <div class="flex flex-col">
+          <label class="createFormLabel" for=""> Business Name </label>
+          <Field
+            type="text"
+            name="business_name"
+            class="intro-x login__input form-control py-3 px-4 border-gray-200 focus:border-theme-36 block"
+            v-model="business_name"
+            placeholder="business name"
+          />
+
+          <ErrorMessage
+            name="business_name"
+            style="font-size: 13px"
+            class="text-theme-6"
+          />
+        </div>
+        <!-- account_number -->
+        
+        <div class="flex flex-col">
+          <label class="createFormLabel" for=""> Account Number </label>
+          <Field
+            type="text"
+            name="account_number"
+            class="intro-x login__input form-control py-3 px-4 border-gray-200 focus:border-theme-36 block"
+            v-model="account_number"
+            placeholder="account_number"
+          />
+
+          <ErrorMessage
+            name="account_number"
+            style="font-size: 13px"
+            class="text-theme-6"
+          />
+        </div>
+        <!-- country -->
+
+        <div class="flex flex-col">
+          <label class="createFormLabel" for=""> Country </label>
+          <Field
+            type="text"
+            name="country"
+            class="intro-x login__input form-control py-3 px-4 border-gray-200 focus:border-theme-36 block"
+            v-model="country"
+            placeholder="country"
+          />
+
+          <ErrorMessage
+            name="country"
+            style="font-size: 13px"
+            class="text-theme-6"
+          />
+        </div>
+        <!-- city -->
+        <div class="flex flex-col">
+          <label class="createFormLabel" for=""> City </label>
+          <Field
+            type="text"
+            name="city"
+            class="intro-x login__input form-control py-3 px-4 border-gray-200 focus:border-theme-36 block"
+            v-model="city"
+            placeholder="city"
+          />
+
+          <ErrorMessage
+            name="city"
+            style="font-size: 13px"
+            class="text-theme-6"
+          />
+        </div>
+
+        <!-- location -->
+        <div class="flex flex-col">
+          <label class="createFormLabel" for="">Location</label>
+          <Field
+            type="text"
+            name="location"
+            class="intro-x login__input form-control py-3 px-4 border-gray-200 focus:border-theme-36 block"
+            v-model="location"
+            placeholder="location"
+          />
+
+          <ErrorMessage
+            name="city"
             style="font-size: 13px"
             class="text-theme-6"
           />
@@ -145,6 +311,15 @@ const formValues = ref({
   middleName: currentUser?.middle_name ?? "",
   lastName: currentUser?.lastname ?? "",
   email: currentUser?.email ?? "",
+  phone_number: currentUser?.phone_number ?? "",
+  DOB: currentUser?.DOB ?? "",
+  business_name: currentUser?.business_name ?? "",
+  id_number: currentUser?.Id_number ?? "",
+  country: currentUser?.country ?? "",
+  city: currentUser?.city ?? "",
+  account_number: currentUser?.account_number ?? "",
+  gender: currentUser?.gender ?? "",
+  location: currentUser?.location ?? "",
 });
 
 const resultsPatientPhone = ref();
@@ -169,7 +344,7 @@ const country_code = ref(currentUser?.country_code ?? "");
 const country_name = ref(currentUser?.country ?? "");
 const province = ref(currentUser?.province ?? "");
 const vmodel = ref("");
-const city = ref("");
+
 const street = ref("");
 const municipality = ref("");
 const firstName = ref("");
@@ -233,92 +408,8 @@ const contactFormElements = [
   },
 ];
 
-const genderFormElements = ref([
-  { label: t("translation.forms.male"), value: "Male" },
-  { label: t("translation.forms.female"), value: "Female" },
-  { label: t("translation.forms.nonBinary"), value: "Non-Binary" },
-]);
-
-const passantFormElements = [
-  {
-    id: "passant",
-    label: t("translation.yes"),
-    required: true,
-    name: "passant",
-    placeholder: t("translation.yes"),
-    type: "radio",
-    value: "1",
-  },
-  {
-    id: "passant",
-    label: t("translation.no"),
-    required: true,
-    name: "passant",
-    placeholder: t("translation.no"),
-    type: "radio",
-    value: "0",
-  },
-];
-
-const maritalFormElements = ref([
-  { label: t("translation.forms.single"), value: "single" },
-  { label: t("translation.forms.married"), value: "married" },
-  { label: t("translation.forms.divorced"), value: "divorced" },
-  { label: t("translation.forms.separated"), value: "separated" },
-]);
-
-const maritalStatus = ref(formValues.value.maritalStatus);
-const documentType = ref(formValues.value.document_type);
-const documentNumber = ref(formValues.value.document_number);
-
-const gender = ref(formValues.value.gender);
 const nokEmail = ref(formValues.value.nok_email);
 
-const nextOfKinFormElements = [
-  {
-    id: "nokName",
-    label: t("translation.forms.fullName"),
-    required: false,
-    name: "nokName",
-    placeholder: t("translation.forms.fullName"),
-    type: "text",
-  },
-  {
-    id: "nokEmail",
-    label: t("translation.email_text"),
-    required: false,
-    name: "nokEmail",
-    placeholder: t("translation.email_text"),
-    type: "email",
-  },
-  {
-    id: "nokPhoneNumber",
-    label: t("translation.mobile_number_text"),
-    required: false,
-    name: "nokPhoneNumber",
-    placeholder: t("translation.mobile_number_text"),
-    type: "text",
-  },
-];
-
-const documentTypes = ref([
-  {
-    id: 1,
-    label: t("translation.forms.nationalIdentityCard"),
-    value: "National Identity Card",
-  },
-  { id: 2, label: t("translation.forms.passport"), value: "Passport" },
-  {
-    id: 3,
-    label: t("translation.forms.driversLicense"),
-    value: "Driver's License",
-  },
-  {
-    id: 4,
-    label: t("translation.forms.residencePermit"),
-    value: "Residence Permit",
-  },
-]);
 const { searchHome } = searchAddress();
 const resetData = (state, code) => {
   // refresh the array of regions according to the country returned from the api
@@ -337,12 +428,16 @@ const phoneCountryCode = {
 const storedLang = localStorage.getItem("lang");
 const defaultLang = storedLang ?? "nl";
 const lang = ref(defaultLang);
-const type = ref("password");
-const typeconfirm = ref("password");
-const phoneRegExp = /^\d{9}$/;
-// const password = ref("");
-const last_name = ref("");
+
 const email = currentUser?.email;
+const Id_number = currentUser?.Id_number;
+const DOB = currentUser?.DOB;
+const business_name = currentUser?.business_name;
+const country = currentUser?.country;
+const city = currentUser?.city;
+const account_number = currentUser?.account_number;
+const gender = currentUser?.gender;
+const location = currentUser?.location;
 const successful = ref(false);
 const loading = ref(false);
 const messagefails = ref("");
@@ -387,6 +482,14 @@ const schema = yup.object().shape({
     .email(t("translation.errors.invalidEmail"))
     .required(t("translation.requiredText")),
 });
+
+
+// phone_number,
+//         DOB,
+//         gender,
+//         Id_number,
+//         business_name,
+//         account_number
 
 const handleRegister = async (values) => {
   console.log("all values", values);
