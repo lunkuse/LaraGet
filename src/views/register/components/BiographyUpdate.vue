@@ -438,6 +438,7 @@ const city = currentUser?.city;
 const account_number = currentUser?.account_number;
 const gender = currentUser?.gender;
 const location = currentUser?.location;
+const userID = currentUser?.id;
 const successful = ref(false);
 const loading = ref(false);
 const messagefails = ref("");
@@ -494,27 +495,49 @@ const schema = yup.object().shape({
 const handleRegister = async (values) => {
   console.log("all values", values);
 
+  // const user = {
+  //   first_name: values?.firstName,
+  //   middle_name: values?.middleName,
+  //   last_name: values?.lastName,
+  //   email: values?.email,
+  // };
   const user = {
-    first_name: values?.firstName,
-    middle_name: values?.middleName,
-    last_name: values?.lastName,
-    email: values?.email,
-  };
-  console.log("user to update", user);
-  const data = new FormData();
+    id: userID,
+      firstname: values?.firstName,
 
-  data.append("firstName", user?.firstname);
-  data.append("middleName", user?.middle_name);
-  data.append("lastName", user?.lastname);
-  data.append("email", user?.email);
+      // middle_name: values?.middleName,
+      last_name: values?.lastName,
+      email: values?.email,
+      phone_number: values?.phone_number,
+      DOB: values?.DOB,
+      business_name: values?.business_name,
+      id_number: values?.id_number,
+      country: values?.country,
+      city: values?.city,
+      account_number: values?.account_number,
+      gender: values?.gender,
+      location: values?.location,
+    };
+    console.log("user to update", user);
+    const data = new FormData();
+    for (const key in user) {
+      data.append(key, user[key]);
+    }
+ 
+  // const data = new FormData();
+
+  // data.append("firstName", user?.first_name);
+  // data.append("middleName", user?.middle_name);
+  // data.append("lastName", user?.last_name);
+  // data.append("email", user?.email);
 
   successful.value = false;
   const token = localStorage.getItem("token");
   loading.value = true;
   axios
     .post(
-      "patients/auth/update_info",
-      data,
+      "auth/updateUser",
+      user,
 
       {
         headers: {
